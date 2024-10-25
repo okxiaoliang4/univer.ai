@@ -31,20 +31,23 @@ export default function CommercialCard() {
   }])
 
   const discount = useMemo(() => {
-    if (count <= 2) {
+    if (count <= 1) {
       return 1
     }
-    else if (count <= 4) {
+    else if (count <= 3) {
       return 0.9
+    }
+    else if (count <= 5) {
+      return 0.85
     }
     else if (count <= 7) {
       return 0.8
     }
     else if (count <= 9) {
-      return 0.7
+      return 0.75
     }
     else if (count <= 10) {
-      return 0.6
+      return 0.7
     }
 
     return 1

@@ -121,9 +121,6 @@ const navigation: NavigationType[] = [{
     }],
   }],
 }, {
-  title: 'Docs',
-  href: (lang: string) => `/${lang}/guides/sheets/introduction`,
-}, {
   title: 'Pricing',
   href: (lang: string) => `/${lang}/pricing`,
 }]

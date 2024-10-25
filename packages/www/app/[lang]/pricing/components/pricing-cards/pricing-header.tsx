@@ -27,7 +27,7 @@ export default function PricingHeader(props: IProps) {
 
         {discount && discount < 1 && (
           <span className="rounded-md bg-green-100 px-2.5 py-0.5 text-xs text-green-400">
-            {discount * 100}
+            {Math.ceil(1 * 100 - discount * 100)}
             % discount
           </span>
         )}
