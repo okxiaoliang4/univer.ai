@@ -37,6 +37,7 @@ jobs:
 
       - name: check check_image
         run: |
+          cd packages/www
           echo "IMAGE_EXIST=$(make check_image CR=${{ secrets.REGISTRY_CR }})" >> $GITHUB_ENV
 
       - name: Set up QEMU
