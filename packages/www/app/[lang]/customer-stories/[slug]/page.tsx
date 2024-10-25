@@ -16,6 +16,14 @@ interface IProps {
   }>
 }
 
+export async function generateStaticParams() {
+  return getSotries().map((post) => {
+    return {
+      slug: post.data.slug,
+    }
+  })
+}
+
 export default async function Page(props: IProps) {
   const { slug } = await props.params
 
