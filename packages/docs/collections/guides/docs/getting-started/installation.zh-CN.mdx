@@ -1,0 +1,182 @@
+import { Callout, Tabs } from 'nextra/components'
+
+# 安装和基本使用
+
+Univer 从 0.5.0 版本起提供了 `@univerjs/presets` 包，它针对一些常见场景提供了预设的配置，可以帮助你快速地搭建一个 Univer 应用而无需关心如何引入和配置 Univer 插件。
+
+<Callout type="info" emoji="🍃">
+  如果你是首次使用 Univer，我们推荐从 Presets 开始。在后续的小节中，除非特殊说明，我们都会假设你使用了 Presets。如果你已经较为熟悉 Univer，并且希望更加灵活地引入插件（例如懒加载部分插件），可以参考 [高级引入方式](/guides/docs/advanced-installation)。
+</Callout>
+
+## 使用包管理器
+
+如果你的项目中已经引入了现代前端开发工具，那么引入 Univer 将会非常简单。我们推荐使用 [Vite](https://vitejs.dev/)、[esbuild](https://esbuild.github.io/) 或 [Webpack 5](https://webpack.js.org/) 等对 ES Module 支持较好的构建工具来构建 Univer 应用。如果你使用了其它构建工具（例如 Webpack 4），可能会需要一些额外的配置，请阅读 [常见问题](/guides/sheets/troubleshooting) 获取更多信息。
+
+### 安装
+
+选择你所使用的包管理器以安装 `@unvierjs/presets`：
+
+<Tabs items={['pnpm', 'npm', 'yarn']}>
+  <Tabs.Tab label="pnpm">
+    ```shell
+    pnpm add @univerjs/presets
+    ```
+  </Tabs.Tab>
+  <Tabs.Tab label="npm">
+    ```shell
+    npm install @univerjs/presets
+    ```
+  </Tabs.Tab>
+  <Tabs.Tab label="yarn">
+    ```shell
+    yarn add @univerjs/presets
+    ```
+  </Tabs.Tab>
+</Tabs>
+
+
+### 使用
+
+```typescript
+import { createUniver, defaultTheme, LocaleType } from '@univerjs/presets';
+import { zhCN } from '@univerjs/presets/docs/docs-basic/zh-CN';
+import { UniverDocsBasicPreset } from '@univerjs/presets/presets/docs/docs-basic/index.js';
+
+const { univerAPI } = createUniver({
+    locale: LocaleType.ZH_CN,
+    theme: defaultTheme,
+    presets: [
+        UniverDocsBasicPreset({ locales: { zhCN } }),
+    ],
+});
+
+univerAPI.createUniverDoc({});
+```
+
+export const code = `const univer = new Univer({
+  theme: defaultTheme,
+  locale: LocaleType.ZH_CN,
+  locales: {
+    [LocaleType.ZH_CN]: zhCN,
+  },
+});
+
+univer.registerPlugin(UniverRenderEnginePlugin);
+univer.registerPlugin(UniverFormulaEnginePlugin);
+
+univer.registerPlugin(UniverUIPlugin, {
+  container: 'app',
+  footer: false,
+});
+
+univer.registerPlugin(UniverDocsPlugin);
+univer.registerPlugin(UniverDocsUIPlugin, {
+  container: 'univerdoc',
+  layout: {
+    docContainerConfig: {
+      innerLeft: false,
+    },
+  },
+});
+
+univer.createUnit(UniverInstanceType.UNIVER_DOC, {});`
+
+<ReactLive code={code} />
+
+### 更新
+
+```shell
+pnpm update "@univerjs/presets" @latest
+```
+
+## 通过 `<script>` 标签引入
+
+如果你不使用包管理工具，你也可以通过 `<script>` 标签引入 Univer。
+
+### 示例
+
+我们在当前主流的 CDN 服务商（例如 jsDelivr、unpkg）都提供了 Univer 的 UMD 构建，你可以在 HTML 文件中引入这些资源（当然你也可以下载这些文件然后通过自己的服务器或者 CDN 网络分发）：
+
+```html
+<head>
+  <script src="https://unpkg.com/@univerjs/umd/lib/univer.full.umd.js"></script>
+  <script src="https://unpkg.com/@univerjs/umd/lib/locale/zh-CN.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/@univerjs/umd/lib/univer.css">
+</head>
+<body>
+  <div id="app"></div>
+
+  <script>
+    var {
+      UniverCore,
+      UniverDesign,
+      UniverEngineRender,
+      UniverEngineFormula,
+      UniverDocs,
+      UniverDocsUi,
+      UniverUi,
+      UniverFacade,
+    } = window
+
+    var univer = new UniverCore.Univer({
+      theme: UniverDesign.defaultTheme,
+      locale: UniverCore.LocaleType.ZH_CN,
+      locales: {
+        [UniverCore.LocaleType.ZH_CN]: UniverUMD['zh-CN'],
+      },
+    });
+
+    univer.registerPlugin(UniverEngineRender.UniverRenderEnginePlugin);
+    univer.registerPlugin(UniverEngineFormula.UniverFormulaEnginePlugin);
+
+    univer.registerPlugin(UniverUi.UniverUIPlugin, {
+      container: "app",
+    });
+
+    univer.registerPlugin(UniverDocs.UniverDocsPlugin);
+    univer.registerPlugin(UniverDocsUi.UniverDocsUIPlugin, {
+      container: 'univerdoc',
+      layout: {
+        docContainerConfig: {
+          innerLeft: false,
+        },
+      },
+    });
+
+    univer.createUnit(UniverCore.UniverInstanceType.UNIVER_DOC, {})
+
+    const univerAPI = UniverFacade.FUniver.newAPI(univer)
+  </script>
+</body>
+```
+
+从上面的代码可以看出，通过 CDN 引入 Univer 的方式和使用包管理工具引入的方式基本一致，只是每个插件都有属于自己的命名空间。通常这些命名空间的命名规则为大写驼峰的 `Univer<PluginName>`。
+
+### 精简版本
+
+如果你的项目中已经使用了 React、ReactDOM 和 RxJS，你可以选择 UMD 包的精简版本，该版本不包含这些依赖项。
+
+```diff
++ <script src="https://unpkg.com/react/umd/react.production.min.js"></script>
++ <script src="https://unpkg.com/react-dom/umd/react-dom.production.min.js"></script>
++ <script src="https://unpkg.com/rxjs/dist/bundles/rxjs.umd.min.js"></script>
+ 
+- <script src="https://unpkg.com/@univerjs/umd/lib/univer.full.umd.js"></script>
++ <script src="https://unpkg.com/@univerjs/umd/lib/univer.slim.umd.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/@univerjs/umd/lib/univer.css">
+```
+
+### 指定版本
+
+unpkg 和 jsDeliver 都支持指定特定版本的资源。以 unpkg 为例，如果你想使用 0.1.16 版本的 Univer，仅需在 URL 中加上 `@<version>` 来指定版本即可：
+
+```diff
+- https://unpkg.com/@univerjs/umd/lib/univer.full.umd.js
++ https://unpkg.com/@univerjs/umd@0.1.16/lib/univer.full.umd.js
+```
+
+---
+
+[^1]: https://blog.npmjs.org/post/110924823920/npm-weekly-5
+[^2]: https://pnpm.io/npmrc#auto-install-peers
+[^3]: https://github.com/yarnpkg/yarn/issues/1503

@@ -1,0 +1,180 @@
+import { Callout } from 'nextra/components'
+import ServerNotice from '@/components/server-notice'
+import VersionBadge from '@/components/version-badge'
+
+# Univer Sheet API
+
+## Concepts
+
+Univer table-related concepts are designed to be as consistent as possible with Excel.
+
+## Workbook
+
+A workbook contains multiple worksheets and can be thought of as an Excel file.
+
+The `unitId` can be used as a unique identifier for the workbook.
+
+### Create a Workbook
+
+The `univer.createUnit(UniverInstanceType.UNIVER_SHEET, {})` method creates and returns the `Workbook` object.
+
+### Getting Workbook Data
+
+```typescript
+const univerAPI = FUniver.newAPI(univer);
+const activeWorkbook = univerAPI.getActiveWorkbook()
+const saveData = activeWorkbook.save();
+```
+
+### Unload Workbook
+
+When you no longer need a `Workbook`, you can call the `disposeUnit` method on the API instance to unload it.
+
+```typescript
+const activeWorkbook = univerAPI.getActiveWorkbook()
+const unitId = activeWorkbook && activeWorkbook.getId()
+if(unitId){
+  univerAPI.disposeUnit(unitId)
+}
+```
+
+## Worksheet
+
+Worksheets store table data, worksheets belong to the workbook.
+
+A workbook can contain multiple worksheets, and the names of worksheets in the same workbook cannot be duplicated.
+
+The `subUnitId` can be used to uniquely identify a sheet in a workbook.
+
+### Get Worksheets
+
+Get all sheets in a sheet
+```typescript
+const activeWorkbook = univerAPI.getActiveWorkbook();
+const sheets = activeWorkbook.save().sheets;
+```
+
+Get Active Worksheet
+
+```typescript
+const sheet = univerAPI.getActiveWorkbook().getActiveSheet();
+  ```
+
+### Get Worksheet Data
+
+```typescript
+const activeWorkbook = univerAPI.getActiveWorkbook();
+const snapshot = activeWorkbook.save()
+const sheet1 = Object.values(snapshot.sheets).find((sheet) => {
+  return sheet.name === 'Sheet1'
+})
+```
+
+### Create a Worksheet
+
+When creating a workbook, if no parameters are passed, a worksheet will be automatically created.
+
+The following example shows how to create a worksheet using the `Workbook.create` method.
+
+### Remove Worksheet
+
+Remove Worksheet by worksheet id
+
+```typescript
+import { RemoveSheetCommand } from '@univerjs/sheets'
+
+const sheetId = 'SheetId';
+univerAPI.executeCommand(RemoveSheetCommand.id, { subUnitId: sheetId });
+```
+
+### Activate Worksheet
+
+To activate a worksheet, you need to know the workbook id and the sheet id.
+
+```typescript
+import { SetWorksheetActiveOperation } from '@univerjs/sheets'
+
+const workbookId = 'WorkbookId';
+const sheetId = 'SheetId';
+univerAPI.executeCommand(SetWorksheetActiveOperation.id, { unitId: workbookId, subUnitId: sheetId });
+```
+
+## Core Features
+
+### [Permission](/guides/sheets/features/core/permission)
+
+### [Formula](/guides/sheets/features/core/formula)
+
+### [Row and Column](/guides/sheets/features/core/row-column)
+
+### [Range](/guides/sheets/features/core/range-selection#range)
+
+### [Selection](/guides/sheets/features/core/range-selection#selection)
+
+### [Cell](/guides/sheets/features/core/range-selection#selection)
+
+### [Freeze](/guides/sheets/facade/freeze)
+
+### [Integrating Custom Components into Univer](/guides/sheets/facade/dom)
+
+## Server-Related Features
+
+<ServerNotice />
+
+### Import XLSX
+
+To import via API, use the [Server Version of the Facade API](/guides/sheets/getting-started/facade#use-with-the-univer-server) to call the features provided by the [import/export plugin](/guides/sheets/features/import-export). Make sure to include the necessary dependencies before use.
+
+#### Import XLSX and Get `unitId` <a id="import-xlsx-and-get-unitid" />
+
+In a collaborative environment, each workbook has a unique `unitId`. Use the API `importXLSXToUnitId` to pass in the `file` parameter and return `unitId`, which can be used to access the workbook. The `file` parameter can be a File object or a URL to a remote file.
+
+```typescript
+univerAPI.importXLSXToUnitId(file).then((id)=>{
+  console.log(id)
+})
+```
+
+#### Import XLSX and Get Workbook Data
+
+When using the import XLSX capability separately in a non-collaborative environment, you can use the API `importXLSXToSnapshot` to return the workbook data in the IWorkbookData format.
+
+```typescript
+univerAPI.importXLSXToSnapshot(file).then((data)=>{
+  console.log(data)
+})
+```
+
+### Export XLSX
+
+To export via API, use the [Server Version of the Facade API](/guides/sheets/getting-started/facade#use-with-the-univer-server) to call the features provided by the [import/export plugin](/guides/sheets/features/import-export). Make sure to include the necessary dependencies before use.
+
+#### Export XLSX via `unitId`
+
+Use the API `exportXLSXByUnitId` to pass in the `unitId` parameter and return an `File` object. You can use `downloadFile` to download the file or process it further.
+
+```typescript
+import { downloadFile } from '@univerjs-pro/exchange-client';
+univerAPI.exportXLSXByUnitId(unitId).then((file)=>{
+  console.log(file);
+  downloadFile(file, 'univer', 'xlsx'); // download file
+})
+```
+
+### Export XLSX via Workbook Data
+
+Use the API `exportXLSXBySnapshot` to pass in the table data in the `IWorkbookData` format and return a `File` object.
+
+You can refer to [Getting Workbook Data](/guides/sheets/facade/sheet-api#getting-workbook-data) to get the data in the `IWorkbookData` format.
+
+```typescript
+univerAPI.exportXLSXBySnapshot(snapshot).then((file)=>{
+  console.log(file)
+})
+```
+
+## Reference
+
+Please refer to the following API documentation for more information:
+
+- [Facade API](/typedoc/@univerjs/facade/README)

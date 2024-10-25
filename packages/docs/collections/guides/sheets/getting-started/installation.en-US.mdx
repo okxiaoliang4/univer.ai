@@ -1,0 +1,213 @@
+import { Callout, Tabs } from 'nextra/components'
+
+# Installation & Usage
+
+From version 0.5.0, Univer provides the `@univerjs/presets` package, which provides presets for common scenarios to help you quickly build a Univer application without worrying about how to import and configure Univer plugins.
+
+<Callout type="info" emoji="🍃">
+  If you are using Univer for the first time, we recommend starting with Presets. In the following sections, unless otherwise specified, we will assume that you are using Presets. If you are already familiar with Univer and want to import plugins more flexibly (e.g., lazy loading some plugins), you can refer to the [Advanced Installation](/guides/sheets/advanced-installation) section.
+</Callout>
+
+## Using Package Managers
+
+If you are familiar with modern frontend development, using package managers to build applications containing Univer will be a good choice.
+
+We recommend using build tools such as [Vite](https://vitejs.dev/), [esbuild](https://esbuild.github.io/), or [Webpack 5](https://webpack.js.org/) that have good support for ES Modules to build Univer applications. If you are using other build tools like Webpack 4, you may require some additional configurations. For more information, please refer to [Read More](/guides/quickstart#read-more) and the [Troubleshooting](/guides/sheets/troubleshooting).
+
+### Installation
+
+Choose your package manager to install `@unvierjs/presets`:
+
+<Tabs items={['pnpm', 'npm', 'yarn']}>
+  <Tabs.Tab label="pnpm">
+    ```shell
+    pnpm add @univerjs/presets
+    ```
+  </Tabs.Tab>
+  <Tabs.Tab label="npm">
+    ```shell
+    npm install @univerjs/presets
+    ```
+  </Tabs.Tab>
+  <Tabs.Tab label="yarn">
+    ```shell
+    yarn add @univerjs/presets
+    ```
+  </Tabs.Tab>
+</Tabs>
+
+### Usage
+
+With just a few lines of code, you can start a spreadsheet application and load the basic functionality of a spreadsheet:
+
+```typescript
+import { LocaleType, LogLevel } from '@univerjs/core';
+import { defaultTheme } from '@univerjs/design';
+import { createUniver } from '@univerjs/presets';
+import { UniverSheetsBasicPreset } from '@univerjs/presets/sheets/sheets-basic';
+import { enUS } from '@univerjs/presets/sheets/sheets-basic/en-US';
+
+const { univerAPI } = createUniver({
+    locale: LocaleType.EN_US,
+    theme: defaultTheme,
+    presets: [
+        UniverSheetsBasicPreset({ locales: { enUS }, container: 'app' }),
+    ],
+});
+
+univerAPI.createUniverSheet({ name: 'Test Sheet' });
+```
+
+### Update
+
+If you are using pnpm, you can use the following command to update all plugins:
+
+```shell
+pnpm update "@univerjs/presets" @latest
+```
+
+## Import by a `<script>` Tag
+
+If you are not using a package manager, you can also import Univer via a `<script>` tag.
+
+### Example
+
+Current mainstream CDN service providers (such as jsDelivr and unpkg) support Univer's UMD build, and you can include these resources in your HTML file:
+
+```html
+<head>
+  <script src="https://unpkg.com/@univerjs/umd/lib/univer.full.umd.js"></script>
+  <script src="https://unpkg.com/@univerjs/umd/lib/locale/en-US.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/@univerjs/umd/lib/univer.css">
+</head>
+<body>
+  <div id="app"></div>
+
+  <script>
+    var {
+      UniverCore,
+      UniverDesign,
+      UniverEngineRender,
+      UniverEngineFormula,
+      UniverDocs,
+      UniverDocsUi,
+      UniverUi,
+      UniverSheets,
+      UniverSheetsUi,
+      UniverSheetsNumfmt,
+      UniverSheetsFormula,
+      UniverFacade,
+    } = window
+
+    var univer = new UniverCore.Univer({
+      theme: UniverDesign.defaultTheme,
+      locale: UniverCore.LocaleType.EN_US,
+      locales: {
+        [UniverCore.LocaleType.EN_US]: UniverUMD['en-US'],
+      },
+    });
+
+    univer.registerPlugin(UniverEngineRender.UniverRenderEnginePlugin);
+    univer.registerPlugin(UniverEngineFormula.UniverFormulaEnginePlugin);
+
+    univer.registerPlugin(UniverUi.UniverUIPlugin, {
+      container: "app",
+    });
+
+    univer.registerPlugin(UniverDocs.UniverDocsPlugin);
+    univer.registerPlugin(UniverDocsUi.UniverDocsUIPlugin);
+
+    univer.registerPlugin(UniverSheets.UniverSheetsPlugin);
+    univer.registerPlugin(UniverSheetsUi.UniverSheetsUIPlugin);
+    univer.registerPlugin(UniverSheetsNumfmt.UniverSheetsNumfmtPlugin);
+    univer.registerPlugin(UniverSheetsFormula.UniverSheetsFormulaPlugin);
+
+    univer.createUnit(UniverCore.UniverInstanceType.UNIVER_SHEET, {})
+
+    const univerAPI = UniverFacade.FUniver.newAPI(univer)
+  </script>
+</body>
+```
+
+`univerAPI` is the API object that you can use to interact with Univer.
+
+### Specifying Versions
+
+Both unpkg and jsDeliver support specifying specific versions of resources. For example, if you want to use version 0.1.16 of Univer, you only need to add `@<version>` to the URL to specify the version:
+
+```diff
+- https://unpkg.com/@univerjs/umd/lib/univer.full.umd.js
++ https://unpkg.com/@univerjs/umd@0.1.16/lib/univer.full.umd.js
+```
+
+## Getting Started: Loading, modifying and storing data
+
+In the previous section, you have already created a Univer instance and an empty spreadsheet. However, in most cases, you will likely need to load existing data into Univer. This section will explain how to load data into Univer and retrieve data from it.
+
+### Loading Data
+
+By calling the `createUniverSheet` method of `univerAPI`, you can create a new `Workbook` instance. The first parameter of the method is an object containing the data of the `Workbook`, which should conform to the `IWorkbookData` interface.
+
+```typescript
+import { IWorkbookData, UniverInstanceType } from "@univerjs/core";
+
+const data: IWorkbookData = {
+  id: 'test',
+  sheets: {
+    sheet1: {
+      id: 'sheet1',
+      name: 'sheet1',
+      cellData: {
+        0: {
+          0: {
+            v: 'Hello Univer!',
+          },
+        },
+
+      },
+      rowCount: 100,
+      columnCount: 100,
+    },
+  },
+  locale: LocaleType.ZH_CN,
+  name: 'Test Workbook',
+  sheetOrder: ['sheet1'],
+};
+const workbook = univerAPI.createUniverSheet(data);
+```
+
+### Modifying Data
+
+You can use the Facade API of Univer to interact with Univer. For example, you can get the currently active sheet and update values in the specified range:
+
+```typescript
+const sheet = univerAPI.getActiveWorkbook().getActiveSheet();
+
+const range = sheet.getRange(0, 0, 1, 1);
+range.setValue(1);
+```
+
+<Callout type="error" emoji="🚨">
+  Univer operates and updates states and data based on a [command system](/guides/sheets/architecture/univer#command-system), so you **must** use commands or the corresponding Facade API to update data properly, rather than directly modifying data. Any operation that directly modifies data in the hope of updating the view will not work as expected.
+</Callout>
+
+### Storing Data
+
+By calling the `save` method of the `workbook`, you can get an `IWorkbookData` object containing the data inside the sheet.
+
+```typescript
+const savedData = univerAPI.getActiveWorkbook().save();
+```
+
+## Next
+
+* [Basic Concepts](/guides/sheets/getting-started/basic-concepts) - Learn about the basic concepts of Univer.
+* [Presets](/guides/sheets/getting-started/presets) - Learn how to use presets to quickly build a Univer application.
+* [Workbook Data Structure](/guides/sheets/getting-started/workbook-data) - Learn how to initialize spreadsheet data.
+* [Features](/guides/sheets/features/code) - Learn about the features of Univer and how to manipulate data.
+
+---
+
+[^1]: https://blog.npmjs.org/post/110924823920/npm-weekly-5
+[^2]: https://pnpm.io/npmrc#auto-install-peers
+[^3]: https://github.com/yarnpkg/yarn/issues/1503

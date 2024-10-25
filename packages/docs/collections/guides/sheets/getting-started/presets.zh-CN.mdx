@@ -1,0 +1,109 @@
+import { Callout } from 'nextra/components'
+import VersionBadge from '@/components/version-badge'
+
+# Presets  <VersionBadge version="0.5.0+" />
+
+从 0.5.0 版本开始，我们为一些常见的场景准备了预置的插件组合以及配置，让你可以立即开始开发 Univer，不用再关心安装、引入 Facade API 和注册插件等细节。
+
+<Callout type="info" emoji="🛸">
+  如果你希望更灵活地引入和配置插件（例如懒加载部分插件，以及使用一些 Presets 不提供的配置项），可以参考 [高级引入方式](/guides/sheets/getting-started/advanced-installation)。
+</Callout>
+
+<Callout type="error">
+TODO: 提供基于包管理器和使用 HTML 的两个 demo
+</Callout>
+
+## 基础电子表格
+
+创建一个简单的电子表格，并引用所有 Univer 提供的第一方功能（插件）。
+
+```js
+import { createUniver, defaultTheme, LocaleType } from '@univerjs/presets';
+import { UniverSheetsBasicPreset } from '@univerjs/presets/sheets/sheets-basic';
+import { zhCN } from '@univerjs/presets/sheets/sheets-basic/zh-CN';
+
+const { univerAPI } = createUniver({
+    locale: LocaleType.ZH_CN,
+    theme: defaultTheme,
+    presets: [
+        UniverSheetsBasicPreset({ locales: { zhCN } }),
+    ],
+});
+
+univerAPI.createUniverSheet({ name: 'Test Sheet' });
+```
+
+在线例子
+
+## 带高级功能的电子表格
+
+使用 Univer 官方提供的高级功能（包含打印、透视表等等），需要引入 `UniverSheetsAdvancedPreset`。
+
+1. 如果你已经取得授权，需要配置授权信息。
+2. 如果你已经部署了服务端，需要配置服务端 endpoint。
+
+```js
+import { createUniver, defaultTheme, LocaleType } from '@univerjs/presets';
+import { UniverSheetsAdvancedPreset } from '@univerjs/presets/sheets/sheets-advanced-features';
+import { zhCN as advancedZhCN } from '@univerjs/presets/sheets/sheets-advanced-features/zh-CN';
+import { UniverSheetsBasicPreset } from '@univerjs/presets/sheets/sheets-basic';
+import { zhCN as basicZhCN } from '@univerjs/presets/sheets/sheets-basic/zh-CN';
+
+const { univerAPI } = createUniver({
+    locale: LocaleType.ZH_CN,
+    theme: defaultTheme,
+    presets: [
+        UniverSheetsBasicPreset({ locales: { zhCN: basicZhCN } }),
+        UniverSheetsAdvancedPreset({ 
+            locales: { zhCN: advancedZhCN }, 
+            universerEndpoint: 'https://dev.univer.plus',
+            license: 'xxx',
+        }),
+    ],
+});
+
+univerAPI.createUniverSheet({ name: 'Test Sheet' });
+```
+
+在线例子
+
+## 带协同编辑功能的电子表格
+
+```js
+import { createUniver, defaultTheme, LocaleType } from '@univerjs/presets';
+import { UniverSheetsAdvancedPreset } from '@univerjs/presets/sheets/sheets-advanced-features';
+import { zhCN as advancedZhCN } from '@univerjs/presets/sheets/sheets-advanced-features/zh-CN';
+import { UniverSheetsBasicPreset } from '@univerjs/presets/sheets/sheets-basic';
+import { zhCN as basicZhCN } from '@univerjs/presets/sheets/sheets-basic/zh-CN';
+import { UniverSheetsCollaborationPreset } from '@univerjs/presets/sheets/sheets-collaboration';
+import { zhCN as collaborationZhCN } from '@univerjs/presets/sheets/sheets-collaboration/zh-CN';
+
+createUniver({
+    locale: LocaleType.ZH_CN,
+    theme: defaultTheme,
+    collaboration: true,
+    presets: [
+        UniverSheetsBasicPreset({ locales: { zhCN: basicZhCN }, collaboration: true }),
+        UniverSheetsAdvancedPreset({ locales: { zhCN: advancedZhCN } }),
+        UniverSheetsCollaborationPreset({ locales: { zhCN: collaborationZhCN } }),
+    ],
+});
+```
+
+在线例子
+
+## 运行在 Node.js 当中的 Univer
+
+请移步 [在 Node.js 上运行 Univer](/guides/sheets/getting-started/node)。
+
+## 在以上 Presets 中启用 Web Worker
+
+Univer 支持在 Web Worker 线程中进行公式和透视表等运算，Presets 也支持基于 Web Worker 的配置，请参考 Presets 仓库的代码：
+
+1. 在基础电子表格中使用 Web Worker
+2. 高级功能使用 Web Worker
+
+## 提交建议
+
+我们非常欢迎你试用 Presets，如果你发现 Presets 无法满足你的配置需求，可以在 [GitHub](https://github.com/dream-num/univer-presets/issues/new) 上向我们提交 Feature Request，我们会综合评估社区的需要有选择性地将更多底层的配置能力开发给 Presets。
+

@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.text-primary {
+  @apply bg-[linear-gradient(263deg,#394071_17.48%,#1B1C2F_67.1%)];
+  @apply bg-clip-text;
+  @apply text-transparent;
+}

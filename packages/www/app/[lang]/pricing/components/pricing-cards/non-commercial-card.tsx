@@ -1,0 +1,149 @@
+import Button from '@/components/button'
+import Slider from '@/components/slider'
+import { ArrowCircleRightSingle, InfoSingle } from '@univerjs/icons'
+import { useMemo, useState } from 'react'
+import CardWrapper from './card-wrapper'
+import nonCommercialImg from './non-commercial.svg'
+import PricingHeader from './pricing-header'
+import SupportList from './support-list'
+import ToggleButton from './toggle-button'
+
+interface IFeature {
+  name: string
+  price: number
+  selected: boolean
+}
+
+export default function NonCommercialCard() {
+  const [count, setCount] = useState(1)
+  const [selectedFeatures, setSelectedFeatures] = useState<IFeature[]>([{
+    name: 'Sheets premium features',
+    price: 1998,
+    selected: true,
+  }, {
+    name: 'Docs premium features',
+    price: 1998,
+    selected: false,
+  }, {
+    name: 'Collabration',
+    price: 1398,
+    selected: false,
+  }])
+
+  const discount = useMemo(() => {
+    if (count <= 3) {
+      return 1
+    }
+    else if (count <= 6) {
+      return 0.9
+    }
+    else if (count <= 10) {
+      return 0.8
+    }
+
+    return 1
+  }, [count])
+
+  const totalPricing = useMemo(() => {
+    return Math.floor(selectedFeatures.reduce((acc, feature) => {
+      return feature.selected ? acc + feature.price : acc
+    }, 0) * count * discount)
+  }, [selectedFeatures, count, discount])
+
+  function handleSelectFeature(feature: IFeature, value: boolean) {
+    setSelectedFeatures(prev => prev.map((item) => {
+      if (item.name === feature.name) {
+        return {
+          ...item,
+          selected: value,
+        }
+      }
+      return item
+    }))
+  }
+
+  return (
+    <CardWrapper>
+      <PricingHeader
+        img={nonCommercialImg}
+        title="Non-commercial"
+        description="Internal and Non-commercial use is defined as an application(s) that will be used for internal or external use where the end-user will not be charged to access the service(s)."
+        discount={discount}
+        pricing={(
+          <strong className="text-[40px]/[1] font-bold">
+            {count <= 10
+              ? (
+                  <span className="text-[40px]/[1]">
+                    $
+                    {totalPricing}
+                  </span>
+                )
+              : (
+                  <span className="text-[28px]/[1]">
+                    Custom Pricing
+                  </span>
+                )}
+          </strong>
+        )}
+      />
+
+      <div className="mb-6 grid h-14 gap-4 text-sm text-gray-500">
+        <p>
+          <span className="inline-flex items-center gap-2">
+            {count <= 10 ? count : `${count - 1}+`}
+            {' '}
+            Named Hostname
+            <InfoSingle className="text-gray-500" />
+          </span>
+        </p>
+
+        <Slider
+          min={0}
+          max={11}
+          value={count}
+          onChange={setCount}
+        />
+      </div>
+
+      <ul className="mb-5 grid gap-4 text-sm">
+        <li className="flex justify-between">
+          <div className="inline-flex items-center gap-2">All basic features</div>
+          <div className="text-gray-500">Free</div>
+        </li>
+        {selectedFeatures.map(feature => (
+          <li key={feature.name} className="flex justify-between">
+            <div className="inline-flex items-center gap-2">
+              {feature.name}
+            </div>
+            <div className="flex items-center gap-2 text-gray-500">
+              <span>
+                $
+                {feature.price}
+              </span>
+              <ToggleButton value={feature.selected} onChange={value => handleSelectFeature(feature, value)} />
+            </div>
+
+          </li>
+        ))}
+      </ul>
+
+      {/* Actions */}
+      <div className="mb-5">
+        <Button className="w-full" type="primary">
+          Contact us
+          {' '}
+          <ArrowCircleRightSingle />
+        </Button>
+      </div>
+
+      <SupportList
+        className="mb-4"
+        list={['Perpetual license', 'Email / Discord Support Issues priority support', '1 year of free upgrades. Subsequent access to the latest version requires renewal at a 40% discount.']}
+      />
+
+      <a className="text-indigo-600 underline">
+        Get your 30-day free trial
+      </a>
+    </CardWrapper>
+  )
+}

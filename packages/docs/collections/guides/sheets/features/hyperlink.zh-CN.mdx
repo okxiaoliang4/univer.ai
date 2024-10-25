@@ -1,0 +1,55 @@
+import { Tabs } from 'nextra/components'
+
+# 超链接
+
+1. 超链接功能可跳转工作表、单元格，支持添加、更新、解析和删除链接。
+2. 支持富文本内插入超链接。
+3. 超链接支持 子表、range/cell、defined-name、标准链接(http,mailto等)。
+
+## 安装
+
+<Tabs items={['pnpm', 'npm']}>
+  <Tabs.Tab label="pnpm">
+    ```shell
+    pnpm add @univerjs/sheets-hyper-link @univerjs/sheets-hyper-link-ui
+    ```
+  </Tabs.Tab>
+  <Tabs.Tab label="npm">
+    ```shell
+    npm install @univerjs/sheets-hyper-link @univerjs/sheets-hyper-link-ui
+    ```
+  </Tabs.Tab>
+</Tabs>
+
+## 引入
+
+```typescript
+import '@univerjs/sheets-hyper-link-ui/lib/index.css';
+
+import { UniverSheetsHyperLinkPlugin } from '@univerjs/sheets-hyper-link';
+import { UniverSheetsHyperLinkUIPlugin } from '@univerjs/sheets-hyper-link-ui';
+```
+
+## 国际化
+
+```typescript
+import { LocaleType, Tools } from '@univerjs/core';
+import SheetsHyperLinkUIZhCN from '@univerjs/sheets-hyper-link-ui/locale/zh-CN';
+
+const univer = new Univer({
+  theme: defaultTheme,
+  locale: LocaleType.ZH_CN,
+  locales: {
+    [LocaleType.ZH_CN]: Tools.deepMerge(
+      SheetsHyperLinkUIZhCN
+    ),
+  },
+});
+```
+
+## 注册
+
+```typescript
+univer.registerPlugin(UniverSheetsHyperLinkPlugin);
+univer.registerPlugin(UniverSheetsHyperLinkUIPlugin);
+```

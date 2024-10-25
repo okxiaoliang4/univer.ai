@@ -1,0 +1,45 @@
+import { clsx } from '@/utils/clsx'
+
+interface IProps {
+  level: 'h1' | 'h2'
+  align?: 'left' | 'center'
+  className?: string
+  children: React.ReactNode
+  description?: React.ReactNode
+}
+
+export default function Title(props: IProps) {
+  const { level, align = 'center', className, children, description } = props
+
+  const Heading = level as keyof JSX.IntrinsicElements
+
+  return (
+    <div className={clsx('mx-auto', className)}>
+      <Heading
+        className={clsx(`
+          mx-auto text-primary
+
+          xl:text-[52px]
+        `, {
+          'mb-6': description,
+          'text-4xl/[1.25] font-bold xl:text-[52px]/[1.25]': level === 'h1',
+          'text-2xl/[1.5] font-semibold xl:text-5xl/[1.5]': level === 'h2',
+          'text-center': align === 'center',
+        })}
+      >
+        {children}
+      </Heading>
+      {description && (
+        <p
+          className={`
+            mx-auto text-center text-lg text-gray-500
+
+            xl:max-w-[824px]
+          `}
+        >
+          {description}
+        </p>
+      )}
+    </div>
+  )
+}

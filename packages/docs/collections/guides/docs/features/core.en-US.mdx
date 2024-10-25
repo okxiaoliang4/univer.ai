@@ -1,0 +1,151 @@
+import { Tabs } from 'nextra/components'
+import VersionBadge from '@/components/version-badge'
+
+# Core Features
+
+The Core package and Doc-related Base packages provide the basic capabilities and core functions required by Univer Doc. For example, engine-render provides the typesetting and rendering of Doc documents, engine-formula provides the computing power of formulas, UI provides basic UI components, design provides basic style design, and doc and doc-ui implement most of the functions of Univer Doc.
+
+## Features
+
+At present, the core functions of Univer Doc mainly include:
+
+- Document Rendering: Supports rendering of Univer documents and drawing of cursors and selections.
+- **Document typesetting**: Support full-text typesetting, including paragraph setting, paragraph spacing, paragraph alignment, indentation and hanging etc., as well as the ability to typeset in paragraphs, punctuation extrusion, punctuation hanging, puppet spacing, Western word hyphenation, etc.
+- **Formula Calculation**: Supports the addition and calculation of Univer formulas (in development).
+- **Table capability**: Support inserting basic tables and editing tables, adding and deleting row operations, editing cells, etc.
+- **Document Flavor**: Univer Doc not only supports traditional documents like word (including pagination, headers, footers, etc.), but also supports modern document styles like Notion, in which there is no pagination, and supports the insertion of official and third-party block plug-ins (planned).
+- **Header and footer**: Support inserting header footer and editing header footer content, can distinguish between Home and odd and even pages, etc., only **Traditional Documents** support.
+- **List Function**: Support the insertion and editing of order, bullet lists and task lists, support the indentation and indentation of lists, etc.
+- **Plug-in system**: Support plug-in system, you can customize plug-ins, such as formula plug-ins, picture plug-ins, chart plug-ins, etc., which is also one of Univer's core architecture capabilities.
+
+## Installation
+
+<Tabs items={['pnpm', 'npm']}>
+  <Tabs.Tab label="pnpm">
+    ```shell
+    pnpm add @univerjs/core @univerjs/design @univerjs/docs @univerjs/docs-ui @univerjs/engine-formula @univerjs/engine-render @univerjs/ui
+    ```
+  </Tabs.Tab>
+  <Tabs.Tab label="npm">
+    ```shell
+    npm install @univerjs/core @univerjs/design @univerjs/docs @univerjs/docs-ui @univerjs/engine-formula @univerjs/engine-render @univerjs/ui
+    ```
+  </Tabs.Tab>
+</Tabs>
+
+## Import
+
+```typescript
+import "@univerjs/design/lib/index.css";
+import "@univerjs/ui/lib/index.css";
+import "@univerjs/docs-ui/lib/index.css";
+
+import { Univer } from "@univerjs/core";
+import { defaultTheme } from "@univerjs/design";
+
+import { UniverFormulaEnginePlugin } from "@univerjs/engine-formula";
+import { UniverRenderEnginePlugin } from "@univerjs/engine-render";
+
+import { UniverUIPlugin } from "@univerjs/ui";
+
+import { UniverDocsPlugin } from "@univerjs/docs";
+import { UniverDocsUIPlugin } from "@univerjs/docs-ui";
+```
+
+## Internationalization
+
+```typescript
+import { LocaleType, Tools } from '@univerjs/core';
+import DesignEnUS from '@univerjs/design/locale/en-US';
+import DocsUIEnUS from '@univerjs/docs-ui/locale/en-US';
+import SheetsEnUS from '@univerjs/sheets/locale/en-US';
+import SheetsUIEnUS from '@univerjs/sheets-ui/locale/en-US';
+import UIEnUS from '@univerjs/ui/locale/en-US';
+
+const univer = new Univer({
+  theme: defaultTheme,
+  locale: LocaleType.EN_US,
+  locales: {
+    [LocaleType.EN_US]: Tools.deepMerge(
+      DesignEnUS,
+      DocsUIEnUS,
+      UIEnUS
+    ),
+  },
+});
+```
+
+## Register
+
+```typescript
+univer.registerPlugin(UniverRenderEnginePlugin);
+univer.registerPlugin(UniverFormulaEnginePlugin);
+
+univer.registerPlugin(UniverUIPlugin, {
+  container: 'app',
+  footer: false,
+});
+
+univer.registerPlugin(UniverDocsPlugin);
+univer.registerPlugin(UniverDocsUIPlugin, {
+  container: 'univerdoc',
+  layout: {
+    docContainerConfig: {
+      innerLeft: false,
+    },
+  },
+});
+
+univer.createUnit(UniverInstanceType.UNIVER_DOC, {});
+```
+
+## Configuration
+
+### `@univerjs/core`
+
+`@univerjs/core` provides some configuration options that can be used to configure the theme, internationalization, etc.
+
+```typescript
+new Univer({
+  theme: IStyleSheet;
+  locale: LocaleType;
+  locales: ILocales;
+  logLevel?: LogLevel;
+});
+```
+
+For a complete list of configuration options, see [IUniverConfig](https://github.com/dream-num/univer/blob/dev/packages/core/src/univer.ts#L57-L63).
+
+### `@univerjs/ui`
+
+`@univerjs/ui` provides some configuration options that can be used to configure the basic layout.
+
+```typescript
+univer.registerPlugin(UniverUIPlugin, {
+  container?: string | HTMLElement;
+
+  header?: boolean;
+  footer?: boolean;
+  contextMenu?: boolean;
+});
+```
+
+* `container` - Container element, can be a string or DOM element.
+* `header` - Whether to display the header.
+* `toolbar` - Whether to display the header toolbar. <VersionBadge version="0.2.0+" />
+* `footer` - Whether to display the footer.
+* `contextMenu` - Whether to display the right-click menu.
+
+## Notes
+
+- Header and footer are only supported for traditional documents, so you need to set `documentFlavor` to `DocumentFlavor.TRADITIONAL`. as follows:
+
+```typescript
+const univerDocData = {
+  // ...
+  documentStyle: {
+    // ...
+    documentFlavor: DocumentFlavor.TRADITIONAL,
+  },
+}
+```
