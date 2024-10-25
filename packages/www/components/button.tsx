@@ -1,4 +1,5 @@
 import { clsx } from '@/utils/clsx'
+import { useRouter } from 'next/navigation'
 
 interface IProps {
   className?: string
@@ -6,10 +7,19 @@ interface IProps {
   children: React.ReactNode
 
   type?: 'primary'
+
+  href?: string
 }
 
 export default function Button(props: IProps) {
-  const { className, children, type } = props
+  const { className, children, type, href } = props
+  const router = useRouter()
+
+  function handleClick() {
+    if (href) {
+      router.push(href)
+    }
+  }
 
   return (
     <button
@@ -24,6 +34,7 @@ export default function Button(props: IProps) {
         },
       )}
       type="button"
+      onClick={handleClick}
     >
       {children}
     </button>

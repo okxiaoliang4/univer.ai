@@ -6,10 +6,13 @@ import Container from '@/components/container'
 import Title from '@/components/title'
 import { ArrowCircleRightSingle, RoundnessSingle } from '@univerjs/icons'
 import Image from 'next/image'
+import { useParams } from 'next/navigation'
 import backgroundImg from './background.svg'
 import previewSheetImg from './preview-sheet.svg'
 
 export default function Hero() {
+  const params = useParams()
+
   return (
     <section
       className={`
@@ -53,7 +56,7 @@ export default function Hero() {
               </Title>
 
               <div className="flex justify-center gap-4">
-                <Button type="primary">
+                <Button type="primary" href={`/${params.lang}/quick-guide`}>
                   Get Univer for free
                   {' '}
                   <ArrowCircleRightSingle />

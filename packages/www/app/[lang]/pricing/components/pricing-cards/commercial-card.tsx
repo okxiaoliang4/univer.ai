@@ -1,6 +1,8 @@
 import Button from '@/components/button'
 import Slider from '@/components/slider'
+import Tooltip from '@/components/tooltip'
 import { ArrowCircleRightSingle, InfoSingle } from '@univerjs/icons'
+import Link from 'next/link'
 import { useMemo, useState } from 'react'
 import CardWrapper from './card-wrapper'
 import commercialImg from './commercial.svg'
@@ -107,7 +109,9 @@ export default function CommercialCard() {
             {count <= 10 ? count * 5 : `${(count - 1) * 5}+`}
             {' '}
             Named Hostnames
-            <InfoSingle className="text-gray-500" />
+            <Tooltip content="Each production server hostname and/or named mobile/desktop application that univer will be deployed to requires separate licensing, with hostname examples such as: www.univer.com, www.univer.ai, sub1.univer.com, sub2.univer.com." width="300px">
+              <InfoSingle className="text-gray-500" />
+            </Tooltip>
           </span>
         </p>
 
@@ -155,9 +159,9 @@ export default function CommercialCard() {
         list={['Annual subscription fees are required', 'Email / Discord Support Issues priority support']}
       />
 
-      <a className="text-indigo-600 underline">
+      <Link className="text-indigo-600 underline" href="https://univer.ai/pro/license">
         Get your 30-day free trial
-      </a>
+      </Link>
     </CardWrapper>
   )
 }

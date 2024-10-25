@@ -14,6 +14,7 @@ import logoImg from './logo.svg'
 
 export default function Footer() {
   const params = useParams()
+  const { lang } = params
   const currentYear = new Date().getFullYear()
 
   return (
@@ -64,7 +65,11 @@ export default function Footer() {
             </Title>
 
             {/* Actions */}
-            <Button className="relative left-1/2 mb-14 -translate-x-1/2" type="primary">
+            <Button
+              className="relative left-1/2 mb-14 -translate-x-1/2"
+              type="primary"
+              href={`/${lang}/quick-guide`}
+            >
               Get started — for free
             </Button>
 
@@ -82,7 +87,7 @@ export default function Footer() {
                     {link.children.map(child => (
                       <li key={child.title}>
                         <Link
-                          href={typeof child.href === 'function' ? child.href((params.lang ?? '').toString()) : child.href}
+                          href={typeof child.href === 'function' ? child.href((lang ?? '').toString()) : child.href}
                         >
                           {child.title}
                         </Link>

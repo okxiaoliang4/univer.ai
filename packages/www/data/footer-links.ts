@@ -8,28 +8,28 @@ export default [{
     href: (lang: string) => `/${lang}/workspace`,
   }, {
     title: 'ClipSheet',
-    href: '/clipsheet',
+    href: (lang: string) => `/${lang}/clipsheet`,
   }],
 }, {
   title: 'Community',
   children: [{
     title: 'Obsidian',
-    href: '/',
+    href: 'https://obsidian.md/plugins?id=univer',
   }, {
     title: 'VSCode',
-    href: '/',
-  }, {
-    title: 'Chart',
-    href: '/',
+    href: 'https://marketplace.visualstudio.com/items?itemName=Univer.univer',
+  // }, {
+  //   title: 'Chart',
+  //   href: '/',
   }],
 }, {
   title: 'Resources',
   children: [{
-    title: 'Guide',
-    href: '/',
+    title: 'Guides',
+    href: 'https://docs.univer.ai',
   }, {
     title: 'API',
-    href: '/',
+    href: (lang: string) => `https://docs.univer.ai/${lang}/introduction`,
   }, {
     title: 'Changelog',
     href: (lang: string) => `/${lang}/changelog`,
@@ -38,7 +38,7 @@ export default [{
     href: (lang: string) => `/${lang}/icons`,
   }, {
     title: 'Blog',
-    href: '/',
+    href: (lang: string) => `https://docs.univer.ai/${lang}/blog/hyphenation`,
   }, {
     title: 'Examples',
     href: '/',
@@ -47,7 +47,7 @@ export default [{
   title: 'Company',
   children: [{
     title: 'Pricing',
-    href: '/pricing',
+    href: (lang: string) => `/${lang}/pricing`,
   }, {
     title: 'Terms and Conditions',
     href: (lang: string) => `/${lang}/legal/terms-and-conditions`,

@@ -2,7 +2,9 @@ import type { Metadata } from 'next'
 import process from 'node:process'
 import Container from '@/components/container'
 import PageHeader from '@/components/page-header'
+import { ArrowCircleRightSingle } from '@univerjs/icons'
 import dayjs from 'dayjs'
+import Link from 'next/link'
 import { MDXRemote } from 'next-mdx-remote/rsc'
 import { Octokit } from 'octokit'
 
@@ -22,7 +24,8 @@ export default async function Page() {
       'X-GitHub-Api-Version': '2022-11-28',
     },
   })
-  const releases = resp.data
+
+  const releases = resp.data?.slice(0, 10)
 
   return (
     <main>
@@ -104,6 +107,17 @@ export default async function Page() {
             </section>
           ))}
         </section>
+
+        <footer className="mx-auto mb-24 flex max-w-[1053px] justify-end gap-9">
+          <Link
+            className="flex items-center gap-2 text-indigo-700 underline"
+            href="https://github.com/dream-num/univer/releases"
+          >
+            Click here to view the full changelog
+            {' '}
+            <ArrowCircleRightSingle />
+          </Link>
+        </footer>
       </Container>
     </main>
   )

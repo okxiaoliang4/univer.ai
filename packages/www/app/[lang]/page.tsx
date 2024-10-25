@@ -2,7 +2,6 @@ import type { Metadata } from 'next'
 import getSotries from '@/articles/customer-stories/data'
 import Container from '@/components/container'
 import LabelButton from '@/components/label-button'
-
 import Title from '@/components/title'
 import CommonUse from './components/common-use'
 import CustomerStories from './components/customer-stories'
@@ -123,7 +122,7 @@ export default function Page() {
           <section className="mx-auto max-w-[860px]">
             <Title className="mb-14" level="h2">See what our users say about us</Title>
 
-            <div>123123</div>
+            {/* <div>123123</div> */}
           </section>
         </section>
       </Container>

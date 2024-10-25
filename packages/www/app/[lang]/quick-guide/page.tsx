@@ -15,7 +15,9 @@ interface IProps {
   }>
 }
 
-export default function Page(_props: IProps) {
+export default async function Page(props: IProps) {
+  const { lang } = await props.params
+
   return (
     <main>
       <PageHeader
@@ -50,14 +52,14 @@ export default function Page(_props: IProps) {
             <li>
               Follow our
               {' '}
-              <Link href="/">installation and integration</Link>
+              <Link href={`https://docs.univer.ai/${lang}/guides/sheets`}>installation and integration</Link>
               {' '}
               guide to add Univer to your project.
             </li>
             <li>
               Learn how to modify Univer using APIs to tailor spreadsheets, documents, and slides to meet your business requirements.
               {' '}
-              <Link href="/">Learn more</Link>
+              <Link href={`https://docs.univer.ai/${lang}/api`}>Learn more</Link>
               .
             </li>
             <li>
@@ -177,13 +179,13 @@ export default function Page(_props: IProps) {
           >
             You will need to
             {' '}
-            <Link href="/">purchase a license</Link>
+            <Link href={`/${lang}/pricing`}>purchase a license</Link>
             {' '}
             to remove the usage restrictions on these features.
             <br />
             If your project does not require these features, you can try
             {' '}
-            <Link href="/">Univer OSS</Link>
+            <Link href="https://github.com/dream-num/univer">Univer OSS</Link>
             .
           </p>
         </section>

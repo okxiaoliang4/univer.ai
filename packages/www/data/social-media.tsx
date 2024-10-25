@@ -1,4 +1,5 @@
-import { DiscordFillSingle, GithubSingle40, TwitterFillSingle, WechatSingle40, YoutubeFillSingle, ZhihuFillSingle } from '@univerjs/icons'
+// import { DiscordFillSingle, GithubSingle40, TwitterFillSingle, WechatSingle40, YoutubeFillSingle, ZhihuFillSingle } from '@univerjs/icons'
+import { DiscordFillSingle, GithubSingle40, TwitterFillSingle, YoutubeFillSingle } from '@univerjs/icons'
 
 export default [{
   title: 'GitHub',
@@ -16,12 +17,12 @@ export default [{
   title: 'YouTube',
   href: 'https://www.youtube.com/@dreamNum',
   icon: <YoutubeFillSingle />,
-}, {
-  title: 'Zhihu',
-  href: '/',
-  icon: <ZhihuFillSingle />,
-}, {
-  title: 'WeChat Work',
-  href: '/',
-  icon: <WechatSingle40 />,
+// }, {
+//   title: 'Zhihu',
+//   href: '/',
+//   icon: <ZhihuFillSingle />,
+// }, {
+//   title: 'WeChat Work',
+//   href: '/',
+//   icon: <WechatSingle40 />,
 }]

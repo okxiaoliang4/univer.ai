@@ -33,7 +33,7 @@ const navigation: NavigationType[] = [{
     title: 'Univer SDK',
     children: [{
       title: 'Get Started',
-      href: '/',
+      href: (lang: string) => `/${lang}/quick-guide`,
       icon: <Icon Component={Dashboard} />,
     }, {
       title: 'All Features',
@@ -41,11 +41,11 @@ const navigation: NavigationType[] = [{
       icon: <Icon Component={Features} />,
     }, {
       title: 'Uses',
-      href: '/',
+      href: (lang: string) => `/${lang}/customer-stories`,
       icon: <Icon Component={Uses} />,
     }, {
       title: 'Open Source',
-      href: '/',
+      href: 'https://github.com/dream-num/univer',
       icon: <Icon Component={OpenSource} />,
     }],
   }, {
@@ -56,22 +56,22 @@ const navigation: NavigationType[] = [{
       href: (lang: string) => `/${lang}/workspace`,
     }, {
       title: 'Online Use',
-      href: '/',
+      href: 'https://space.univer.ai/home',
       icon: <Icon Component={Network} />,
     }],
   }, {
     title: 'ClipSheet',
     children: [{
       title: 'Introduction',
-      href: '/',
+      href: (lang: string) => `/${lang}/clipSheet`,
       icon: <Icon Component={DataFlow} />,
     }, {
       title: 'Get ClipSheet',
-      href: '/',
+      href: 'https://chromewebstore.google.com/detail/univer-clipsheet-ai-drive/mbcpbomfebacllmjjefeifejbbibbope',
       icon: <Icon Component={Chrome} />,
     }, {
       title: 'Tutorial',
-      href: '/',
+      href: 'https://www.youtube.com/@UniverClipsheet',
       icon: <Icon Component={Tutorials} />,
     }],
   }],
@@ -85,7 +85,7 @@ const navigation: NavigationType[] = [{
       icon: <Icon Component={Examples} />,
     }, {
       title: 'Univer Icons',
-      href: '/icons',
+      href: (lang: string) => `/${lang}/icons`,
       icon: <Icon Component={Icons} />,
     }, {
       title: 'Performance Report',
@@ -97,7 +97,7 @@ const navigation: NavigationType[] = [{
       icon: <Icon Component={Layers} />,
     }, {
       title: 'Blogs',
-      href: '/',
+      href: (lang: string) => `https://docs.univer.ai/${lang}/blog/hyphenation`,
       icon: <Icon Component={Newspaper} />,
     }, {
       title: 'Roadmap',
@@ -108,11 +108,11 @@ const navigation: NavigationType[] = [{
     title: 'Docs',
     children: [{
       title: 'Guides',
-      href: (lang: string) => `/${lang}/guides/sheets/introduction`,
+      href: (lang: string) => `https://docs.univer.ai/${lang}/introduction`,
       icon: <Icon Component={Guides} />,
     }, {
       title: 'API',
-      href: '/',
+      href: (lang: string) => `https://docs.univer.ai/${lang}/api`,
       icon: <Icon Component={Api} />,
     }, {
       title: 'Changelog',

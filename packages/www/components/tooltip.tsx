@@ -1,3 +1,5 @@
+'use client'
+
 import { clsx } from '@/utils/clsx'
 import { useEffect, useMemo, useRef, useState } from 'react'
 
@@ -33,10 +35,10 @@ export default function Tooltip(props: IProps) {
   }, [placement])
 
   return (
-    <div ref={ref} className="group relative">
+    <span ref={ref} className="group relative">
       {children}
 
-      <div
+      <span
         className={clsx(`
           invisible absolute z-10 rounded-lg bg-black px-2.5 py-1.5 text-xs text-white opacity-0 shadow-lg
           transition-opacity duration-200 easing-in-out
@@ -53,7 +55,7 @@ export default function Tooltip(props: IProps) {
         }}
       >
         {content}
-      </div>
-    </div>
+      </span>
+    </span>
   )
 }

@@ -1,12 +1,17 @@
 import Button from '@/components/button'
 import Tooltip from '@/components/tooltip'
 import { ArrowCircleRightSingle, InfoSingle } from '@univerjs/icons'
+import { useParams } from 'next/navigation'
 import CardWrapper from './card-wrapper'
 import freeImg from './free.svg'
 import PricingHeader from './pricing-header'
 import SupportList from './support-list'
 
 export default function FreeCard() {
+  const params = useParams<{ lang: string }>()
+
+  const { lang } = params
+
   return (
     <CardWrapper>
       <PricingHeader
@@ -23,7 +28,9 @@ export default function FreeCard() {
         <p>
           <span className="inline-flex items-center gap-2">
             No limited Named Hostname
-            <InfoSingle className="text-gray-500" />
+            <Tooltip content="Each production server hostname and/or named mobile/desktop application that univer will be deployed to requires separate licensing, with hostname examples such as: www.univer.com, www.univer.ai, sub1.univer.com, sub2.univer.com." width="300px">
+              <InfoSingle className="text-gray-500" />
+            </Tooltip>
           </span>
         </p>
       </div>
@@ -60,7 +67,7 @@ export default function FreeCard() {
 
       {/* Actions */}
       <div className="mb-5">
-        <Button className="w-full">
+        <Button className="w-full" href={`/${lang}/quick-guide`}>
           Start
           {' '}
           <ArrowCircleRightSingle />
