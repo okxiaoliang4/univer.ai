@@ -6,6 +6,7 @@ import Title from '@/components/title'
 import CommonUse from './components/common-use'
 import CustomerStories from './components/customer-stories'
 import Features from './components/features'
+import Feedback from './components/feedback'
 import Hero from './components/hero'
 
 export const metadata: Metadata = {
@@ -122,7 +123,7 @@ export default function Page() {
           <section className="mx-auto max-w-[860px]">
             <Title className="mb-14" level="h2">See what our users say about us</Title>
 
-            {/* <div>123123</div> */}
+            <Feedback />
           </section>
         </section>
       </Container>

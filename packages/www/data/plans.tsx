@@ -1,14 +1,16 @@
+import { MinusSingle } from '@univerjs/icons'
+
 interface IFeatureWithChildren {
   title: string
   children?: {
     title: string
-    limitCaution?: string
+    limitCaution?: string | React.ReactNode
   }[]
 }
 
 interface IFeatureWithoutChildren {
   title: string
-  limitCaution?: string
+  limitCaution?: string | React.ReactNode
 }
 
 interface IPlan {
@@ -111,13 +113,13 @@ const plans: IPlan[] = [{
     title: 'Community support',
   }, {
     title: 'Email support',
-    limitCaution: '-',
+    limitCaution: <MinusSingle />,
   }, {
     title: 'IM support',
-    limitCaution: '-',
+    limitCaution: <MinusSingle />,
   }, {
     title: '2-hours onboarding session',
-    limitCaution: '-',
+    limitCaution: <MinusSingle />,
   }],
 }]
 
