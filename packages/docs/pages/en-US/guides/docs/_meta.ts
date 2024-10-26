@@ -1,3 +1,6 @@
 export default {
-  index: 'Univer 简介',
+  'index': 'Univer Docs',
+  'getting-started': 'Getting Started',
+  'facade': 'Facade API',
+  'features': 'Features',
 }

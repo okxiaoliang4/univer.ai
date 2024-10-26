@@ -19,17 +19,17 @@ We recommend using build tools such as [Vite](https://vitejs.dev/), [esbuild](ht
 Choose your package manager to install `@unvierjs/presets`:
 
 <Tabs items={['pnpm', 'npm', 'yarn']}>
-  <Tabs.Tab label="pnpm">
+  <Tabs.Tab>
     ```shell
     pnpm add @univerjs/presets
     ```
   </Tabs.Tab>
-  <Tabs.Tab label="npm">
+  <Tabs.Tab>
     ```shell
     npm install @univerjs/presets
     ```
   </Tabs.Tab>
-  <Tabs.Tab label="yarn">
+  <Tabs.Tab>
     ```shell
     yarn add @univerjs/presets
     ```
@@ -53,36 +53,6 @@ const { univerAPI } = createUniver({
 
 univerAPI.createUniverDoc({});
 ```
-
-export const code = `const univer = new Univer({
-  theme: defaultTheme,
-  locale: LocaleType.ZH_CN,
-  locales: {
-    [LocaleType.ZH_CN]: zhCN,
-  },
-});
-
-univer.registerPlugin(UniverRenderEnginePlugin);
-univer.registerPlugin(UniverFormulaEnginePlugin);
-
-univer.registerPlugin(UniverUIPlugin, {
-  container: 'app',
-  footer: false,
-});
-
-univer.registerPlugin(UniverDocsPlugin);
-univer.registerPlugin(UniverDocsUIPlugin, {
-  container: 'univerdoc',
-  layout: {
-    docContainerConfig: {
-      innerLeft: false,
-    },
-  },
-});
-
-univer.createUnit(UniverInstanceType.UNIVER_DOC, {});`
-
-<ReactLive code={code} />
 
 ### Update
 

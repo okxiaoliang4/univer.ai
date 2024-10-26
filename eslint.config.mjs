@@ -4,7 +4,6 @@ import eslintPluginReadableTailwind from 'eslint-plugin-readable-tailwind'
 export default antfu({
   typescript: true,
   formatters: true,
-  markdown: true,
   react: true,
   rules: {
     'react-refresh/only-export-components': 'off',

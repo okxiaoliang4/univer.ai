@@ -17,17 +17,17 @@ Univer 从 0.5.0 版本起提供了 `@univerjs/presets` 包，它针对一些常
 选择你所使用的包管理器以安装 `@unvierjs/presets`：
 
 <Tabs items={['pnpm', 'npm', 'yarn']}>
-  <Tabs.Tab label="pnpm">
+  <Tabs.Tab>
     ```shell
     pnpm add @univerjs/presets
     ```
   </Tabs.Tab>
-  <Tabs.Tab label="npm">
+  <Tabs.Tab>
     ```shell
     npm install @univerjs/presets
     ```
   </Tabs.Tab>
-  <Tabs.Tab label="yarn">
+  <Tabs.Tab>
     ```shell
     yarn add @univerjs/presets
     ```
@@ -52,36 +52,6 @@ const { univerAPI } = createUniver({
 
 univerAPI.createUniverDoc({});
 ```
-
-export const code = `const univer = new Univer({
-  theme: defaultTheme,
-  locale: LocaleType.ZH_CN,
-  locales: {
-    [LocaleType.ZH_CN]: zhCN,
-  },
-});
-
-univer.registerPlugin(UniverRenderEnginePlugin);
-univer.registerPlugin(UniverFormulaEnginePlugin);
-
-univer.registerPlugin(UniverUIPlugin, {
-  container: 'app',
-  footer: false,
-});
-
-univer.registerPlugin(UniverDocsPlugin);
-univer.registerPlugin(UniverDocsUIPlugin, {
-  container: 'univerdoc',
-  layout: {
-    docContainerConfig: {
-      innerLeft: false,
-    },
-  },
-});
-
-univer.createUnit(UniverInstanceType.UNIVER_DOC, {});`
-
-<ReactLive code={code} />
 
 ### 更新
 

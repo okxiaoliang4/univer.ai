@@ -13,6 +13,17 @@ export default function Slider(props: IProps) {
 
   const ratio = useMemo(() => ((value - min) / (max - min)) * 100, [value, min, max])
 
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const value = Number(e.target.value)
+    if (value < min || value > max)
+      return
+
+    if (value === 0)
+      return
+
+    onChange(Number(e.target.value))
+  }
+
   return (
     <div className="flex items-center gap-4">
       <input
@@ -30,7 +41,7 @@ export default function Slider(props: IProps) {
         value={value}
         min={min}
         max={max}
-        onChange={e => onChange(Number(e.target.value))}
+        onChange={handleChange}
       />
       {suffix && (
         <label

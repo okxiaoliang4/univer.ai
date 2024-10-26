@@ -6,7 +6,7 @@ export default function VersionBadge(props: IProps) {
   const { version } = props
 
   return (
-    <span className="rounded-sm bg-slate-900 px-2.5 py-0.5 text-white">
+    <span className="rounded-lg bg-slate-700 px-2 py-1 text-xs text-white">
       {version}
     </span>
   )

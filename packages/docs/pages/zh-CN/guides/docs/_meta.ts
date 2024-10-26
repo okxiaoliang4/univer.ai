@@ -1,3 +1,5 @@
 export default {
-  index: 'Univer 简介',
+  'index': 'Univer Docs',
+  'getting-started': '开始使用',
+  'features': '功能',
 }

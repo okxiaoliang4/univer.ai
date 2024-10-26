@@ -1,5 +1,4 @@
-import { Cards, Card, Steps, Tabs } from 'nextra/components'
-import { Callout } from 'nextra/components'
+import { Cards, Callout, Steps, Tabs } from 'nextra/components'
 
 # 快速开始
 
@@ -10,7 +9,7 @@ import { Callout } from 'nextra/components'
 你可以在线体验 Univer，无需安装任何东西。只需点击下面的链接，即可立即开始使用 Univer。
 
 <Cards>
-  <Card
+  <Cards.Card
     icon="📊"
     title={<span className="">Univer Sheet</span>}
     href="https://stackblitz.com/~/github.com/awesome-univer/sheets-vite-demo"
@@ -24,7 +23,7 @@ import { Callout } from 'nextra/components'
 如果你想在本地搭建 Univer 应用，可以使用以下命令从模板创建一个新的 Univer 应用。
 
 <Tabs items={['pnpm', 'npm']}>
-  <Tabs.Tab label="pnpm">
+  <Tabs.Tab>
     执行以下命令需要设备安装有 `nodejs >= 18`, `pnpm >= 7` 和 `git`。
 
     ```shell
@@ -34,7 +33,7 @@ import { Callout } from 'nextra/components'
     pnpm dev
     ```
   </Tabs.Tab>
-  <Tabs.Tab label="npm">
+  <Tabs.Tab>
     执行以下命令需要设备安装有 `nodejs >= 18`, `npm >= 8` 和 `git`。
 
     ```shell
@@ -53,7 +52,7 @@ import { Callout } from 'nextra/components'
 如果你不想使用前端开发工具，可以下载如下 HTML 文件以快速开始：
 
 <Cards>
-  <Card
+  <Cards.Card
     icon="📦"
     title={<span className="">Univer Sheet (HTML)</span>}
     href="https://stackblitz.com/~/github.com/awesome-univer/sheets-vite-demo"
@@ -78,7 +77,7 @@ import { Callout } from 'nextra/components'
   ### 安装并运行客户端 <a id="install-and-run-the-frontend" />
 
   <Tabs items={['pnpm', 'npm', '从单 HTML 文件开始']}>
-    <Tabs.Tab label="pnpm">
+    <Tabs.Tab>
       执行以下命令需要设备安装有 `nodejs >= 18`, `pnpm >= 7` 和 `git`。
 
       ```shell
@@ -95,7 +94,7 @@ import { Callout } from 'nextra/components'
 
       你可以在 [dream-num/univer-pro-sheet-start-kit](https://github.com/dream-num/univer-pro-sheet-start-kit) 找到该模板的源代码。
     </Tabs.Tab>
-    <Tabs.Tab label="npm">
+    <Tabs.Tab>
       执行以下命令需要设备安装有 `nodejs >= 18`, `npm >= 8` 和 `git`。
 
       ```shell

@@ -1,0 +1,5 @@
+export default {
+  quickstart: '快速开始',
+  installation: '安装和引入',
+  i18n: '国际化',
+}

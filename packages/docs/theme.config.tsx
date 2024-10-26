@@ -3,6 +3,7 @@ import Banner from '@/components/banner'
 import Copyright from '@/components/copyright'
 import Head from '@/components/head'
 import Logo from '@/components/logo'
+import MdxPre from '@/components/mdx-pre'
 import TocBackToTop from '@/components/toc-back-to-top'
 import TocTitle from '@/components/toc-title'
 import pkg from './package.json'
@@ -25,6 +26,9 @@ const themeConfig: ThemeConfig = {
   darkMode: false,
   editLink: false,
   feedback: false,
+  components: {
+    pre: MdxPre,
+  },
   color: {
     hue: '180deg',
     saturation: '50%',

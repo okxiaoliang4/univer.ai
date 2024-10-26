@@ -1,4 +1,4 @@
-import { Cards, Card, Callout, Steps, Tabs } from 'nextra/components'
+import { Cards, Callout, Steps, Tabs } from 'nextra/components'
 
 # Quickstart
 
@@ -9,7 +9,7 @@ If you want to get started with Univer as quickly as possible, you've come to th
 You can play with Univer online without installing anything. Just click the link below and start using Univer right away.
 
 <Cards>
-  <Card
+  <Cards.Card
     icon="📊"
     title={<span className="">Univer Sheet</span>}
     href="https://stackblitz.com/~/github.com/awesome-univer/sheets-vite-demo"
@@ -23,7 +23,7 @@ You can play with Univer online without installing anything. Just click the link
 If you prefer to start with a local development environment, you can use the following starter kits to create a new Univer app in just a few seconds.
 
 <Tabs items={['pnpm', 'npm']}>
-  <Tabs.Tab label="pnpm">
+  <Tabs.Tab>
     Run the following command requires your device has `nodejs >= 18`, `pnpm >= 7` and `git` installed.
 
     ```shell
@@ -33,7 +33,7 @@ If you prefer to start with a local development environment, you can use the fol
     pnpm dev
     ```
   </Tabs.Tab>
-  <Tabs.Tab label="npm">
+  <Tabs.Tab>
     Run the following command requires your device has `nodejs >= 18`, `npm >= 8` and `git` installed.
 
     ```shell
@@ -52,7 +52,7 @@ Great job on your first steps with Univer! You've successfully created your firs
 If you prefer not to use frontend development tools, you can download the following HTML file to get started quickly:
 
 <Cards>
-  <Card
+  <Cards.Card
     icon="📦"
     title={<span className="">Univer Sheet (HTML)</span>}
     href="https://unpkg.com/@univerjs/umd/lib/univer.full.umd.js"
@@ -77,7 +77,7 @@ Of course, you may want more than just the basics. If you're looking to add feat
   ### Install and Run the Frontend <a id="install-and-run-the-frontend" />
 
   <Tabs items={['pnpm', 'npm', 'Without package manager']}>
-    <Tabs.Tab label="pnpm">
+    <Tabs.Tab>
       Run the following command requires your device has `nodejs >= 18`, `pnpm >= 7` and `git` installed.
 
       ```shell
@@ -95,7 +95,7 @@ Of course, you may want more than just the basics. If you're looking to add feat
       You can also find the source code for this template at [dream-num/univer-pro-sheet-start-kit](https://github.com/dream-num/univer-pro-sheet-start-kit).
     </Tabs.Tab>
 
-    <Tabs.Tab label="npm">
+    <Tabs.Tab>
       Run the following command requires your device has `nodejs >= 18`, `npm >= 8` and `git` installed.
 
       ```shell

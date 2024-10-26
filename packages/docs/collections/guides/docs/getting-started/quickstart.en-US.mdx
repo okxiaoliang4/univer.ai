@@ -1,4 +1,4 @@
-import { Cards, Card, Tabs } from 'nextra/components'
+import { Cards, Tabs } from 'nextra/components'
 
 # Quickstart
 
@@ -9,7 +9,7 @@ If you want to get started with Univer as quickly as possible, you've come to th
 You can play with Univer online without installing anything. Just click the link below and start using Univer right away.
 
 <Cards>
-  <Card
+  <Cards.Card
     icon="📝"
     title={<span className="">Univer Doc<sup>Beta</sup></span>}
     href="https://stackblitz.com/~/github.com/awesome-univer/docs-vite-demo"
@@ -21,7 +21,7 @@ You can play with Univer online without installing anything. Just click the link
 If you prefer to start with a local development environment, you can use the following starter kits to create a new Univer app in just a few seconds.
 
 <Tabs items={['pnpm', 'npm']}>
-  <Tabs.Tab label="pnpm">
+  <Tabs.Tab>
     Run the following command requires your device has `nodejs >= 18`, `pnpm >= 7` and `git` installed.
 
     ```shell
@@ -31,7 +31,7 @@ If you prefer to start with a local development environment, you can use the fol
     pnpm dev
     ```
   </Tabs.Tab>
-  <Tabs.Tab label="npm">
+  <Tabs.Tab>
     Run the following command requires your device has `nodejs >= 18`, `npm >= 8` and `git` installed.
 
     ```shell

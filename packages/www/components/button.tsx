@@ -1,3 +1,5 @@
+'use client'
+
 import { clsx } from '@/utils/clsx'
 import { useRouter } from 'next/navigation'
 
