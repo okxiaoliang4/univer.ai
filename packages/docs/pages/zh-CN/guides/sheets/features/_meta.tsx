@@ -2,7 +2,6 @@ import TitleTag from '@/components/title-tag'
 
 export default {
   'core': '核心功能',
-  'numfmt': '数字格式',
   'hyperlink': '超链接',
   'floating-images': '浮动图片',
   'find-replace': '查找 & 替换',

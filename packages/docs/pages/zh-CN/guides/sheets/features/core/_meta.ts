@@ -3,6 +3,7 @@ export default {
   'sheet-api': 'Sheet API',
   'permission': '权限控制',
   'formula': '公式',
+  'numfmt': '数字格式',
   'row-col': '行列',
   'range-selection': '范围、选区、单元格',
   'freeze': '冻结',

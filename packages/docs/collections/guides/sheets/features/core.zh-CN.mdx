@@ -1,26 +1,65 @@
-import { Tabs } from 'nextra/components'
+import { Callout, Tabs } from 'nextra/components'
 import VersionBadge from '@/components/version-badge'
 
 # 核心功能
 
-核心功能是实现电子表格的基础功能，包含了 Univer Sheet 的核心功能，如创建工作簿、单元格编辑、单元格选择、公式等。
+| 有付费版本 | 需要接入服务端 | 可用于 Univer on Node.js | 包含的 Preset |
+| - | - | - | - |
+| - | - | ✅ | `preset-sheets-core` |
 
-## 安装
+核心功能是实现电子表格的基础功能，包含了 Univer Sheet 的核心功能，如创建工作簿、单元格编辑、单元格选择、公式、数字格式等。
+
+该功能包含以下插件包：
+
+* [`@univerjs/engine-render`](https://www.npmjs.com/package/@univerjs/engine-render) - 渲染引擎插件
+* [`@univerjs/engine-formula`](https://www.npmjs.com/package/@univerjs/engine-formula) - 公式引擎插件
+* [`@univerjs/ui`](https://www.npmjs.com/package/@univerjs/ui) - 基础UI插件
+* [`@univerjs/docs`](https://www.npmjs.com/package/@univerjs/docs) - docs插件
+* [`@univerjs/docs-ui`](https://www.npmjs.com/package/@univerjs/docs-ui) - docs-UI插件
+* [`@univerjs/sheets`](https://www.npmjs.com/package/@univerjs/sheets) - sheets插件
+* [`@univerjs/sheets-ui`](https://www.npmjs.com/package/@univerjs/sheets-ui) - sheets-UI插件
+* [`@univerjs/sheets-formula`](https://www.npmjs.com/package/@univerjs/sheets-formula) - 公式插件
+* [`@univerjs/sheets-formula-ui`](https://www.npmjs.com/package/@univerjs/sheets-formula-ui) - 公式UI插件
+* [`@univerjs/sheets-numfmt`](https://www.npmjs.com/package/@univerjs/sheets-numfmt) - 数字格式插件
+
+<Callout>
+  TODO: add example
+</Callout>
+
+## Preset 安装
 
 <Tabs items={['pnpm', 'npm']}>
   <Tabs.Tab>
     ```shell
-    pnpm add @univerjs/core @univerjs/design @univerjs/docs @univerjs/docs-ui @univerjs/engine-formula @univerjs/engine-render @univerjs/sheets @univerjs/sheets-formula @univerjs/sheets-formula-ui @univerjs/sheets-ui @univerjs/ui
+    pnpm add @univerjs/core @univerjs/design @univerjs/engine-formula @univerjs/engine-render @univerjs/ui @univerjs/docs @univerjs/docs-ui @univerjs/sheets @univerjs/sheets-ui @univerjs/sheets-formula @univerjs/sheets-formula-ui @univerjs/sheets-numfmt 
     ```
   </Tabs.Tab>
   <Tabs.Tab>
     ```shell
-    npm install @univerjs/core @univerjs/design @univerjs/docs @univerjs/docs-ui @univerjs/engine-formula @univerjs/engine-render @univerjs/sheets @univerjs/sheets-formula @univerjs/sheets-formula-ui @univerjs/sheets-ui @univerjs/ui
+    npm install @univerjs/core @univerjs/design @univerjs/engine-formula @univerjs/engine-render @univerjs/ui @univerjs/docs @univerjs/docs-ui @univerjs/sheets @univerjs/sheets-ui @univerjs/sheets-formula @univerjs/sheets-formula-ui @univerjs/sheets-numfmt
     ```
   </Tabs.Tab>
 </Tabs>
 
-## 引入
+```ts {2-3,10,15}
+import { createUniver, defaultTheme, LocaleType, Tools } from '@univerjs/presets';
+import { UniverSheetsCorePreset } from '@univerjs/presets/preset-sheets-core';
+import sheetsCoreZhCN from '@univerjs/presets/preset-sheets-core/locales/zh-CN';
+
+const { univerAPI } = createUniver({
+    locale: LocaleType.ZH_CN,
+    locales: {
+        zhCN: Tools.deepMerge(
+            {},
+            sheetsCoreZhCN
+        ),
+    },
+    theme: defaultTheme,
+    presets: [
+        UniverSheetsCorePreset(),
+    ]
+});
+```
 
 ```typescript
 import "@univerjs/design/lib/index.css";

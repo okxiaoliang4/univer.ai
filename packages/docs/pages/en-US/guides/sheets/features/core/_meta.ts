@@ -3,6 +3,7 @@ export default {
   'sheet-api': 'Sheet API',
   'permission': 'Permission',
   'formula': 'Formula',
+  'numfmt': 'Number Format',
   'row-col': 'Row & Column',
   'range-selection': 'Range & Selection & Cell',
   'freeze': 'Freeze',

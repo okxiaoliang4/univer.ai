@@ -1,12 +1,25 @@
-import { Tabs } from 'nextra/components'
+import { Callout, Tabs } from 'nextra/components'
 
 # HyperLink
+
+| 有付费版本 | 需要接入服务端 | 可用于 Univer on Node.js | 包含的 Preset |
+| - | - | - | - |
+| - | - | ✅ | `preset-sheets-hyper-link` |
 
 1.	The hyperlink feature allows jumping to worksheets and cells, supporting adding, updating, parsing, and removing links.
 2.	Supports inserting hyperlinks within rich text.
 3.	Hyperlinks support sub-sheets, ranges/cells, defined names, and standard links (http, mailto, etc.).
 
-## Installation
+该功能包含以下插件包：
+
+* [`@univerjs/sheets-hyper-link`](https://www.npmjs.com/package/@univerjs/sheets-hyper-link) - 超链接插件
+* [`@univerjs/sheets-hyper-link-ui`](https://www.npmjs.com/package/@univerjs/sheets-hyper-link-ui) - 超链接 UI 插件
+
+<Callout>
+  TODO: add example
+</Callout>
+
+## Preset Installation
 
 <Tabs items={['pnpm', 'npm']}>
   <Tabs.Tab>
@@ -21,35 +34,128 @@ import { Tabs } from 'nextra/components'
   </Tabs.Tab>
 </Tabs>
 
-## Import
+```ts {3,5,7,9,17,23}
+import { createUniver, defaultTheme, LocaleType, Tools } from '@univerjs/presets';
+import { UniverSheetsCorePreset } from '@univerjs/presets/preset-sheets-core';
+import { UniverSheetsHyperLinkPreset } from '@univerjs/presets/preset-sheets-hyper-link';
+import sheetsCoreZhCN from '@univerjs/presets/preset-sheets-core/locales/zh-CN';
+import SheetsHyperLinkUIZhCN from '@univerjs/presets/preset-sheets-hyper-link/locale/zh-CN';
 
-```typescript
 import '@univerjs/sheets-hyper-link-ui/lib/index.css';
 
-import { UniverSheetsHyperLinkPlugin } from '@univerjs/sheets-hyper-link';
-import { UniverSheetsHyperLinkUIPlugin } from '@univerjs/sheets-hyper-link-ui';
-```
+import '@univerjs/sheets-hyper-link/facade';
 
-## Internationalization
-
-```typescript
-import { LocaleType, Tools } from '@univerjs/core';
-import SheetsHyperLinkUIEnUS from '@univerjs/sheets-hyper-link-ui/locale/en-US';
-
-const univer = new Univer({
-  theme: defaultTheme,
-  locale: LocaleType.EN_US,
-  locales: {
-    [LocaleType.EN_US]: Tools.deepMerge(
-      SheetsHyperLinkUIEnUS
-    ),
-  },
+const { univerAPI } = createUniver({
+    locale: LocaleType.ZH_CN,
+    locales: {
+        zhCN: Tools.deepMerge(
+            {},
+            sheetsCoreZhCN,
+            SheetsHyperLinkUIZhCN 
+        ),
+    },
+    theme: defaultTheme,
+    presets: [
+        UniverSheetsCorePreset(),
+        UniverSheetsHyperLinkPreset()
+    ]
 });
 ```
 
-## Register
+## Advanced Installation
 
-```typescript
+<Tabs items={['pnpm', 'npm']}>
+  <Tabs.Tab>
+    ```shell
+    pnpm add @univerjs/sheets-hyper-link @univerjs/sheets-hyper-link-ui
+    ```
+  </Tabs.Tab>
+  <Tabs.Tab>
+    ```shell
+    npm install @univerjs/sheets-hyper-link @univerjs/sheets-hyper-link-ui
+    ```
+  </Tabs.Tab>
+</Tabs>
+
+```typescript {2-4,6,8,15,20-21}
+import { LocaleType, Tools } from '@univerjs/core';
+import { UniverSheetsHyperLinkPlugin } from '@univerjs/sheets-hyper-link';
+import { UniverSheetsHyperLinkUIPlugin } from '@univerjs/sheets-hyper-link-ui';
+import SheetsHyperLinkUIZhCN from '@univerjs/sheets-hyper-link-ui/locale/zh-CN';
+
+import '@univerjs/sheets-hyper-link-ui/lib/index.css';
+
+import '@univerjs/sheets-hyper-link/facade';
+
+const univer = new Univer({
+  theme: defaultTheme,
+  locale: LocaleType.ZH_CN,
+  locales: {
+    [LocaleType.ZH_CN]: Tools.deepMerge(
+      SheetsHyperLinkUIZhCN
+    ),
+  },
+});
+
 univer.registerPlugin(UniverSheetsHyperLinkPlugin);
 univer.registerPlugin(UniverSheetsHyperLinkUIPlugin);
+```
+## Facade API
+
+### Build/Parse/Jump HyperLink
+
+```typescript
+const workbook = univerAPI.getActiveWorkbook();
+const sheet = workbook.getActiveSheet();
+const range = sheet.getRange(0, 0, 1, 1);
+
+// Create a link to jump to a sheet
+// The returned link: `#gid=sheetId`
+const sheetLink = workbook.createSheetHyperlink(sheet.getSheetId());
+
+// Create a link to jump to a range or cell
+// The returned link: `#gid=sheetId&range=A1`
+const rangeLink = workbook.createSheetHyperlink(sheet.getSheetId(), range.getRange());
+// Or
+const rangeLink = workbook.createSheetHyperlink(
+  sheet.getSheetId(),
+  {
+    startRow: 0,
+    endRow: 0,
+    startColumn: 0,
+    endColumn: 0
+  }
+);
+
+// Parse the link, returning information including the link's name, handler, and type
+const linkInfo = workbook.parseSheetHyperlink('#gid=sheet&range=A1');
+
+// Jump to the link
+linkInfo.handler();
+
+// Or
+workbook.navigateToSheetHyperlink('#gid=sheet&range=A1');
+```
+
+### Manipulating Hyperlinks in Cells
+
+```typescript
+const workbook = univerAPI.getActiveWorkbook();
+const sheet = workbook.getActiveSheet();
+const range = sheet.getRange(0, 0, 1, 1);
+
+// Add a link
+const url = workbook.createSheetHyperlink(sheet.getSheetId());
+const label = '123';
+// If the current cell is not empty, the label can be omitted
+await range.setHyperLink(url, label);
+
+// Query the hyperlink in the current cell
+const links = range.getHyperLinks();
+
+// Update the hyperlink
+range.updateHyperLink(linkId, url, label);
+
+// Remove the hyperlink
+range.cancelHyperLink(linkId);
 ```

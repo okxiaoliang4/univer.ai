@@ -1,42 +1,96 @@
-import { Tabs } from 'nextra/components'
+import { Callout, Tabs } from 'nextra/components'
 
 # 浮动图片
 
+| 有付费版本 | 需要接入服务端 | 可用于 Univer on Node.js | 包含的 Preset |
+| - | - | - | - |
+| - | - | ✅ | `preset-sheets-drawing` |
+
 插入浮动图片，支持拖拽调整大小和位置。
 
-## 安装
+该功能包含以下插件包：
+
+* [`@univerjs/drawing`](https://www.npmjs.com/package/@univerjs/drawing) - 插图插件
+* [`@univerjs/drawing-ui`](https://www.npmjs.com/package/@univerjs/drawing-ui) - 插图 UI 插件
+* [`@univerjs/sheets-drawing`](https://www.npmjs.com/package/@univerjs/sheets-drawing) - 表格插图插件
+* [`@univerjs/sheets-drawing-ui`](https://www.npmjs.com/package/@univerjs/sheets-drawing-ui) - 表格插图 UI 插件
+
+<Callout>
+  TODO: add example
+</Callout>
+
+## Preset 安装
 
 <Tabs items={['pnpm', 'npm']}>
   <Tabs.Tab>
     ```shell
-    pnpm add @univerjs/drawing @univerjs/sheets-drawing @univerjs/drawing-ui @univerjs/sheets-drawing-ui
+    pnpm add @univerjs/drawing @univerjs/drawing-ui @univerjs/sheets-drawing @univerjs/sheets-drawing-ui
     ```
   </Tabs.Tab>
   <Tabs.Tab>
     ```shell
-    npm install @univerjs/drawing @univerjs/sheets-drawing @univerjs/drawing-ui @univerjs/sheets-drawing-ui
+    npm install @univerjs/drawing @univerjs/drawing-ui @univerjs/sheets-drawing @univerjs/sheets-drawing-ui
     ```
   </Tabs.Tab>
 </Tabs>
 
-## 引入
+```ts {3,5,7-8,10,18,24}
+import { createUniver, defaultTheme, LocaleType, Tools } from '@univerjs/presets';
+import { UniverSheetsCorePreset } from '@univerjs/presets/preset-sheets-core';
+import { UniverSheetsDrawingPreset } from '@univerjs/presets/preset-sheets-drawing';
+import sheetsCoreZhCN from '@univerjs/presets/preset-sheets-core/locales/zh-CN';
+import SheetsDrawingUIZhCN from '@univerjs/presets/preset-sheets-drawing/locale/zh-CN';
 
-```typescript
 import '@univerjs/drawing-ui/lib/index.css';
 import '@univerjs/sheets-drawing-ui/lib/index.css';
 
-import { UniverDrawingPlugin } from '@univerjs/drawing';
+import '@univerjs/sheets-drawing-ui/facade';
+
+const { univerAPI } = createUniver({
+    locale: LocaleType.ZH_CN,
+    locales: {
+        zhCN: Tools.deepMerge(
+            {},
+            sheetsCoreZhCN,
+            SheetsDrawingUIZhCN 
+        ),
+    },
+    theme: defaultTheme,
+    presets: [
+        UniverSheetsCorePreset(),
+        UniverSheetsDrawingPreset()
+    ]
+});
+```
+
+## 高级安装
+
+<Tabs items={['pnpm', 'npm']}>
+  <Tabs.Tab>
+    ```shell
+    pnpm add @univerjs/drawing @univerjs/drawing-ui @univerjs/sheets-drawing @univerjs/sheets-drawing-ui
+    ```
+  </Tabs.Tab>
+  <Tabs.Tab>
+    ```shell
+    npm install @univerjs/drawing @univerjs/drawing-ui @univerjs/sheets-drawing @univerjs/sheets-drawing-ui
+    ```
+  </Tabs.Tab>
+</Tabs>
+
+```typescript {2-7,9-10,12,19-20,26-29,32-37}
+import { LocaleType, Tools } from '@univerjs/core';
+import { IImageIoService, UniverDrawingPlugin } from '@univerjs/drawing';
 import { UniverDrawingUIPlugin } from '@univerjs/drawing-ui';
 import { UniverSheetsDrawingPlugin } from '@univerjs/sheets-drawing';
 import { UniverSheetsDrawingUIPlugin } from '@univerjs/sheets-drawing-ui';
-```
-
-## 国际化
-
-```typescript
-import { LocaleType, Tools } from '@univerjs/core';
 import DrawingUIZhCN from '@univerjs/drawing-ui/locale/zh-CN';
 import SheetsDrawingUIZhCN from '@univerjs/sheets-drawing-ui/locale/zh-CN';
+
+import '@univerjs/drawing-ui/lib/index.css';
+import '@univerjs/sheets-drawing-ui/lib/index.css';
+
+import '@univerjs/sheets-drawing-ui/facade';
 
 const univer = new Univer({
   theme: defaultTheme,
@@ -44,28 +98,18 @@ const univer = new Univer({
   locales: {
     [LocaleType.ZH_CN]: Tools.deepMerge(
       DrawingUIZhCN,
-      SheetsDrawingUIZhCN
+      SheetsDrawingUIZhCN,
     ),
   },
 });
-```
 
-## 注册
-
-不使用协同插件时，注册代码如下：
-
-```typescript
+// 不使用协同插件时，注册代码如下：
 univer.registerPlugin(UniverDrawingPlugin);
 univer.registerPlugin(UniverDrawingUIPlugin);
 univer.registerPlugin(UniverSheetsDrawingPlugin);
 univer.registerPlugin(UniverSheetsDrawingUIPlugin);
-```
 
-使用协同插件时，注册代码如下：
-
-```typescript
-import { IImageIoService } from '@univerjs/drawing'
-
+// 使用协同插件时，注册代码如下：
 univer.registerPlugin(UniverDrawingPlugin, {
   override: [[IImageIoService, null]], // 协同插件将会提供该实现
 });
