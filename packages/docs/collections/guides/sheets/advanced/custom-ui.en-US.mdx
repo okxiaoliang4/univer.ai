@@ -14,7 +14,6 @@ First, construct a `controller` class to register menu item commands, menu item 
 
 ```typescript
 // src/plugin/controllers/custom-menu.controller.ts
-@OnLifecycle(LifecycleStages.Steady, CustomMenuController)
 export class CustomMenuController extends Disposable {
   constructor(
     @Inject(Injector) private readonly _injector: Injector,
@@ -276,7 +275,6 @@ For more details, please refer to the [Custom Menu Playground](/playground?title
 Some business components in Univer can be overridden, such as the right-click menu panel, pop-up windows, icons, etc. These components are registered internally in Univer through `ComponentManager`, and you can override the default components by registering components with the same name.
 
 ```diff
-@OnLifecycle(LifecycleStages.Steady, CustomMenuController)
 export class CustomMenuController extends Disposable {
   constructor(
 +   @Inject(ComponentManager) private readonly _componentManager: ComponentManager,

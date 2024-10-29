@@ -14,7 +14,6 @@ import { Callout } from 'nextra/components'
 
 ```typescript
 // src/plugin/controllers/custom-menu.controller.ts
-@OnLifecycle(LifecycleStages.Steady, CustomMenuController)
 export class CustomMenuController extends Disposable {
   constructor(
     @Inject(Injector) private readonly _injector: Injector,
@@ -276,7 +275,6 @@ private _initMenus(): void {
 Univer 中部分业务组件是可以被覆盖的，例如右侧的菜单面板、弹窗、图标等。这些组件在 Univer 的内部经由 `ComponentManager` 进行注册，你可以通过注册同名的组件来覆盖默认的组件。
 
 ```diff
-@OnLifecycle(LifecycleStages.Steady, CustomMenuController)
 export class CustomMenuController extends Disposable {
   constructor(
 +   @Inject(ComponentManager) private readonly _componentManager: ComponentManager,

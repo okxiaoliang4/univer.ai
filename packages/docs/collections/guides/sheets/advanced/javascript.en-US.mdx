@@ -10,7 +10,7 @@ To facilitate development, Univer uses a large number of [TypeScript decorators]
 
 Therefore, we certainly recommend that you use TypeScript first. However, if you are not familiar with TypeScript or are constrained by other reasons, you can also use JavaScript to extend Univer. Of course, this is not an easy task, as you may need to understand the internal mechanism of Univer and how to use JavaScript to implement decorators in TypeScript.
 
-In Univer's documentation, the most common decorators are the parameter decorators provided by `@univerjs/core` and the `OnLifecycle` class decorators. Here we will introduce how to replace these two decorators in JavaScript.
+In Univer's documentation, the most common decorator is the parameter decorators provided by `@univerjs/core`. Here we will introduce how to replace this decorator in JavaScript.
 
 ## Parameter Decorators
 
@@ -43,18 +43,3 @@ export class MyPlugin extends Plugin {
 ```
 
 Reference: https://redi.wendell.fun/docs/javascript
-
-## Class Decorator `OnLifecycle`
-
-The `OnLifecycle` class decorator is used to declare lifecycles. `@univerjs/core` provides the `runOnLifecycle` method to explicitly declare lifecycles in JavaScript. For example:
-
-```diff
-- import { Disposable, LifecycleStages, OnLifecycle } from '@univerjs/core'
-+ import { Disposable, LifecycleStages, runOnLifecycle } from '@univerjs/core'
-
-- @OnLifecycle(LifecycleStages.Steady, MYController)
-export class MYController extends Disposable {
-}
-
-+ runOnLifecycle(LifecycleStages.Steady, MYController)
-```

@@ -380,12 +380,11 @@ First, create a new plugin, and then you can start adding custom formulas.
 2. Create a new `custom-description.controller.ts` under the `controllers` folder to register formula internationalization content and description.
 
     ```typescript
-    import { Disposable, LifecycleStages, Inject, LocaleService, OnLifecycle } from '@univerjs/core';
+    import { Disposable, LifecycleStages, Inject, LocaleService } from '@univerjs/core';
 
     import { FUNCTION_LIST_USER, functionEnUS, functionZhCN } from '../common/custom-function';
     import { IDescriptionService } from '../services/description.service';
 
-    @OnLifecycle(LifecycleStages.Ready, CustomDescriptionController)
     export class CustomDescriptionController extends Disposable {
       constructor(
         @IDescriptionService private readonly _descriptionService: IDescriptionService,
@@ -418,13 +417,12 @@ First, create a new plugin, and then you can start adding custom formulas.
 
     ```typescript
     import { type Ctor } from '@univerjs/core';
-    import { Disposable, LifecycleStages, OnLifecycle } from '@univerjs/core';
+    import { Disposable, LifecycleStages } from '@univerjs/core';
     import type { BaseFunction, IFunctionNames } from '@univerjs/engine-formula';
     import { IFunctionService } from '@univerjs/engine-formula';
 
     import { functionUser } from '../common/custom-function';
 
-    @OnLifecycle(LifecycleStages.Ready, CustomFunctionController)
     export class CustomFunctionController extends Disposable {
       constructor(@IFunctionService private readonly _functionService: IFunctionService) {
         super();
