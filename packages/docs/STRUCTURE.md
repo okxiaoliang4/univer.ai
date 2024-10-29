@@ -1,15 +1,15 @@
 引导部分目录结构
 
 - 开始使用
-  - 快速开始
-  - 安装和基本使用（基于 presets）
+  - 快速开始 (starterkit + presets)
+  - 安装和基本使用（基于 presets，有一些插件不提供 presets）
   - 国际化
   - 工作表数据结构
   - 单元格数据结构
-  - 高级安装方式
   - Univer on Node.js
-- 集成高级功能
-  - 快速开始
+  - 高级安装方式 (plugins) ()
+- 集成 Pro 功能
+  - 快速开始 starterkit + (presets)
   - 安装 Univer 前端
   - 安装 Univer 服务端
     - 通过 Docker 部署
