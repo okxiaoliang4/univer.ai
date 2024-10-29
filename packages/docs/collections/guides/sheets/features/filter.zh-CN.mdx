@@ -1,10 +1,49 @@
-import { Tabs } from 'nextra/components'
+import { Callout, Tabs } from 'nextra/components'
 
 # 筛选
 
+| 有付费版本 | 需要接入服务端 | 可用于 Univer on Node.js | 包含的 Preset |
+| - | - | - | - |
+| ❌ | ❌ | ✅ | `UniverSheetsFilterPreset` |
+
 筛选插件提供了对单元格的筛选功能。
 
-## 安装
+该功能包含以下插件包：
+
+* [`@univerjs/sheets-filter`](https://www.npmjs.com/package/@univerjs/sheets-filter/README) - 筛选插件
+* [`@univerjs/sheets-filter-ui`](https://www.npmjs.com/package/@univerjs/sheets-filter-ui/README) - 筛选 UI 插件
+
+<Callout>
+  TODO: add example
+</Callout>
+
+## Presets 安装
+
+```ts {4-5,13,19}
+import { createUniver, defaultTheme, LocaleType, Tools } from '@univerjs/presets';
+import { UniverSheetsCorePreset } from '@univerjs/presets/preset-sheets-core';
+import sheetsCoreZhCN from '@univerjs/presets/preset-sheets-core/locales/zh-CN';
+import { UniverSheetsFilterPreset } from '@univerjs/presets/preset-sheets-filter';
+import sheetsFilterZhCN from '@univerjs/presets/preset-sheets-filter/locales/zh-CN';
+
+const { univerAPI } = createUniver({
+    locale: LocaleType.ZH_CN,
+    locales: {
+        zhCN: Tools.deepMerge(
+            {},
+            sheetsCoreZhCN,
+            sheetsFilterZhCN 
+        ),
+    },
+    theme: defaultTheme,
+    presets: [
+        UniverSheetsCorePreset(),
+        UniverSheetsFilterPreset(),
+    ],
+});
+```
+
+## 高级安装
 
 <Tabs items={['pnpm', 'npm']}>
   <Tabs.Tab>
@@ -19,20 +58,15 @@ import { Tabs } from 'nextra/components'
   </Tabs.Tab>
 </Tabs>
 
-## 引入
-
-```typescript
-import '@univerjs/sheets-filter-ui/lib/index.css';
-
+```typescript {2-4,6,8,15,20-21}
+import { LocaleType, Tools } from '@univerjs/core';
 import { UniverSheetsFilterPlugin } from '@univerjs/sheets-filter';
 import { UniverSheetsFilterUIPlugin } from '@univerjs/sheets-filter-ui';
-```
-
-## 国际化
-
-```typescript
-import { LocaleType, Tools } from '@univerjs/core';
 import SheetsFilterUIZhCN from '@univerjs/sheets-filter-ui/locale/zh-CN';
+
+import '@univerjs/sheets-filter-ui/lib/index.css';
+
+import '@univerjs/sheets-filter/facade';
 
 const univer = new Univer({
   theme: defaultTheme,
@@ -43,24 +77,50 @@ const univer = new Univer({
     ),
   },
 });
-```
 
-## 注册
-
-```typescript
 univer.registerPlugin(UniverSheetsFilterPlugin);
 univer.registerPlugin(UniverSheetsFilterUIPlugin);
 ```
 
-## API
+## Univer on Node.js 高级安装
 
-### 插件 API
+<Tabs items={['pnpm', 'npm']}>
+  <Tabs.Tab>
+    ```shell
+    pnpm add @univerjs/sheets-filter
+    ```
+  </Tabs.Tab>
+  <Tabs.Tab>
+    ```shell
+    npm install @univerjs/sheets-filter
+    ```
+  </Tabs.Tab>
+</Tabs>
+
+```typescript {2,4,11}
+import { LocaleType, Tools } from '@univerjs/core';
+import { UniverSheetsFilterPlugin } from '@univerjs/sheets-filter';
+
+import '@univerjs/sheets-filter/facade';
+
+const univer = new Univer({
+  theme: defaultTheme,
+  locale: LocaleType.ZH_CN,
+});
+
+univer.registerPlugin(UniverSheetsFilterPlugin);
+```
+
+## Facade API
+
+<Callout>
+  Add facade API
+</Callout>
+
+## 参考链接
 
 * [@univerjs/sheets-filter](/typedoc/@univerjs/sheets-filter/README)
 * [@univerjs/sheets-filter-ui](/typedoc/@univerjs/sheets-filter-ui/README)
-
-### Facade API
-
 * `FRange` 对象上的 API
   * [`getFilter()`](/typedoc/@univerjs/facade/classes/FRange#getfilter)
   * [`createFilter()`](/typedoc/@univerjs/facade/classes/FRange#createfilter)

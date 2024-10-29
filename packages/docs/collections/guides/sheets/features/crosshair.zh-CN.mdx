@@ -1,10 +1,22 @@
-import { Tabs } from 'nextra/components'
+import { Callout, Tabs } from 'nextra/components'
 
 # 十字高亮
 
+| 有付费版本 | 需要接入服务端 | 可用于 Univer on Node.js | 包含的 Preset |
+| - | - | - | - |
+| ❌ | ❌ | ❌ | ❌ 通过 plugin 引入 |
+
 十字高亮将用户选中的单元格所在行列突出显示，以便用户更容易地识别当前选中的单元格。
 
-## 安装
+该功能包含以下插件包：
+
+* [`@univerjs/sheets-crosshair-highlight`](https://www.npmjs.com/package/@univerjs/sheets-crosshair-highlight) - 十字高亮插件
+
+<Callout>
+  TODO: add example
+</Callout>
+
+## Preset 安装
 
 <Tabs items={['pnpm', 'npm']}>
   <Tabs.Tab>
@@ -19,33 +31,89 @@ import { Tabs } from 'nextra/components'
   </Tabs.Tab>
 </Tabs>
 
-## 引入
+```ts {4-5,7,9,17,25}
+import { createUniver, defaultTheme, LocaleType, Tools } from '@univerjs/presets';
+import { UniverSheetsCorePreset } from '@univerjs/presets/preset-sheets-core';
+import sheetsCoreZhCN from '@univerjs/presets/preset-sheets-core/locales/zh-CN';
+import { UniverSheetsCrosshairHighlightPlugin } from '@univerjs/sheets-crosshair-highlight';
+import sheetsCrosshairHighlightZhCN from '@univerjs/sheets-crosshair-highlight/locale/zh-CN';
 
-```typescript
 import '@univerjs/sheets-crosshair-highlight/lib/index.css';
 
-import { UniverSheetsCrosshairHighlightPlugin } from '@univerjs/sheets-crosshair-highlight';
+import '@univerjs/sheets-crosshair-highlight/facade';
+
+const { univerAPI } = createUniver({
+    locale: LocaleType.ZH_CN,
+    locales: {
+        zhCN: Tools.deepMerge(
+            {},
+            sheetsCoreZhCN,
+            sheetsCrosshairHighlightZhCN 
+        ),
+    },
+    theme: defaultTheme,
+    presets: [
+        UniverSheetsCorePreset(),
+    ],
+    plugins: [
+      UniverSheetsCrosshairHighlightPlugin
+    ],
+});
 ```
 
-## 国际化
+## 高级安装
 
-```typescript
+<Tabs items={['pnpm', 'npm']}>
+  <Tabs.Tab>
+    ```shell
+    pnpm add @univerjs/sheets-crosshair-highlight
+    ```
+  </Tabs.Tab>
+  <Tabs.Tab>
+    ```shell
+    npm install @univerjs/sheets-crosshair-highlight
+    ```
+  </Tabs.Tab>
+</Tabs>
+
+```typescript {2-3,5,7,14,19}
 import { LocaleType, Tools } from '@univerjs/core';
+import { UniverSheetsCrosshairHighlightPlugin } from '@univerjs/sheets-crosshair-highlight';
 import SheetsCrosshairHighlightZhCN from '@univerjs/sheets-crosshair-highlight/locale/zh-CN';
+
+import '@univerjs/sheets-crosshair-highlight/lib/index.css';
+
+import '@univerjs/sheets-crosshair-highlight/facade';
 
 const univer = new Univer({
   theme: defaultTheme,
   locale: LocaleType.ZH_CN,
   locales: {
     [LocaleType.ZH_CN]: Tools.deepMerge(
-      SheetsCrosshairHighlightZhCN 
+      SheetsCrosshairHighlightZhCN
     ),
   },
 });
-```
 
-## 注册
-
-```typescript
 univer.registerPlugin(UniverSheetsCrosshairHighlightPlugin);
 ```
+
+## Facade API
+
+### 切换十字高亮开关
+
+```typescript
+univerAPI.setCrosshairHighlightEnabled(true);
+
+univerAPI.setCrosshairHighlightEnabled(false);
+```
+
+### 设置十字高亮颜色
+
+```typescript
+univerAPI.setCrosshairHighlightColor('red');
+```
+
+## 参考链接
+
+* [API reference](/typedoc/@univerjs/sheets-crosshair-highlight/README)

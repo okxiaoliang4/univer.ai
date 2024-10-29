@@ -1,8 +1,17 @@
 import { Tabs } from 'nextra/components'
 
-# 查找 & 替换
+# 查找替换
 
-## 安装
+| 有付费版本 | 需要接入服务端 | 可用于 Univer on Node.js | 包含的 Preset |
+| - | - | - | - |
+| ❌ | ❌ | ❌ | `UniverSheetsFindReplacePreset` |
+
+该功能包含以下插件包：
+
+* [`@univerjs/find-replace`](https://www.npmjs.com/package/@univerjs/find-replace/README) - 跨业务查找替换插件
+* [`@univerjs/sheets-find-replace`](https://www.npmjs.com/package/@univerjs/sheets-find-replace/README) - sheet 查找替换插件
+
+## 高级安装
 
 <Tabs items={['pnpm', 'npm']}>
   <Tabs.Tab>
@@ -17,21 +26,14 @@ import { Tabs } from 'nextra/components'
   </Tabs.Tab>
 </Tabs>
 
-## 引入
-
-```typescript
-import '@univerjs/find-replace/lib/index.css';
-
+```typescript {2-5,14-15,20-21}
+import { LocaleType, Tools } from '@univerjs/core';
 import { UniverFindReplacePlugin } from '@univerjs/find-replace';
 import { UniverSheetsFindReplacePlugin } from '@univerjs/sheets-find-replace';
-```
-
-## 国际化
-
-```typescript
-import { LocaleType, Tools } from '@univerjs/core';
 import FindReplaceZhCN from '@univerjs/find-replace/locale/zh-CN';
 import SheetsFindReplaceZhCN from '@univerjs/sheets-find-replace/locale/zh-CN';
+
+import '@univerjs/find-replace/lib/index.css';
 
 const univer = new Univer({
   theme: defaultTheme,
@@ -43,11 +45,7 @@ const univer = new Univer({
     ),
   },
 });
-```
 
-## 注册
-
-```typescript
 univer.registerPlugin(UniverFindReplacePlugin);
 univer.registerPlugin(UniverSheetsFindReplacePlugin);
 ```
