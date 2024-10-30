@@ -4,13 +4,15 @@ import ServerNotice from '@/components/server-notice'
 
 # Live Share
 
-<BusinessPlanNotice />
+| 有付费版本 | 需要接入 Univer 服务端 | 可用于 Univer on Node.js | 包含的 Preset |
+| - | - | - | - |
+| ✅ | ✅ | - | `UniverSheetsCollaborationPreset` |
 
-<ServerNotice />
+Live Share 是基于协同编辑提供的实时演示功能，**因此在使用 Live Share 之前，需要先安装 [协同编辑](/guides/sheets/features/collaboration) 插件**。
 
-Live Share 是 Univer 基于协同编辑提供的实时演示功能，**因此在使用 Live Share 之前，需要先安装[协同编辑](/guides/sheets/features/collaboration)插件**。
+## Preset 安装
 
-## 安装
+## 高级安装
 
 <Tabs items={['pnpm', 'npm']}>
   <Tabs.Tab>
@@ -25,16 +27,9 @@ Live Share 是 Univer 基于协同编辑提供的实时演示功能，**因此�
   </Tabs.Tab>
 </Tabs>
 
-## 引入
-
 ```typescript
+import { UniverLiveSharePlugin } from '@univerjs-pro/live-share';
 import '@univerjs-pro/live-share/lib/index.css';
 
-import { UniverLiveSharePlugin } from '@univerjs-pro/live-share';
-```
-
-## 注册
-
-```typescript
 univer.registerPlugin(UniverLiveSharePlugin);
 ```

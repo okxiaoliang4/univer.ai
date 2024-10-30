@@ -2,9 +2,43 @@ import { Tabs } from 'nextra/components'
 
 # Filter
 
+| Paid Plan | Univer Server Integration | Univer on Node.js | Included in Preset |
+| - | - | - | - |
+| - | - | ✅ | `UniverSheetsFilterPreset` |
+
 The filter plugin provides filtering functionality for cells.
 
-## Installation
+This feature includes the following plugin packages:
+
+* [`@univerjs/sheets-filter`](https://www.npmjs.com/package/@univerjs/sheets-filter/README) - Filter Plugin
+* [`@univerjs/sheets-filter-ui`](https://www.npmjs.com/package/@univerjs/sheets-filter-ui/README) - Filter UI Plugin
+
+## Presets Installation
+
+```ts {4-5,13,19}
+import { createUniver, defaultTheme, LocaleType, Tools } from '@univerjs/presets';
+import { UniverSheetsCorePreset } from '@univerjs/presets/preset-sheets-core';
+import sheetsCoreEnUS from '@univerjs/presets/preset-sheets-core/locales/en-US';
+import { UniverSheetsFilterPreset } from '@univerjs/presets/preset-sheets-filter';
+import sheetsFilterEnUS from '@univerjs/presets/preset-sheets-filter/locales/en-US';
+
+const { univerAPI } = createUniver({
+    locale: LocaleType.EN_US,
+    locales: {
+        enUS: Tools.deepMerge(
+            {},
+            sheetsCoreZhCN,
+            sheetsFilterZhCN 
+        ),
+    },
+    theme: defaultTheme,
+    presets: [
+        UniverSheetsCorePreset(),
+        UniverSheetsFilterPreset(),
+    ],
+});
+```
+## Advanced Installation
 
 <Tabs items={['pnpm', 'npm']}>
   <Tabs.Tab>
@@ -19,35 +53,26 @@ The filter plugin provides filtering functionality for cells.
   </Tabs.Tab>
 </Tabs>
 
-## Import
-
-```typescript
-import '@univerjs/sheets-filter-ui/lib/index.css';
-
+```typescript {2-4,6,8,15,20-21}
+import { LocaleType, Tools } from '@univerjs/core';
 import { UniverSheetsFilterPlugin } from '@univerjs/sheets-filter';
 import { UniverSheetsFilterUIPlugin } from '@univerjs/sheets-filter-ui';
-```
-
-## Internationalization
-
-```typescript
-import { LocaleType, Tools } from '@univerjs/core';
 import SheetsFilterUIEnUS from '@univerjs/sheets-filter-ui/locale/en-US';
+
+import '@univerjs/sheets-filter-ui/lib/index.css';
+
+import '@univerjs/sheets-filter/facade';
 
 const univer = new Univer({
   theme: defaultTheme,
-  locale: LocaleType.EN_US,
+  locale: LocaleType.en_US,
   locales: {
-    [LocaleType.EN_US]: Tools.deepMerge(
+    [LocaleType.en_US]: Tools.deepMerge(
       SheetsFilterUIEnUS
     ),
   },
 });
-```
 
-## Register
-
-```typescript
 univer.registerPlugin(UniverSheetsFilterPlugin);
 univer.registerPlugin(UniverSheetsFilterUIPlugin);
 ```

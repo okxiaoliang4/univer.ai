@@ -1,41 +1,77 @@
 import { Tabs } from 'nextra/components'
 
-# 评论 / 批注简介
+# 评论 / 批注
+
+| 有付费版本 | 需要接入 Univer 服务端 | 可用于 Univer on Node.js | 包含的 Preset |
+| - | - | - | - |
+| - | 可以选择是否接入 | - | `UniverSheetsThreadCommentPreset` |
 
 评论 / 批注插件提供了对单元格进行评论或者批注的功能。
 
-## 安装
+该功能包含以下插件包：
+
+- [`@univerjs/thread-comment`](https://www.npmjs.com/package/@univerjs/thread-comment) - 基础评论插件
+- [`@univerjs/thread-comment-ui`](https://www.npmjs.com/package/@univerjs/thread-comment-ui) - 基础评论 UI 插件
+- [`@univerjs/sheets-thread-comment`](https://www.npmjs.com/package/@univerjs/sheets-thread-comment) - sheet 评论插件
+- [`@univerjs/sheets-thread-comment-ui`](https://www.npmjs.com/package/@univerjs/sheets-thread-comment-ui) - sheet 评论插件
+- [`@univerjs-pro/thread-comment-datasource`](https://www.npmjs.com/package/@univerjs-pro/thread-comment-datasource) - 和协同编辑一起使用时的评论数据源插件
+
+## Preset 安装
+
+```ts {4-5,13,20}
+import { createUniver, defaultTheme, LocaleType, Tools } from '@univerjs/presets';
+import { UniverSheetsCorePreset } from '@univerjs/presets/preset-sheets-core';
+import sheetsCoreZhCN from '@univerjs/presets/preset-sheets-core/locales/zh-CN';
+import { UniverSheetsThreadCommentPreset } from '@univerjs/presets/preset-sheets-thread-comment';
+import sheetsThreadCommentZhCN from '@univerjs/presets/preset-sheets-thread-comment/locales/zh-CN';
+
+createUniver({
+    locale: LocaleType.ZH_CN,
+    locales: {
+        zhCN: Tools.deepMerge(
+            {},
+            sheetsCoreZhCN,
+            sheetsThreadCommentZhCN 
+        ),
+    },
+    theme: defaultTheme,
+    collaboration: true,
+    presets: [
+        UniverSheetsCorePreset(),
+        UniverSheetsThreadCommentPreset(),
+    ],
+});
+```
+
+## 高级安装
 
 <Tabs items={['pnpm', 'npm']}>
   <Tabs.Tab>
     ```shell
-    pnpm add @univerjs/sheets-thread-comment-base @univerjs/sheets-thread-comment @univerjs/thread-comment @univerjs/thread-comment-ui
+    pnpm add @univerjs/sheets-thread-comment @univerjs/sheets-thread-comment-ui @univerjs/thread-comment @univerjs/thread-comment-ui
     ```
   </Tabs.Tab>
   <Tabs.Tab>
     ```shell
-    npm install @univerjs/sheets-thread-comment-base @univerjs/sheets-thread-comment @univerjs/thread-comment @univerjs/thread-comment-ui
+    npm install @univerjs/sheets-thread-comment @univerjs/sheets-thread-comment-ui @univerjs/thread-comment @univerjs/thread-comment-ui
     ```
   </Tabs.Tab>
 </Tabs>
 
 ## 引入
 
-```typescript
-import '@univerjs/thread-comment-ui/lib/index.css';
-
+```typescript {2-7,9,11,18-19,24-27}
+import { LocaleType, Tools } from '@univerjs/core';
 import { IThreadCommentMentionDataService, UniverThreadCommentUIPlugin } from '@univerjs/thread-comment-ui';
 import { UniverThreadCommentPlugin } from '@univerjs/thread-comment';
-import { UniverSheetsThreadCommentBasePlugin } from '@univerjs/sheets-thread-comment-base';
 import { UniverSheetsThreadCommentPlugin } from '@univerjs/sheets-thread-comment';
-```
-
-## 国际化
-
-```typescript
-import { LocaleType, Tools } from '@univerjs/core';
+import { UniverSheetsThreadCommentUIPlugin } from '@univerjs/sheets-thread-comment-ui';
 import ThreadCommentUIZhCN from '@univerjs/thread-comment-ui/locale/zh-CN';
 import SheetsThreadCommentZhCN from '@univerjs/sheets-thread-comment/locale/zh-CN';
+
+import '@univerjs/thread-comment-ui/lib/index.css';
+
+import '@univerjs/sheets-thread-comment/facade';
 
 const univer = new Univer({
   theme: defaultTheme,
@@ -47,13 +83,42 @@ const univer = new Univer({
     ),
   },
 });
-```
 
-## 注册
-
-```typescript
 univer.registerPlugin(UniverThreadCommentPlugin);
 univer.registerPlugin(UniverThreadCommentUIPlugin);
 univer.registerPlugin(UniverSheetsThreadCommentBasePlugin);
 univer.registerPlugin(UniverSheetsThreadCommentPlugin);
+```
+
+## 与 Univer 协同功能一起使用
+
+在使用评论功能时，你可以选择和 Univer 提供的协同功能一起使用，从而无需自己管理评论信息。
+
+### Preset 安装
+
+只需要修改 preset 配置参数即可。
+
+```ts
+UniverSheetsThreadCommentPreset({ collaboration: true }),
+```
+
+### 高级安装
+
+<Tabs items={['pnpm', 'npm']}>
+  <Tabs.Tab>
+    ```shell
+    pnpm add @univerjs-pro/thread-comment-datasource
+    ```
+  </Tabs.Tab>
+  <Tabs.Tab>
+    ```shell
+    npm install @univerjs-pro/thread-comment-datasource
+    ```
+  </Tabs.Tab>
+</Tabs>
+
+```typescript 
+import { UniverThreadCommentDataSourcePlugin } from '@univerjs-pro/thread-comment-datasource';
+
+univer.registerPlugin(UniverThreadCommentDataSourcePlugin);
 ```

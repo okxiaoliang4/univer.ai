@@ -9,4 +9,5 @@ export default {
   'freeze': '冻结',
   'dom': '集成自定义组件',
   'default-style': '默认样式',
+  'gridlines': '网格线',
 }

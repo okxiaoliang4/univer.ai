@@ -4,13 +4,17 @@ import ServerNotice from '@/components/server-notice'
 
 # 历史纪录
 
-<BusinessPlanNotice />
+| 有付费版本 | 需要接入 Univer 服务端 | 可用于 Univer on Node.js | 包含的 Preset |
+| - | - | - | - |
+| ✅ | ✅ | - | `UniverSheetsCollaborationPreset` |
 
-<ServerNotice />
+Univer 基于协同编辑提供了历史纪录功能，**因此在使用历史纪录之前，需要先安装 [协同编辑](/guides/sheets/features/collaboration) 插件**。
 
-Univer 基于协同编辑提供了历史纪录功能，**因此在使用历史纪录之前，需要先安装[协同编辑](/guides/sheets/features/collaboration)插件**。
+## Preset 安装
 
-## 安装
+按照协同编辑功能中的引导安装即可。
+
+## 高级安装
 
 <Tabs items={['pnpm', 'npm']}>
   <Tabs.Tab>
@@ -29,17 +33,12 @@ Univer 基于协同编辑提供了历史纪录功能，**因此在使用历史�
 
 ## 引入
 
-```typescript
-import '@univerjs-pro/edit-history-viewer/lib/index.css';
-
-import { UniverEditHistoryLoaderPlugin } from '@univerjs-pro/edit-history-loader';
-```
-
-## 国际化
-
-```typescript
+```typescript {2-3,5,12,17-19}
 import { LocaleType, Tools } from '@univerjs/core';
+import { UniverEditHistoryLoaderPlugin } from '@univerjs-pro/edit-history-loader';
 import EditHistoryViewerZhCN from '@univerjs-pro/edit-history-viewer/locale/zh-CN';
+
+import '@univerjs-pro/edit-history-viewer/lib/index.css';
 
 const univer = new Univer({
   theme: defaultTheme,
@@ -50,20 +49,13 @@ const univer = new Univer({
     ),
   },
 });
+
+univer.registerPlugin(UniverEditHistoryLoaderPlugin, { 
+  univerContainerId: 'Your-Univer-Container-Id',
+});
 ```
 
-## 注册
-
-启动历史记录时，UniverEditHistoryLoaderPlugin 会加载一个新的 Univer 实例挂载指定 DOM 节点上。
-
-因此在注册时，需要提供合适的 DOM 节点 id（如原 Univer 实例的 Container），以达到历史纪录面板覆盖原 Univer 面板的目的。若节点 id 未指定，则默认为'univer-container'。
-
-```typescript
-
-univer.registerPlugin(UniverEditHistoryLoaderPlugin, { univerContainerId: 'Your-Univer-Container-Id'});
-
-```
-
+启动历史记录时，UniverEditHistoryLoaderPlugin 会加载一个新的 Univer 实例挂载指定 DOM 节点上。因此在注册时，需要提供合适的 DOM 节点 id（如原 Univer 实例的 Container），以达到历史纪录面板覆盖原 Univer 面板的目的。若节点 id 未指定，则默认为  `univer-container`。
 
 ## Feature 适配
 
