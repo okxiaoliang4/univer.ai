@@ -12,10 +12,6 @@ The number format plugin provides the formatting function of numbers in cells, i
   The **DBNum syntax** is not supported.
 </Callout>
 
-<Callout>
-  TODO: add example
-</Callout>
-
 ## Facade API
 
 ### Set number format
@@ -26,7 +22,7 @@ const sheet = univerAPI.getActiveWorkbook().getActiveSheet();
 // get range
 const range = sheet.getRange(0, 0, 10, 10); // A1:J10
 
-// 具体参数请参考 https://support.microsoft.com/en-us/office/number-format-codes-5026bbd6-04bc-48cd-bf33-80f18b4eae68
+// For specific parameters, please refer to: https://support.microsoft.com/en-us/office/number-format-codes-5026bbd6-04bc-48cd-bf33-80f18b4eae68
 range.setNumberFormat('#,###');
 ```
 

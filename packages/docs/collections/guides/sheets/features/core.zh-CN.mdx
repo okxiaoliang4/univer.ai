@@ -21,10 +21,6 @@ import FeatureMeta from '@/components/feature-meta'
 * [`@univerjs/sheets-formula-ui`](https://www.npmjs.com/package/@univerjs/sheets-formula-ui) - 公式 UI 插件
 * [`@univerjs/sheets-numfmt`](https://www.npmjs.com/package/@univerjs/sheets-numfmt) - 数字格式插件
 
-<Callout>
-  TODO: add example
-</Callout>
-
 ## Preset 安装
 
 <Tabs items={['pnpm', 'npm']}>
@@ -138,6 +134,49 @@ univer.registerPlugin(UniverSheetsPlugin);
 univer.registerPlugin(UniverSheetsUIPlugin);
 univer.registerPlugin(UniverSheetsFormulaPlugin);
 univer.registerPlugin(UniverSheetsFormulaUIPlugin);
+univer.registerPlugin(UniverSheetsNumfmtPlugin);
+```
+
+## Univer on Node.js 高级安装
+
+<Tabs items={['pnpm', 'npm']}>
+  <Tabs.Tab>
+    ```shell
+    pnpm add @univerjs/core @univerjs/design @univerjs/engine-render @univerjs/engine-formula @univerjs/docs @univerjs/sheets @univerjs/sheets-formula @univerjs/sheets-numfmt 
+    ```
+  </Tabs.Tab>
+  <Tabs.Tab>
+    ```shell
+    npm install @univerjs/core @univerjs/design @univerjs/engine-render @univerjs/engine-formula @univerjs/docs @univerjs/sheets @univerjs/sheets-formula @univerjs/sheets-numfmt
+    ```
+  </Tabs.Tab>
+</Tabs>
+
+```typescript {2-8,10-13,20-26}
+import { LocaleType, Tools } from '@univerjs/core';
+import { defaultTheme } from "@univerjs/design";
+import { UniverRenderEnginePlugin } from "@univerjs/engine-render";
+import { UniverFormulaEnginePlugin } from "@univerjs/engine-formula";
+import { UniverDocsPlugin } from "@univerjs/docs";
+import { UniverSheetsPlugin } from "@univerjs/sheets";
+import { UniverSheetsFormulaPlugin } from "@univerjs/sheets-formula";
+import { UniverSheetsNumfmtPlugin } from '@univerjs/sheets-numfmt';
+
+import '@univerjs/engine-formula/facade';
+import '@univerjs/sheets/facade';
+import '@univerjs/sheets-formula/facade';
+import '@univerjs/sheets-numfmt/facade';
+
+const univer = new Univer({
+  theme: defaultTheme,
+  locale: LocaleType.ZH_CN,
+});
+
+univer.registerPlugin(UniverRenderEnginePlugin);
+univer.registerPlugin(UniverFormulaEnginePlugin);
+univer.registerPlugin(UniverDocsPlugin);
+univer.registerPlugin(UniverSheetsPlugin);
+univer.registerPlugin(UniverSheetsFormulaPlugin);
 univer.registerPlugin(UniverSheetsNumfmtPlugin);
 ```
 

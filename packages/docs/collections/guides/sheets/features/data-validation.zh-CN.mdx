@@ -22,10 +22,6 @@ import FeatureMeta from '@/components/feature-meta'
 * [`@univerjs/sheets-data-validation`](https://www.npmjs.com/package/@univerjs/sheets-data-validation) - sheet 数据验证插件
 * [`@univerjs/sheets-data-validation-ui`](https://www.npmjs.com/package/@univerjs/sheets-data-validation-ui) - sheet 数据验证 UI 插件
 
-<Callout>
-  TODO: add example
-</Callout>
-
 ## Preset 安装
 
 <Tabs items={['pnpm', 'npm']}>
@@ -108,6 +104,38 @@ univer.registerPlugin(UniverSheetsDataValidationUIPlugin, {
   showEditOnDropdown: true
 });
 ```
+
+## Univer on Node.js 高级安装
+
+<Tabs items={['pnpm', 'npm']}>
+  <Tabs.Tab>
+    ```shell
+    pnpm add @univerjs/data-validation @univerjs/sheets-data-validation
+    ```
+  </Tabs.Tab>
+  <Tabs.Tab>
+    ```shell
+    npm install @univerjs/data-validation @univerjs/sheets-data-validation
+    ```
+  </Tabs.Tab>
+</Tabs>
+
+```typescript {2-3,5,12-13}
+import { LocaleType, Tools } from '@univerjs/core';
+import { UniverDataValidationPlugin } from '@univerjs/data-validation';
+import { UniverSheetsDataValidationPlugin } from '@univerjs/sheets-data-validation';
+
+import '@univerjs/sheets-data-validation/facade';
+
+const univer = new Univer({
+  theme: defaultTheme,
+  locale: LocaleType.ZH_CN,
+});
+
+univer.registerPlugin(UniverDataValidationPlugin);
+univer.registerPlugin(UniverSheetsDataValidationPlugin);
+```
+
 ## Facade API <VersionBadge version="0.2.10+" />
 
 完整 facade api 类型定义，请查看 [FacadeAPI](/typedoc/@univerjs/facade/README)

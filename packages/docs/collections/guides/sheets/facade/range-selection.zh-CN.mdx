@@ -10,24 +10,20 @@ import VersionBadge from '@/components/version-badge'
 
 表格中的大部分操作都可以通过范围 API 来操作，如设置值、获取值、设置样式、获取样式等。
 
-### 创建范围
+### Facade API
+
+#### 创建范围
 
 获得一个范围需要知道起始行号、起始列号、长宽。
 
-获取 A1 单元格的范围：
-
 ```typescript
 const sheet = univerAPI.getActiveWorkbook().getActiveSheet();
 
+// 获取 A1 单元格的范围：
 const range = sheet.getRange(0, 0, 1, 1);
-```
 
-获取 A1:B2 的范围：
-
-```typescript
-const sheet = univerAPI.getActiveWorkbook().getActiveSheet();
-
-const range = sheet.getRange(0, 0, 2, 2);
+// 获取 A1:B2 的范围：
+const range2 = sheet.getRange(0, 0, 2, 2);
 ```
 
 从 `0.2.15` 开始 `getRange` 支持用 A1 表示法获取范围。
@@ -50,7 +46,7 @@ const range4 = sheet.getRange('A:A');
 const range5 = sheet.getRange('1:1');
 ```
 
-### 获取范围数据
+#### 获取范围数据
 
 获取范围第一个单元格的值
 
@@ -67,8 +63,8 @@ const value = range.getValue();
 const sheet = univerAPI.getActiveWorkbook().getActiveSheet();
 
 const range = sheet.getRange(0, 0, 2, 2);
-range.forEach(( row, column, cell) => {
-  console.log( row, column, cell);
+range.forEach((row, column, cell) => {
+  console.log(row, column, cell);
 });
 ```
 
@@ -81,9 +77,9 @@ const range = sheet.getRange(0, 0, 2, 2);
 console.log(range.getFormulas());
 ```
 
-### 设置范围数据
+#### 设置范围数据
 
-#### 设置单一值
+##### 设置单一值
 
 传入一个值或者单元格对象，将会覆盖范围内所有单元格，如果以 `=` 开头，将被解释为公式。
 
@@ -116,7 +112,7 @@ range.setValue({
 });
 ```
 
-#### 通过数组设置多个值
+##### 通过数组设置多个值
 
 数组的长度和宽度必须和范围的长宽一致。
 
@@ -137,7 +133,7 @@ range.setValues([
 ]);
 ```
 
-#### 通过对象设置多个值
+##### 通过对象设置多个值
 
 则对象的一级索引代表行号，二级索引代表列号，与范围的长宽无需一致。
 
@@ -157,7 +153,7 @@ range.setValues({
 });
 ```
 
-### 获取范围样式
+#### 获取范围样式
 
 ```typescript
 const sheet = univerAPI.getActiveWorkbook().getActiveSheet();
@@ -166,7 +162,7 @@ const range = sheet.getRange(0, 0, 2, 2);
 const style = range.getCellStyleData();
 ```
 
-### 设置范围样式
+#### 设置范围样式
 
 ```typescript
 const sheet = univerAPI.getActiveWorkbook().getActiveSheet();
@@ -180,7 +176,7 @@ range
   .setFontColor('red');
 ```
 
-### 清理范围样式
+#### 清理范围样式
 
 ```typescript
 const sheet = univerAPI.getActiveWorkbook().getActiveSheet();
@@ -194,7 +190,7 @@ range
   .setFontColor(null);
 ```
 
-### 是否合并
+#### 是否合并
 
 ```typescript
 const sheet = univerAPI.getActiveWorkbook().getActiveSheet();
@@ -203,7 +199,7 @@ const range = sheet.getRange(0, 0, 2, 2);
 const isMerged = range.isMerged();
 ```
 
-### 获取坐标
+#### 获取坐标
 
 ```typescript
 const sheet = univerAPI.getActiveWorkbook().getActiveSheet();
@@ -212,7 +208,7 @@ const range = sheet.getRange(0, 0, 2, 2);
 const rect = range.getCellRect(); // width、heigh、left、right、top、bottom、x、y
 ```
 
-### 同时获取范围的合并信息和坐标
+#### 同时获取范围的合并信息和坐标
 
 ```typescript
 const sheet = univerAPI.getActiveWorkbook().getActiveSheet();
@@ -227,7 +223,9 @@ Univer 表格支持多选区，所以选区是一个范围数组，可以通过�
 
 我们还提供 API 来获取当前选区、设置选区和监听选区变化。
 
-### 获取激活选区的范围
+### Facade API
+
+#### 获取激活选区的范围
 
 ```typescript
 const sheet = univerAPI.getActiveWorkbook().getActiveSheet();
@@ -236,7 +234,7 @@ const selection = sheet.getSelection();
 const range = selection.getActiveRange();
 ```
 
-### 设置选区
+#### 设置选区
 
 设置 A1:B2 为选区
 
@@ -260,7 +258,7 @@ univerAPI.executeCommand(SetSelectionsOperation.id, {
 })
 ```
 
-### 监听选区变化
+#### 监听选区变化
 
 ```typescript
 const activeWorkbook = univerAPI.getActiveWorkbook();

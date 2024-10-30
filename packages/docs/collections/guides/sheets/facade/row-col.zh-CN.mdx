@@ -2,9 +2,11 @@ import { Callout } from 'nextra/components'
 
 # 行列操作
 
-## 行 Row
+## Facade API
 
-### 在指定行后插入行
+### 行 Row
+
+#### 在指定行后插入行
 
 `insertRowAfter(afterPosition)`: 在指定行位置之后插入一行。
 
@@ -15,7 +17,7 @@ const sheet = univerAPI.getActiveWorkbook().getActiveSheet();
 sheet.insertRowAfter(0);
 ```
 
-### 在指定行前插入行
+#### 在指定行前插入行
 
 `insertRowBefore(beforePosition)`: 在指定行位置之前插入一行。
 
@@ -26,7 +28,7 @@ const sheet = univerAPI.getActiveWorkbook().getActiveSheet();
 sheet.insertRowBefore(0);
 ```
 
-### 插入多行
+#### 插入多行
 
 `insertRows(rowIndex, numRows)`: 在工作表中从指定位置开始插入一个或多个连续的空白行。
 
@@ -37,7 +39,7 @@ const sheet = univerAPI.getActiveWorkbook().getActiveSheet();
 sheet.insertRows(0, 3);
 ```
 
-### 在指定行后插入多行
+#### 在指定行后插入多行
 
 `insertRowsAfter(afterPosition, howMany)`: 在指定行位置之后插入若干行。
 
@@ -48,7 +50,7 @@ const sheet = univerAPI.getActiveWorkbook().getActiveSheet();
 sheet.insertRowsAfter(0, 5);
 ```
 
-### 在指定行前插入多行
+#### 在指定行前插入多行
 
 `insertRowsBefore(beforePosition, howMany)`: 在指定行位置之前插入若干行。
 
@@ -59,7 +61,7 @@ const sheet = univerAPI.getActiveWorkbook().getActiveSheet();
 sheet.insertRowsBefore(0, 5);
 ```
 
-### 删除指定行
+#### 删除指定行
 
 `deleteRow(rowPosition)`: 删除给定行位置处的行。
 
@@ -70,7 +72,7 @@ const sheet = univerAPI.getActiveWorkbook().getActiveSheet();
 sheet.deleteRow(0);
 ```
 
-### 删除多行
+#### 删除多行
 
 `deleteRows(rowPosition, howMany)`: 删除从给定行位置开始的若干行。
 
@@ -81,7 +83,7 @@ const sheet = univerAPI.getActiveWorkbook().getActiveSheet();
 sheet.deleteRows(0, 2);
 ```
 
-### 移动行
+#### 移动行
 
 `moveRows(rowSpec, destinationIndex)`: 将给定范围选定的行移动到 `destinationIndex` 指示的位置。`rowSpec` 本身不必准确表示要移动的整行或整组行 — 它选择范围跨越的所有行。
 
@@ -95,7 +97,7 @@ const rowSpec = sheet.getRange(0,0,2,1);
 sheet.moveRows(rowSpec, 5);
 ```
 
-### 隐藏行
+#### 隐藏行
 
 `hideRow(row)`: 隐藏指定范围内的行。
 
@@ -107,7 +109,7 @@ const range = sheet.getRange(0,0,0,0);
 sheet.hideRow(range);
 ```
 
-### 隐藏多行
+#### 隐藏多行
 
 `hideRows(rowIndex, numRows)`: 隐藏从指定索引开始的一个或多个连续行。此方法使用 0 索引。
 
@@ -118,7 +120,7 @@ const sheet = univerAPI.getActiveWorkbook().getActiveSheet();
 sheet.hideRows(0, 3);
 ```
 
-### 取消隐藏行
+#### 取消隐藏行
 
 `unhideRow(row)`: 取消隐藏指定范围内的行。
 
@@ -130,7 +132,7 @@ const range = sheet.getRange(0,0,0,0);
 sheet.unhideRow(range);
 ```
 
-### 显示多行
+#### 显示多行
 
 `showRows(rowIndex, numRows)`: 取消隐藏从指定索引开始的一个或多个连续行。此方法使用 0 索引。
 
@@ -141,7 +143,7 @@ const sheet = univerAPI.getActiveWorkbook().getActiveSheet();
 sheet.showRows(0, 3);
 ```
 
-### 设置行高
+#### 设置行高
 
 `setRowHeight(rowPosition, height)`: 设置给定行的行高（以像素为单位）。默认情况下，行会扩展以适应单元格内容的大小。如果想要将行强制设置为指定高度，请使用 `setRowHeightsForced(startRow, numRows, height)`。
 
@@ -152,7 +154,7 @@ const sheet = univerAPI.getActiveWorkbook().getActiveSheet();
 sheet.setRowHeight(0, 200);
 ```
 
-### 设置多行高度
+#### 设置多行高度
 
 `setRowHeights(startRow, numRows, height)`: 设置给定行的高度（以像素为单位）。默认情况下，行会扩展以适应单元格内容的大小。如果想要将行强制设置为指定高度，请使用 `setRowHeightsForced(startRow, numRows, height)`。
 
@@ -163,7 +165,7 @@ const sheet = univerAPI.getActiveWorkbook().getActiveSheet();
 sheet.setRowHeights(0, 3, 20);
 ```
 
-### 强制设置多行高度
+#### 强制设置多行高度
 
 `setRowHeightsForced(startRow, numRows, height)`: 设置给定行的高度（以像素为单位）。默认情况下，行会扩展以适应单元格内容的大小。使用 `setRowHeightsForced` 时，即使单元格内容高于行高，行也会被强制为指定的高度。
 
@@ -174,7 +176,7 @@ const sheet = univerAPI.getActiveWorkbook().getActiveSheet();
 sheet.setRowHeightsForced(0, 3, 5);
 ```
 
-### 设置行自定义属性
+#### 设置行自定义属性
 
 `setRowCustom(custom)`：设置给定行的自定义属性，在行上存储一个对象 `custom`, 其中可以放入任何符合 JSON 格式的数据，用于自定义存储一些额外的信息。
 更新 `custom` 数据会覆盖原有的 `custom` 数据，如果你在更新数据时需要保留原有的 `custom` 数据，请提前获取到 `custom` 数据合并成新的数据后再更新。
@@ -189,9 +191,9 @@ sheet.setRowCustom({
 });
 ```
 
-## 列 Column
+### 列 Column
 
-### 在指定列后插入列
+#### 在指定列后插入列
 
 `insertColumnAfter(afterPosition)`: 在指定列位置之后插入一列。
 
@@ -202,7 +204,7 @@ const sheet = univerAPI.getActiveWorkbook().getActiveSheet();
 sheet.insertColumnAfter(0);
 ```
 
-### 在指定列前插入列
+#### 在指定列前插入列
 
 `insertColumnBefore(beforePosition)`: 在指定列位置之前插入一列。
 
@@ -213,7 +215,7 @@ const sheet = univerAPI.getActiveWorkbook().getActiveSheet();
 sheet.insertColumnBefore(0);
 ```
 
-### 插入多列
+#### 插入多列
 
 `insertColumns(columnIndex, numColumns)`: 在工作表中从指定位置开始插入一个或多个连续的空白列。
 
@@ -224,7 +226,7 @@ const sheet = univerAPI.getActiveWorkbook().getActiveSheet();
 sheet.insertColumns(0, 3);
 ```
 
-### 在指定列后插入多列
+#### 在指定列后插入多列
 
 `insertColumnsAfter(afterPosition, howMany)`: 在指定列位置后插入指定数量的列。
 
@@ -235,7 +237,7 @@ const sheet = univerAPI.getActiveWorkbook().getActiveSheet();
 sheet.insertColumnsAfter(0, 2);
 ```
 
-### 在指定列前插入多列
+#### 在指定列前插入多列
 
 `insertColumnsBefore(beforePosition, howMany)`: 在指定列位置之前插入若干列。
 
@@ -246,7 +248,7 @@ const sheet = univerAPI.getActiveWorkbook().getActiveSheet();
 sheet.insertColumnsBefore(0, 5);
 ```
 
-### 删除指定列
+#### 删除指定列
 
 `deleteColumn(columnPosition)`: 删除给定列位置处的列。
 
@@ -257,7 +259,7 @@ const sheet = univerAPI.getActiveWorkbook().getActiveSheet();
 sheet.deleteColumn(0);
 ```
 
-### 删除多列
+#### 删除多列
 
 `deleteColumns(columnPosition, howMany)`: 删除从给定列位置开始的若干列。
 
@@ -268,7 +270,7 @@ const sheet = univerAPI.getActiveWorkbook().getActiveSheet();
 sheet.deleteColumns(0, 2);
 ```
 
-### 移动列
+#### 移动列
 
 `moveColumns(columnSpec, destinationIndex)`: 将给定范围选定的列移动到 `destinationIndex` 指示的位置。 `columnSpec` 本身不必准确表示要移动的整列或整组列 - 它会选择范围跨越的所有列。
 
@@ -282,7 +284,7 @@ const columnSpec = sheet.getRange(0,0,1,2);
 sheet.moveColumns(columnSpec, 5);
 ```
 
-### 隐藏列
+#### 隐藏列
 
 `hideColumn(column)`: 隐藏给定范围内的一列或多列。
 
@@ -294,7 +296,7 @@ const range = sheet.getRange(0,0,0,0);
 sheet.hideColumn(range);
 ```
 
-### 隐藏多列
+#### 隐藏多列
 
 `hideColumns(columnIndex, numColumns)`: 隐藏从给定索引开始的一个或多个连续列。此方法使用 0 索引。
 
@@ -305,7 +307,7 @@ const sheet = univerAPI.getActiveWorkbook().getActiveSheet();
 sheet.hideColumns(0, 3);
 ```
 
-### 取消隐藏列
+#### 取消隐藏列
 
 `unhideColumn(column)`: 取消隐藏指定范围内的列。
 
@@ -317,7 +319,7 @@ const range = sheet.getRange(0,0,0,0);
 sheet.unhideColumn(range);
 ```
 
-### 显示多列
+#### 显示多列
 
 `showColumns(columnIndex, numColumns)`: 取消隐藏从指定索引开始的一个或多个连续列。此方法使用 0 索引。
 
@@ -328,7 +330,7 @@ const sheet = univerAPI.getActiveWorkbook().getActiveSheet();
 sheet.showColumns(0, 3);
 ```
 
-### 设置列宽
+#### 设置列宽
 
 `setColumnWidth(columnPosition, width)`: 设置指定列的宽度（以像素为单位）。
 
@@ -339,7 +341,7 @@ const sheet = univerAPI.getActiveWorkbook().getActiveSheet();
 sheet.setColumnWidth(0, 200);
 ```
 
-### 设置多列宽度
+#### 设置多列宽度
 
 `setColumnWidths(startColumn, numColumns, width)`: 设置指定列的宽度（以像素为单位）。
 
@@ -350,7 +352,7 @@ const sheet = univerAPI.getActiveWorkbook().getActiveSheet();
 sheet.setColumnWidths(0, 3, 200);
 ```
 
-### 设置列自定义属性
+#### 设置列自定义属性
 
 `setColumnCustom(custom)`: 设置给定列的自定义属性，在列上存储一个对象 `custom`, 其中可以放入任何符合 JSON 格式的数据，用于自定义存储一些额外的信息。
 更新 `custom` 数据会覆盖原有的 `custom` 数据，如果你在更新数据时需要保留原有的 `custom` 数据，请提前获取到 `custom` 数据合并成新的数据后再更新。

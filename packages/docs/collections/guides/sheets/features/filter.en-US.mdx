@@ -12,10 +12,6 @@ This feature includes the following plugin packages:
 * [`@univerjs/sheets-filter`](https://www.npmjs.com/package/@univerjs/sheets-filter/README) - Filter Plugin
 * [`@univerjs/sheets-filter-ui`](https://www.npmjs.com/package/@univerjs/sheets-filter-ui/README) - Filter UI Plugin
 
-<Callout>
-  TODO: add example
-</Callout>
-
 ## Installation with Presets
 
 <Tabs items={['pnpm', 'npm']}>
@@ -92,6 +88,35 @@ const univer = new Univer({
 
 univer.registerPlugin(UniverSheetsFilterPlugin);
 univer.registerPlugin(UniverSheetsFilterUIPlugin);
+```
+
+## Installation for Univer on Node.js
+
+<Tabs items={['pnpm', 'npm']}>
+  <Tabs.Tab>
+    ```shell
+    pnpm add @univerjs/sheets-filter
+    ```
+  </Tabs.Tab>
+  <Tabs.Tab>
+    ```shell
+    npm install @univerjs/sheets-filter
+    ```
+  </Tabs.Tab>
+</Tabs>
+
+```typescript {2,4,11}
+import { LocaleType, Tools } from '@univerjs/core';
+import { UniverSheetsFilterPlugin } from '@univerjs/sheets-filter';
+
+import '@univerjs/sheets-filter/facade';
+
+const univer = new Univer({
+  theme: defaultTheme,
+  locale: LocaleType.ZH_CN,
+});
+
+univer.registerPlugin(UniverSheetsFilterPlugin);
 ```
 
 ## Facade API
