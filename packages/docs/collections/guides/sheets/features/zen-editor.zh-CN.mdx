@@ -2,9 +2,17 @@ import { Tabs } from 'nextra/components'
 
 # 禅编辑器
 
+| 有付费版本 | 需要接入 Univer 服务端 | 可用于 Univer on Node.js | 包含的 Preset |
+| - | - | - | - |
+| - | - | - | ❌ 通过 plugin 引入 |
+
 禅编辑器插件提供了一种沉浸式的单元格编辑体验。通过禅编辑器，你可以轻松地以文档编辑器的形式在单元格中编辑文本、图片、链接等内容。
 
-## 安装
+该功能包含以下插件包：
+
+* [`@univerjs/sheets-zen-editor`](https://www.npmjs.com/package/@univerjs/sheets-zen-editor)
+
+## Presets 安装
 
 <Tabs items={['pnpm', 'npm']}>
   <Tabs.Tab>
@@ -19,19 +27,56 @@ import { Tabs } from 'nextra/components'
   </Tabs.Tab>
 </Tabs>
 
-## 引入
+```ts {4-5,7,15,23}
+import { createUniver, defaultTheme, LocaleType, Tools } from '@univerjs/presets';
+import { UniverSheetsCorePreset } from '@univerjs/presets/preset-sheets-core';
+import sheetsCoreZhCN from '@univerjs/presets/preset-sheets-core/locales/zh-CN';
+import { UniverSheetsZenEditorPlugin } from '@univerjs/sheets-zen-editor';
+import SheetsZenEditorZhCN from '@univerjs/sheets-zen-editor/locale/zh-CN';
 
-```typescript
 import '@univerjs/sheets-zen-editor/lib/index.css';
 
-import { UniverSheetsZenEditorPlugin } from '@univerjs/sheets-zen-editor';
+const { univerAPI } = createUniver({
+    locale: LocaleType.ZH_CN,
+    locales: {
+        zhCN: Tools.deepMerge(
+            {},
+            sheetsCoreZhCN,
+            SheetsZenEditorZhCN 
+        ),
+    },
+    theme: defaultTheme,
+    presets: [
+        UniverSheetsCorePreset(),
+    ],
+    plugins: [
+      UniverSheetsZenEditorPlugin 
+    ],
+});
 ```
 
-## 国际化
 
-```typescript
+## 高级安装
+
+<Tabs items={['pnpm', 'npm']}>
+  <Tabs.Tab>
+    ```shell
+    pnpm add @univerjs/sheets-zen-editor
+    ```
+  </Tabs.Tab>
+  <Tabs.Tab>
+    ```shell
+    npm install @univerjs/sheets-zen-editor
+    ```
+  </Tabs.Tab>
+</Tabs>
+
+```typescript {3,5,12,17}
+import { UniverSheetsZenEditorPlugin } from '@univerjs/sheets-zen-editor';
 import { LocaleType, Tools } from '@univerjs/core';
 import SheetsZenEditorZhCN from '@univerjs/sheets-zen-editor/locale/zh-CN';
+
+import '@univerjs/sheets-zen-editor/lib/index.css';
 
 const univer = new Univer({
   theme: defaultTheme,
@@ -42,10 +87,6 @@ const univer = new Univer({
     ),
   },
 });
-```
 
-## 注册
-
-```typescript
 univer.registerPlugin(UniverSheetsZenEditorPlugin);
 ```

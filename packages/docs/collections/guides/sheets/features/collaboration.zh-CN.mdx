@@ -4,13 +4,44 @@ import ServerNotice from '@/components/server-notice'
 
 # 协同编辑
 
-<BusinessPlanNotice />
-
-<ServerNotice />
+| 有付费版本 | 需要接入 Univer 服务端 | 可用于 Univer on Node.js | 包含的 Preset |
+| - | - | - | - |
+| ✅ | ✅ | - | `UniverSheetsCollaborationPreset` |
 
 Univer 提供了协同编辑功能，支持多人同时编辑同一个工作簿。
 
-## 安装
+## Preset 安装
+
+```ts {6-7,16,20,24}
+import { createUniver, defaultTheme, LocaleType, Tools } from '@univerjs/presets';
+import { UniverSheetsCorePreset } from '@univerjs/presets/preset-sheets-core';
+import sheetsCoreZhCN from '@univerjs/presets/preset-sheets-core/locales/zh-CN';
+import { UniverSheetsAdvancedPreset } from '@univerjs/presets/preset-sheets-advanced';
+import sheetsAdvancedZhCN from '@univerjs/presets/preset-sheets-advanced/locales/zh-CN';
+import sheetsCollaborationZhCN from '@univerjs/presets/preset-sheets-collaboration/locales/zh-CN';
+import { UniverSheetsCollaborationPreset } from '@univerjs/presets/preset-sheets-collaboration';
+
+createUniver({
+    locale: LocaleType.ZH_CN,
+    locales: {
+        zhCN: Tools.deepMerge(
+            {},
+            sheetsCoreZhCN,
+            sheetsAdvancedZhCN,
+            sheetsCollaborationZhCN,
+        ),
+    },
+    theme: defaultTheme,
+    collaboration: true,
+    presets: [
+        UniverSheetsCorePreset(),
+        UniverSheetsAdvancedPreset(),
+        UniverSheetsCollaborationPreset(),
+    ],
+});
+```
+
+## 高级安装
 
 <Tabs items={['pnpm', 'npm']}>
   <Tabs.Tab>
@@ -27,18 +58,13 @@ Univer 提供了协同编辑功能，支持多人同时编辑同一个工作簿�
 
 ## 引入
 
-```typescript
-import '@univerjs-pro/collaboration-client/lib/index.css';
-
+```typescript {2-4,6,13,23-24,28-34}
+import { LocaleType, Tools } from '@univerjs/core';
 import { UniverCollaborationPlugin } from '@univerjs-pro/collaboration';
 import { UniverCollaborationClientPlugin } from '@univerjs-pro/collaboration-client';
-```
-
-## 国际化
-
-```typescript
-import { LocaleType, Tools } from '@univerjs/core';
 import CollaborationClientZhCN from '@univerjs-pro/collaboration-client/locale/zh-CN';
+
+import '@univerjs-pro/collaboration-client/lib/index.css';
 
 const univer = new Univer({
   theme: defaultTheme,
@@ -49,11 +75,7 @@ const univer = new Univer({
     ),
   },
 });
-```
 
-## 注册
-
-```typescript
 // 通过将 override 选项设置为 [[IAuthzIoService, null]]，可以告诉 Univer 不要注册内置的 IAuthzIoService。
 // 通过将 override 选项设置为 [[IUndoRedoService, null]]，可以告诉 Univer 不要注册内置的 IUndoRedoService
 // 这样，Univer 将使用 UniverCollaborationPlugin 中提供的服务作为权限、重做恢复服务的实现。
@@ -79,9 +101,7 @@ univer.registerPlugin(UniverCollaborationClientPlugin, {
 
 ### unitId
 
-每篇协同文档在 Univer 服务中都有一个唯一的 `unitId`。
-
-Univer 协同客户端（协同编辑插件）使用 `unitId` 可从 Univer 服务获取到对应的协同文档数据进行协同编辑。
+每篇协同文档在 Univer 服务中都有一个唯一的 `unitId`。Univer 协同客户端使用 `unitId` 可从 Univer 服务获取到对应的协同文档数据进行协同编辑。
 
 ### type
 

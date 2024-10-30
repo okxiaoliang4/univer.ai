@@ -2,19 +2,19 @@ import { Callout, Tabs } from 'nextra/components'
 
 # 数据透视表
 
+| 有付费版本 | 需要接入 Univer 服务端 | 可用于 Univer on Node.js | 包含的 Preset |
+| - | - | - | - |
+| ✅ | - | ✅ | `UniverSheetsAdvancedPreset` |
+
 数据透视表是一种强大的数据分析工具，它能够快速汇总、组织和分析大量数据，从而帮助用户发现数据中的模式和趋势。
+
+该功能包含以下插件包：
 
 - `@univerjs-pro/engine-pivot` 提供了数据透视表最基本的数据计算能力，该插件的工作不依赖任何第三方的插件
 - `@univerjs-pro/sheets-pivot` 将 engine-pivot 组装成 Univer Sheet 插件以便支持表格的渲染，协同，公式等能力
 - `@univerjs-pro/sheets-pivot-ui` 提供一个最基本的拖拽操作界面 & 筛选以及其他交互所需要的 Dialog
 
-## 功能
-
-<Callout>
-  数据透视表是很复杂的大型功能，目前提供 beta 版本，后续会继续迭代完善。
-</Callout>
-
-### 现阶段支持功能
+目前已经支持的功能有：
 
 - 11 种 Excel 支持的汇总方式
 - 维度标签筛选，排序（使用 localCompare 方式）
@@ -24,7 +24,7 @@ import { Callout, Tabs } from 'nextra/components'
 - 支持维度重命名，维度设置 format
 - 自动响应数据源变化，感知公式变化
 
-### 计划中的功能
+我们还计划在不久的将来支持如下功能：
 
 - 分组，支持日期分组，数字分组以及元素分组
 - 筛选排序，支持值筛选排序，支持条件格式
@@ -32,7 +32,33 @@ import { Callout, Tabs } from 'nextra/components'
 - 计算字段 & 计算项
 - 增强排版能力，支持紧促视图和大纲视图，合并项和空行等
 
-## 安装
+## Presets 安装
+
+```typescript {4-5,13,19}
+import { createUniver, defaultTheme, LocaleType, Tools } from '@univerjs/presets';
+import { UniverSheetsCorePreset } from '@univerjs/presets/preset-sheets-core';
+import sheetsCoreZhCN from '@univerjs/presets/preset-sheets-core/locales/zh-CN';
+import { UniverSheetsAdvancedPreset } from '@univerjs/presets/preset-sheets-advanced';
+import sheetsAdvancedZhCN from '@univerjs/presets/preset-sheets-advanced/locales/zh-CN';
+
+const { univerAPI } = createUniver({
+    locale: LocaleType.ZH_CN,
+    locales: {
+        zhCN: Tools.deepMerge(
+            {},
+            sheetsCoreZhCN,
+            sheetsAdvancedZhCN,
+        ),
+    },
+    theme: defaultTheme,
+    presets: [
+        UniverSheetsCorePreset(),
+        UniverSheetsAdvancedPreset(),
+    ],
+});
+```
+
+## 高级安装
 
 <Tabs items={['pnpm', 'npm']}>
   <Tabs.Tab>
@@ -47,21 +73,16 @@ import { Callout, Tabs } from 'nextra/components'
   </Tabs.Tab>
 </Tabs>
 
-## 引入
-
-```typescript
-import '@univerjs-pro/sheets-pivot-ui/lib/index.css';
-
+```typescript {2-5,7,9,16-17,22-23}
+import { LocaleType, Tools } from '@univerjs/core';
 import { UniverSheetsPivotTablePlugin } from '@univerjs-pro/sheets-pivot';
 import { UniverSheetsPivotTableUIPlugin } from '@univerjs-pro/sheets-pivot-ui';
-```
-
-## 国际化
-
-```typescript
-import { LocaleType, Tools } from '@univerjs/core';
 import SheetsPivotTableZhCN from '@univerjs-pro/sheets-pivot/locale/zh-CN';
 import SheetsPivotTableUIZhCN from '@univerjs-pro/sheets-pivot-ui/locale/zh-CN';
+
+import '@univerjs-pro/sheets-pivot-ui/lib/index.css';
+
+import '@univerjs-pro/sheets-pivot/facade';
 
 const univer = new Univer({
   theme: defaultTheme,
@@ -73,11 +94,159 @@ const univer = new Univer({
     ),
   },
 });
-```
 
-## 注册
-
-```typescript
 univer.registerPlugin(UniverSheetsPivotTablePlugin);
 univer.registerPlugin(UniverSheetsPivotTableUIPlugin);
+```
+
+## Univer on Node.js 高级安装
+
+```typescript {2-3,5,12,17}
+import { LocaleType, Tools } from '@univerjs/core';
+import { UniverSheetsPivotTablePlugin } from '@univerjs-pro/sheets-pivot';
+import SheetsPivotTableZhCN from '@univerjs-pro/sheets-pivot/locale/zh-CN';
+
+import '@univerjs-pro/sheets-pivot/facade';
+
+const univer = new Univer({
+  theme: defaultTheme,
+  locale: LocaleType.ZH_CN,
+  locales: {
+    [LocaleType.ZH_CN]: Tools.deepMerge(
+      SheetsPivotTableZhCN,
+    ),
+  },
+});
+
+univer.registerPlugin(UniverSheetsPivotTablePlugin);
+```
+
+## Facade API
+
+### 添加透视表
+
+```javascript
+import { PositionType } from '@univerjs-pro/sheets-pivot'
+
+const univerAPI = FUniver.newAPI(univer)
+const fWorkbook = univerAPI.getActiveWorkbook()
+const unitId = fWorkbook.getId()
+const fSheet = fWorkbook.getActiveSheet()
+const subUnitId = fSheet.getSheetId()
+const sheetName = fSheet.getSheetName()
+const sourceInfo = {
+  unitId,
+  subUnitId,
+  sheetName,
+  range: {
+    startRow: 0,
+    startColumn: 0,
+    endRow: 8,
+    endColumn: 5,
+  },
+}
+const anchorCellInfo = {
+  unitId,
+  subUnitId,
+  row: 0,
+  col: 8,
+}
+const FPivot = await fWorkbook.addPivotTable(sourceInfo, PositionType.Exiting, anchorCellInfo)
+```
+
+### `FPivotTable`
+
+方法 `getPivotTableByCell` 可以在 `FWorkbook` 实例中使用，通过锚定单元格获取透视表实例。如果目标单元格在透视表中，它将返回 `FPivotTable` 实例。
+
+```javascript
+const fPivotTable = fWorkbook.getPivotTableByCell(unitId, subUnitId, 0, 8)
+```
+
+| 方法                | 描述                                                                    |
+| ------------------- | ----------------------------------------------------------------------- |
+| remove              | 删除透视表实例                                                          |
+| getConfig           | 获取当前透视表的配置信息，其中包括数据源范围，锚定单元格， 维度配置信息 |
+| addField            | 添加一个维度                                                            |
+| removeField         | 删除一个维度                                                            |
+| updateFieldPosition | 更新维度的所在区域以及顺序                                              |
+| updateValuePosition | 更新 ∑Value 的位置                                                      |
+| setSubtotalType     | 设置汇总方式                                                            |
+| setLabelSort        | 设置标签排序                                                            |
+| setLabelFilter      | 设置标签筛选                                                            |
+| renameField         | 重命名维度                                                              |
+
+```typescript
+    /**
+     * @description Get the pivot table config by the pivot table id.
+     * @typedef PivotTableConfig
+     * @property {TargetInfo} targetCellInfo  The target cell info of the pivot table.
+     * @property {SourceInfo} sourceRangeInfo The source data range info of the pivot table.
+     * @property {boolean} isEmpty The pivot table is empty or not.
+     * @property {object} fieldsConfig The snapshot of the pivot table fields config.
+     * @returns {PivotTableConfig|undefined} The pivot table config or undefined.
+     */
+    getConfig():IPivotTableConfig;
+    /**
+     * @description Remove a pivot table from the workbook by pivot table id
+     */
+    async remove():void;
+    /**
+     *@description Add a pivot field to the pivot table.
+     * @param {string|number} dataFieldIdOrIndex The data field id.
+     * @param {PivotTableFiledAreaEnum} fieldArea The area of the field.
+     * @param {number} index The index of the field in the target area.
+     * @returns {boolean} Whether the pivot field is added successfully.
+     */
+    async addField(dataFieldIdOrIndex: string | number, fieldArea: PivotTableFiledAreaEnum, index: number): Promise<boolean>;
+    /**
+     * @description Remove a pivot field from the pivot table
+     * @param {string[]} fieldIds The deleted field ids.
+     * @returns {boolean} Whether the pivot field is removed successfully.
+     */
+    async removeField(fieldIds: string[]): Promise<boolean>;
+    /**
+     * @description Update the pivot table field position.
+     * @param {string} fieldId - The moved field id.
+     * @param {PivotTableFiledAreaEnum} area - The target area of the field.
+     * @param {number} index - The target index of the field, if the index is bigger than the field count in the target area, the field will be moved to the last, if the index is smaller than 0, the field will be moved to the first.
+     * @returns {boolean} Whether the pivot field is moved successfully.
+     */
+    async updateFieldPosition(fieldId: string, area: PivotTableFiledAreaEnum, index: number): Promise<boolean>;
+    /**
+     * @description If there are multiple value fields in the pivot table, you can update the position of the value field, which only can be position in row or column.
+     * @param {PivotTableValuePositionEnum} position - The position of the value field.
+     * @param {number} index - The index of the value field.
+     * @returns {boolean} Whether the pivot value field is moved successfully.
+     */
+    async updateValuePosition(position: PivotTableValuePositionEnum, index: number): Promise<boolean>;
+    /**
+     * @description Set the pivot table subtotal type for value field, it only works for the value field.
+     * @param {string} fieldId - The field id.
+     * @param {PivotSubtotalTypeEnum} subtotalType - The subtotal type of the field.
+     * @returns {boolean} Whether the pivot table subtotal type is set successfully.
+     */
+    async setSubtotalType(fieldId: string, subtotalType: PivotSubtotalTypeEnum): Promise<boolean>;
+    /**
+     * @description Set the pivot table sort info.
+     * @param {string} tableFieldId - The field id of the sort.
+     * @param {PivotTableSortInfo} info - The sort info.
+     * @typedef PivotTableSortInfo
+     * @property {PivotDataFieldSortOperatorEnum} type The sort operator of the field items.
+     * @returns {boolean} Whether the pivot table sort info is set successfully.
+     */
+    async setLabelSort(tableFieldId: string, info: IPivotTableSortInfo): Promise<boolean>;
+    /**
+     * @description Set the pivot table filter.
+     * @param {string} tableFieldId - The field id of the filter.
+     * @param {string[]} items - The items of the filter.
+     * @returns {boolean} Whether the pivot table filter is set successfully.
+     */
+    async setLabelFilter(tableFieldId: string, items: string[], isAll?: boolean): Promise<boolean>;
+    /**
+     * @description Rename the pivot table field.
+     * @param {string} fieldId - The field id. 
+     * @param {string} name - The new name of the field.
+     * @returns {boolean} Whether the pivot table field is renamed successfully.
+     */
+    async renameField(fieldId: string, name: string): Promise<boolean>;
 ```

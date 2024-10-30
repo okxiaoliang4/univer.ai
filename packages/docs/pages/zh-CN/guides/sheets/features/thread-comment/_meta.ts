@@ -1,4 +1,0 @@
-export default {
-  introduction: '评论 / 批注简介',
-  facade: 'Facade API',
-}

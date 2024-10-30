@@ -2,7 +2,60 @@ import { Tabs } from 'nextra/components'
 
 # Uniscript
 
-## 安装
+| 有付费版本 | 需要接入 Univer 服务端 | 可用于 Univer on Node.js | 包含的 Preset |
+| - | - | - | - |
+| - | - | - | ❌ 通过 plugin 引入 |
+
+该功能包含以下插件包：
+
+* [`@univerjs/uniscript`](https://www.npmjs.com/package/@univerjs/uniscript)
+
+## Presets 安装
+
+<Tabs items={['pnpm', 'npm']}>
+  <Tabs.Tab>
+    ```shell
+    pnpm add @univerjs/uniscript/
+    ```
+  </Tabs.Tab>
+  <Tabs.Tab>
+    ```shell
+    npm install @univerjs/uniscript/
+    ```
+  </Tabs.Tab>
+</Tabs>
+
+```ts {4-5,7,9,17,25}
+import { createUniver, defaultTheme, LocaleType, Tools } from '@univerjs/presets';
+import { UniverSheetsCorePreset } from '@univerjs/presets/preset-sheets-core';
+import sheetsCoreZhCN from '@univerjs/presets/preset-sheets-core/locales/zh-CN';
+import { UniverUniscriptPlugin } from '@univerjs/uniscript';
+import UniscriptZhCN from '@univerjs/uniscript/locale/zh-CN';
+
+import '@univerjs/uniscript/lib/index.css';
+
+import '@univerjs/uniscript/facade';
+
+const { univerAPI } = createUniver({
+    locale: LocaleType.ZH_CN,
+    locales: {
+        zhCN: Tools.deepMerge(
+            {},
+            sheetsCoreZhCN,
+            UniscriptZhCN 
+        ),
+    },
+    theme: defaultTheme,
+    presets: [
+        UniverSheetsCorePreset(),
+    ],
+    plugins: [
+      UniverUniscriptPlugin 
+    ],
+});
+```
+
+## 高级安装
 
 <Tabs items={['pnpm', 'npm']}>
   <Tabs.Tab>
@@ -17,19 +70,12 @@ import { Tabs } from 'nextra/components'
   </Tabs.Tab>
 </Tabs>
 
-## 引入
-
-```typescript
-import '@univerjs/uniscript/lib/index.css';
-
-import { UniverUniscriptPlugin } from '@univerjs/uniscript';
-```
-
-## 国际化
-
-```typescript
+```typescript {2-3,5,12,17}
 import { LocaleType, Tools } from '@univerjs/core';
+import { UniverUniscriptPlugin } from '@univerjs/uniscript';
 import UniscriptZhCN from '@univerjs/uniscript/locale/zh-CN';
+
+import '@univerjs/uniscript/lib/index.css';
 
 const univer = new Univer({
   theme: defaultTheme,
@@ -40,10 +86,6 @@ const univer = new Univer({
     ),
   },
 });
-```
 
-## 注册
-
-```typescript
 univer.registerPlugin(UniverUniscriptPlugin);
 ```

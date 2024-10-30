@@ -9,4 +9,5 @@ export default {
   'freeze': 'Freeze',
   'dom': 'Custom Component',
   'default-style': 'Default Style',
+  'gridlines': 'Gridlines',
 }

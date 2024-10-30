@@ -4,11 +4,58 @@ import ServerNotice from '@/components/server-notice'
 
 # 打印
 
-<BusinessPlanNotice />
-
-<ServerNotice />
+| 有付费版本 | 需要接入 Univer 服务端 | 可用于 Univer on Node.js | 包含的 Preset |
+| - | - | - | - |
+| ✅ | - | - | ❌ 通过 plugin 引入 |
 
 Univer 提供了高精度的打印功能，支持打印预览、打印设置，以及导出为 PDF。
+
+该功能包含以下插件包：
+
+- `@univerjs-pro/sheets-print` 提供了打印功能
+
+## Preset 安装
+
+<Tabs items={['pnpm', 'npm']}>
+  <Tabs.Tab>
+    ```shell
+    pnpm add @univerjs-pro/sheets-print
+    ```
+  </Tabs.Tab>
+  <Tabs.Tab>
+    ```shell
+    npm install @univerjs-pro/sheets-print
+    ```
+  </Tabs.Tab>
+</Tabs>
+
+```ts {3-4,7,15,23}
+import { createUniver, defaultTheme, LocaleType, Tools } from '@univerjs/presets';
+import { UniverSheetsCorePreset } from '@univerjs/presets/preset-sheets-core';
+import sheetsCoreZhCN from '@univerjs/presets/preset-sheets-core/locales/zh-CN';
+import { UniverSheetsPrintPlugin } from '@univerjs-pro/sheets-print';
+import SheetsPrintPluginZhCN from '@univerjs-pro/sheets-print/locale/zh-CN';
+
+import '@univerjs-pro/sheets-print/lib/index.css';
+
+const { univerAPI } = createUniver({
+    locale: LocaleType.ZH_CN,
+    locales: {
+        zhCN: Tools.deepMerge(
+            {},
+            sheetsCoreZhCN,
+            SheetsPrintPluginZhCN 
+        ),
+    },
+    theme: defaultTheme,
+    presets: [
+        UniverSheetsCorePreset(),
+    ],
+    plugins: [
+      UniverSheetsPrintPlugin 
+    ],
+});
+```
 
 ## 安装
 
@@ -25,19 +72,12 @@ Univer 提供了高精度的打印功能，支持打印预览、打印设置，�
   </Tabs.Tab>
 </Tabs>
 
-## 引入
-
-```typescript
-import '@univerjs-pro/sheets-print/lib/index.css';
-
-import { UniverSheetsPrintPlugin } from '@univerjs-pro/sheets-print'
-```
-
-## 国际化
-
-```typescript
+```typescript {2-3,5,12,17}
 import { LocaleType, Tools } from '@univerjs/core';
+import { UniverSheetsPrintPlugin } from '@univerjs-pro/sheets-print'
 import SheetsPrintPluginZhCN from '@univerjs-pro/sheets-print/locale/zh-CN';
+
+import '@univerjs-pro/sheets-print/lib/index.css';
 
 const univer = new Univer({
   theme: defaultTheme,
@@ -48,10 +88,6 @@ const univer = new Univer({
     ),
   },
 });
-```
 
-## 注册
-
-```typescript
 univer.registerPlugin(UniverSheetsPrintPlugin);
 ```
