@@ -49,9 +49,9 @@ import { UniverSheetsDataValidationPreset } from '@univerjs/presets/preset-sheet
 import SheetsDataValidationEnUS from '@univerjs/presets/preset-sheets-data-validation/locale/en-US';
 
 const { univerAPI } = createUniver({
-    locale: LocaleType.ZH_CN,
+    locale: LocaleType.EN_US,
     locales: {
-        zhCN: Tools.deepMerge(
+        enUS: Tools.deepMerge(
             {},
             sheetsCoreEnUS,
             SheetsDataValidationEnUS 
@@ -93,9 +93,9 @@ import '@univerjs/sheets-data-validation/facade';
 
 const univer = new Univer({
   theme: defaultTheme,
-  locale: LocaleType.ZH_CN,
+  locale: LocaleType.EN_US,
   locales: {
-    [LocaleType.ZH_CN]: Tools.deepMerge(
+    [LocaleType.EN_US]: Tools.deepMerge(
       SheetsDataValidationEnUS
     ),
   },

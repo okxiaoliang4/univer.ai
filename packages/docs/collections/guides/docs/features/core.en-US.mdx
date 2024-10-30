@@ -39,12 +39,12 @@ At present, the core functions of Univer Doc mainly include:
 ```typescript
 import { createUniver, defaultTheme, LocaleType } from '@univerjs/presets';
 import { UniverDocsCorePreset } from '@univerjs/presets/preset-docs-core';
-import zhCN from '@univerjs/presets/preset-docs-core/locales/zh-CN';
+import enUS from '@univerjs/presets/preset-docs-core/locales/en-US';
 
 const { univerAPI } = createUniver({
-    locale: LocaleType.ZH_CN,
+    locale: LocaleType.EN_US,
     locales: {
-        zhCN,
+        enUS,
     },
     theme: defaultTheme,
     presets: [
@@ -79,9 +79,9 @@ import { UniverUIPlugin } from "@univerjs/ui";
 import { UniverDocsPlugin } from "@univerjs/docs";
 import { UniverDocsUIPlugin } from "@univerjs/docs-ui";
 
-import DesignZhCN from '@univerjs/design/locale/zh-CN';
-import DocsUIZhCN from '@univerjs/docs-ui/locale/zh-CN';
-import UIZhCN from '@univerjs/ui/locale/zh-CN';
+import DesignEnUS from '@univerjs/design/locale/en-US';
+import DocsUIEnUS from '@univerjs/docs-ui/locale/en-US';
+import UIEnUS from '@univerjs/ui/locale/en-US';
 
 import "@univerjs/design/lib/index.css";
 import "@univerjs/ui/lib/index.css";
@@ -89,12 +89,12 @@ import "@univerjs/docs-ui/lib/index.css";
 
 const univer = new Univer({
   theme: defaultTheme,
-  locale: LocaleType.ZH_CN,
+  locale: LocaleType.EN_US,
   locales: {
-    [LocaleType.ZH_CN]: Tools.deepMerge(
-      DesignZhCN,
-      DocsUIZhCN,
-      UIZhCN
+    [LocaleType.EN_US]: Tools.deepMerge(
+      DesignEnUS,
+      DocsUIEnUS,
+      UIEnUS
     ),
   },
 });

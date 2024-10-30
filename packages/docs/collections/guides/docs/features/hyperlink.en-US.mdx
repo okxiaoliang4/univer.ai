@@ -13,17 +13,17 @@ Insert hyperlinks in the document.
 import { Tools } from '@univerjs/core';
 import { createUniver, defaultTheme, LocaleType } from '@univerjs/presets';
 import { UniverDocsCorePreset } from '@univerjs/presets/preset-docs-core';
-import zhCN from '@univerjs/presets/preset-docs-core/locales/zh-CN';
+import enUS from '@univerjs/presets/preset-docs-core/locales/en-US';
 import { UniverDocsHyperLinkPreset } from '@univerjs/presets/preset-docs-hyperlink';
-import DocsHyperLinkZhCN from '@univerjs/presets/preset-docs-hyperlink/locale/zh-CN';
+import DocsHyperLinkEnUS from '@univerjs/presets/preset-docs-hyperlink/locale/en-US';
 
 const { univerAPI } = createUniver({
-    locale: LocaleType.ZH_CN,
+    locale: LocaleType.EN_US,
     locales: {
-        zhCN: Tools.deepMerge({
+        enUS: Tools.deepMerge({
             {},
-            zhCN,
-            DocsHyperLinkZhCN 
+            enUS,
+            DocsHyperLinkEnUS 
         }),
     },
     theme: defaultTheme,
@@ -53,16 +53,16 @@ const { univerAPI } = createUniver({
 import { LocaleType, Tools } from '@univerjs/core';
 import { UniverDocsHyperLinkPlugin } from '@univerjs/docs-hyper-link';
 import { UniverDocsHyperLinkUIPlugin } from '@univerjs/docs-hyper-link-ui';
-import DocsHyperLinkUIZhCN from '@univerjs/docs-hyper-link-ui/locale/zh-CN';
+import DocsHyperLinkUIEnUS from '@univerjs/docs-hyper-link-ui/locale/en-US';
 
 import '@univerjs/docs-hyper-link-ui/lib/index.css';
 
 const univer = new Univer({
   theme: defaultTheme,
-  locale: LocaleType.ZH_CN,
+  locale: LocaleType.EN_US,
   locales: {
-    [LocaleType.ZH_CN]: Tools.deepMerge(
-      DocsHyperLinkUIZhCN
+    [LocaleType.EN_US]: Tools.deepMerge(
+      DocsHyperLinkUIEnUS
     ),
   },
 });

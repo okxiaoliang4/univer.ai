@@ -13,17 +13,17 @@ Insert floating images, support drag to adjust size and position.
 import { Tools } from '@univerjs/core';
 import { createUniver, defaultTheme, LocaleType } from '@univerjs/presets';
 import { UniverDocsCorePreset } from '@univerjs/presets/preset-docs-core';
-import zhCN from '@univerjs/presets/preset-docs-core/locales/zh-CN';
+import enUS from '@univerjs/presets/preset-docs-core/locales/en-US';
 import { UniverDocsDrawingPreset } from '@univerjs/presets/preset-docs-drawing';
-import DocsDrawingZhCN from '@univerjs/presets/preset-docs-drawing/locale/zh-CN';
+import DocsDrawingEnUS from '@univerjs/presets/preset-docs-drawing/locale/en-US';
 
 const { univerAPI } = createUniver({
-    locale: LocaleType.ZH_CN,
+    locale: LocaleType.EN_US,
     locales: {
-        zhCN: Tools.deepMerge({
+        enUS: Tools.deepMerge({
             {},
-            zhCN,
-            DocsDrawingZhCN 
+            enUS,
+            DocsDrawingEnUS 
         }),
     },
     theme: defaultTheme,
@@ -62,19 +62,19 @@ import { UniverDrawingPlugin } from '@univerjs/drawing';
 import { UniverDrawingUIPlugin } from '@univerjs/drawing-ui';
 import { UniverDocsDrawingPlugin} from '@univerjs/docs-drawing';
 import { UniverDocsDrawingUIPlugin } from '@univerjs/docs-drawing-ui';
-import DrawingUIZhCN from '@univerjs/drawing-ui/locale/zh-CN';
-import DocsDrawingUIZhCN from '@univerjs/docs-drawing-ui/locale/zh-CN';
+import DrawingUIEnUS from '@univerjs/drawing-ui/locale/en-US';
+import DocsDrawingUIEnUS from '@univerjs/docs-drawing-ui/locale/en-US';
 
 import '@univerjs/drawing-ui/lib/index.css';
 import '@univerjs/docs-drawing-ui/lib/index.css';
 
 const univer = new Univer({
   theme: defaultTheme,
-  locale: LocaleType.ZH_CN,
+  locale: LocaleType.EN_US,
   locales: {
-    [LocaleType.ZH_CN]: Tools.deepMerge(
-      DrawingUIZhCN,
-      DocsDrawingUIZhCN
+    [LocaleType.EN_US]: Tools.deepMerge(
+      DrawingUIEnUS,
+      DocsDrawingUIEnUS
     ),
   },
 });

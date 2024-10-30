@@ -22,17 +22,17 @@ This feature includes the following plugin packages:
 import { Tools } from '@univerjs/core';
 import { createUniver, defaultTheme, LocaleType } from '@univerjs/presets';
 import { UniverDocsCorePreset } from '@univerjs/presets/preset-docs-core';
-import zhCN from '@univerjs/presets/preset-docs-core/locales/zh-CN';
+import enUS from '@univerjs/presets/preset-docs-core/locales/en-US';
 import { UniverDocsThreadCommentPreset } from '@univerjs/presets/preset-docs-thread-comment';
-import DocsThreadCommentZhCN from '@univerjs/presets/preset-docs-thread-comment/locale/zh-CN';
+import DocsThreadCommentEnUS from '@univerjs/presets/preset-docs-thread-comment/locale/en-US';
 
 const { univerAPI } = createUniver({
-    locale: LocaleType.ZH_CN,
+    locale: LocaleType.EN_US,
     locales: {
-        zhCN: Tools.deepMerge({
+        enUS: Tools.deepMerge({
             {},
-            zhCN,
-            DocsThreadCommentZhCN 
+            enUS,
+            DocsThreadCommentEnUS 
         }),
     },
     theme: defaultTheme,
@@ -70,16 +70,16 @@ import { LocaleType, Tools, UserManagerService } from '@univerjs/core';
 import { UniverThreadCommentPlugin } from '@univerjs/thread-comment';
 import { UniverThreadCommentUIPlugin } from '@univerjs/thread-comment-ui';
 import { UniverDocsThreadCommentUIPlugin } from '@univerjs/docs-thread-comment-ui';
-import ThreadCommentUIZhCN from '@univerjs/thread-comment-ui/locale/zh-CN';
+import ThreadCommentUIEnUS from '@univerjs/thread-comment-ui/locale/en-US';
 
 import '@univerjs/thread-comment-ui/lib/index.css';
 
 const univer = new Univer({
   theme: defaultTheme,
-  locale: LocaleType.ZH_CN,
+  locale: LocaleType.EN_US,
   locales: {
-    [LocaleType.ZH_CN]: Tools.deepMerge(
-      ThreadCommentUIZhCN,
+    [LocaleType.EN_US]: Tools.deepMerge(
+      ThreadCommentUIEnUS,
     ),
   },
 });
@@ -117,17 +117,17 @@ This feature includes the following plugin packages:
 import { Tools } from '@univerjs/core';
 import { createUniver, defaultTheme, LocaleType } from '@univerjs/presets';
 import { UniverDocsCorePreset } from '@univerjs/presets/preset-docs-core';
-import zhCN from '@univerjs/presets/preset-docs-core/locales/zh-CN';
+import enUS from '@univerjs/presets/preset-docs-core/locales/en-US';
 import { UniverDocsThreadCommentPreset } from '@univerjs/presets/preset-docs-thread-comment';
-import DocsThreadCommentZhCN from '@univerjs/presets/preset-docs-thread-comment/locale/zh-CN';
+import DocsThreadCommentEnUS from '@univerjs/presets/preset-docs-thread-comment/locale/en-US';
 
 const { univerAPI } = createUniver({
-    locale: LocaleType.ZH_CN,
+    locale: LocaleType.EN_US,
     locales: {
-        zhCN: Tools.deepMerge({
+        enUS: Tools.deepMerge({
             {},
-            zhCN,
-            DocsThreadCommentZhCN 
+            enUS,
+            DocsThreadCommentEnUS 
         }),
     },
     theme: defaultTheme,
@@ -165,16 +165,16 @@ import { LocaleType, Tools, UserManagerService } from '@univerjs/core';
 import { UniverThreadCommentPlugin } from '@univerjs/thread-comment';
 import { UniverThreadCommentUIPlugin } from '@univerjs/thread-comment-ui';
 import { UniverDocsThreadCommentUIPlugin } from '@univerjs/docs-thread-comment-ui';
-import ThreadCommentUIZhCN from '@univerjs/thread-comment-ui/locale/zh-CN';
+import ThreadCommentUIEnUS from '@univerjs/thread-comment-ui/locale/en-US';
 
 import '@univerjs/thread-comment-ui/lib/index.css';
 
 const univer = new Univer({
   theme: defaultTheme,
-  locale: LocaleType.ZH_CN,
+  locale: LocaleType.EN_US,
   locales: {
-    [LocaleType.ZH_CN]: Tools.deepMerge(
-      ThreadCommentUIZhCN,
+    [LocaleType.EN_US]: Tools.deepMerge(
+      ThreadCommentUIEnUS,
     ),
   },
 });

@@ -43,14 +43,14 @@ This feature includes the following plugin packages:
 ```typescript {2-3,10,15}
 import { createUniver, defaultTheme, LocaleType, Tools } from '@univerjs/presets';
 import { UniverSheetsCorePreset } from '@univerjs/presets/preset-sheets-core';
-import sheetsCoreZhCN from '@univerjs/presets/preset-sheets-core/locales/zh-CN';
+import sheetsCoreEnUS from '@univerjs/presets/preset-sheets-core/locales/en-US';
 
 const { univerAPI } = createUniver({
-    locale: LocaleType.ZH_CN,
+    locale: LocaleType.EN_US,
     locales: {
-        zhCN: Tools.deepMerge(
+        enUS: Tools.deepMerge(
             {},
-            sheetsCoreZhCN
+            sheetsCoreEnUS
         ),
     },
     theme: defaultTheme,
@@ -88,13 +88,13 @@ import { UniverSheetsUIPlugin } from "@univerjs/sheets-ui";
 import { UniverSheetsFormulaPlugin } from "@univerjs/sheets-formula";
 import { UniverSheetsFormulaUIPlugin } from "@univerjs/sheets-formula-ui";
 import { UniverSheetsNumfmtPlugin } from '@univerjs/sheets-numfmt';
-import DesignZhCN from '@univerjs/design/locale/zh-CN';
-import UIZhCN from '@univerjs/ui/locale/zh-CN';
-import DocsUIZhCN from '@univerjs/docs-ui/locale/zh-CN';
-import SheetsZhCN from '@univerjs/sheets/locale/zh-CN';
-import SheetsUIZhCN from '@univerjs/sheets-ui/locale/zh-CN';
-import SheetsFormulaUIZhCN from '@univerjs/sheets-formula-ui/locale/zh-CN';
-import SheetsNumfmtZhCN from '@univerjs/sheets-numfmt/locale/zh-CN';
+import DesignEnUS from '@univerjs/design/locale/en-US';
+import UIEnUS from '@univerjs/ui/locale/en-US';
+import DocsUIEnUS from '@univerjs/docs-ui/locale/en-US';
+import SheetsEnUS from '@univerjs/sheets/locale/en-US';
+import SheetsUIEnUS from '@univerjs/sheets-ui/locale/en-US';
+import SheetsFormulaUIEnUS from '@univerjs/sheets-formula-ui/locale/en-US';
+import SheetsNumfmtEnUS from '@univerjs/sheets-numfmt/locale/en-US';
 
 import "@univerjs/design/lib/index.css";
 import "@univerjs/ui/lib/index.css";
@@ -113,16 +113,16 @@ import '@univerjs/sheets-numfmt/facade';
 
 const univer = new Univer({
   theme: defaultTheme,
-  locale: LocaleType.ZH_CN,
+  locale: LocaleType.EN_US,
   locales: {
-    [LocaleType.ZH_CN]: Tools.deepMerge(
-      DesignZhCN,
-      UIZhCN,
-      DocsUIZhCN,
-      SheetsZhCN,
-      SheetsUIZhCN,
-      SheetsFormulaUIZhCN,
-      SheetsNumfmtZhCN
+    [LocaleType.EN_US]: Tools.deepMerge(
+      DesignEnUS,
+      UIEnUS,
+      DocsUIEnUS,
+      SheetsEnUS,
+      SheetsUIEnUS,
+      SheetsFormulaUIEnUS,
+      SheetsNumfmtEnUS
     ),
   },
 });
