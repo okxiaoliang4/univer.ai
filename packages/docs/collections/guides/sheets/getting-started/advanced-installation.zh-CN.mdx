@@ -1,6 +1,6 @@
 import { Callout, Tabs } from 'nextra/components'
 
-# 高级安装和引入
+# 高级安装和基本使用
 
 ## 使用包管理器
 
@@ -172,11 +172,10 @@ univer.registerPlugin(UniverSheetsUIPlugin);
 univer.registerPlugin(UniverSheetsFormulaPlugin);
 `
 
-<ReactLive code={code} />
 
 ### 懒加载部分插件
 
-使用高级引入方式的一个优势是你可以更加灵活地控制插件的加载时机，一种常见的方式是在应用初始化时仅加载必须的插件，而将部分插件的加载时机延迟到首次渲染完成之后。
+使用高级安装方式的一个优势是你可以更加灵活地控制插件的加载时机，一种常见的方式是在应用初始化时仅加载必须的插件，而将部分插件的加载时机延迟到首次渲染完成之后。
 
 Univer 的 [官方 demo](https://github.com/dream-num/univer/blob/dev/examples/src/sheets/main.ts) 就使用了这样的优化技巧，可参考。
 
