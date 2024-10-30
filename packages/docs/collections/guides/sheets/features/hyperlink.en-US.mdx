@@ -1,25 +1,24 @@
 import { Callout, Tabs } from 'nextra/components'
+import FeatureMeta from '@/components/feature-meta'
 
 # HyperLink
 
-| 有付费版本 | 需要接入服务端 | 可用于 Univer on Node.js | 包含的 Preset |
-| - | - | - | - |
-| - | - | ✅ | `preset-sheets-hyper-link` |
+<FeatureMeta texts={['-', '-', '✅', 'UniverSheetsHyperLinkPreset' ]} />
 
 1.	The hyperlink feature allows jumping to worksheets and cells, supporting adding, updating, parsing, and removing links.
 2.	Supports inserting hyperlinks within rich text.
 3.	Hyperlinks support sub-sheets, ranges/cells, defined names, and standard links (http, mailto, etc.).
 
-该功能包含以下插件包：
+This feature includes the following plugin packages:
 
-* [`@univerjs/sheets-hyper-link`](https://www.npmjs.com/package/@univerjs/sheets-hyper-link) - 超链接插件
-* [`@univerjs/sheets-hyper-link-ui`](https://www.npmjs.com/package/@univerjs/sheets-hyper-link-ui) - 超链接 UI 插件
+* [`@univerjs/sheets-hyper-link`](https://www.npmjs.com/package/@univerjs/sheets-hyper-link) - HyperLink Plugin
+* [`@univerjs/sheets-hyper-link-ui`](https://www.npmjs.com/package/@univerjs/sheets-hyper-link-ui) - HyperLink UI Plugin
 
 <Callout>
   TODO: add example
 </Callout>
 
-## Preset Installation
+## Installation with Presets
 
 <Tabs items={['pnpm', 'npm']}>
   <Tabs.Tab>

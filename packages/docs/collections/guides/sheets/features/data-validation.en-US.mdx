@@ -1,10 +1,10 @@
 import { Callout, Tabs } from 'nextra/components'
+import VersionBadge from '@/components/version-badge'
+import FeatureMeta from '@/components/feature-meta'
 
 # Data Validation
 
-| 有付费版本 | 需要接入服务端 | 可用于 Univer on Node.js | 包含的 Preset |
-| - | - | - | - |
-| - | - | ✅ | `UniverSheetsDataValidationPreset` |
+<FeatureMeta texts={['-', '-', '✅', 'UniverSheetsDataValidationPreset' ]} />
 
 Data validation is a feature that sets rules in cells to ensure that the data entered by users meets specific conditions.
 Currently supported data validation types:
@@ -16,17 +16,17 @@ Currently supported data validation types:
 * Drop-down list (single/multiple)
 * Custom formula
 
-该功能包含以下插件包：
+This feature includes the following plugin packages:
 
-* [`@univerjs/data-validation`](https://www.npmjs.com/package/@univerjs/data-validation) - 跨业务数据验证插件
-* [`@univerjs/sheets-data-validation`](https://www.npmjs.com/package/@univerjs/sheets-data-validation) - sheet 数据验证插件
-* [`@univerjs/sheets-data-validation-ui`](https://www.npmjs.com/package/@univerjs/sheets-data-validation-ui) - sheet 数据验证 UI 插件
+* [`@univerjs/data-validation`](https://www.npmjs.com/package/@univerjs/data-validation) - Fundamental Data Validation Plugin
+* [`@univerjs/sheets-data-validation`](https://www.npmjs.com/package/@univerjs/sheets-data-validation) - Sheet Data Validation Plugin
+* [`@univerjs/sheets-data-validation-ui`](https://www.npmjs.com/package/@univerjs/sheets-data-validation-ui) - Sheet Data Validation UI Plugin
 
 <Callout>
   TODO: add example
 </Callout>
 
-## Preset Installation
+## Installation with Presets
 
 <Tabs items={['pnpm', 'npm']}>
   <Tabs.Tab>
@@ -65,7 +65,7 @@ const { univerAPI } = createUniver({
 });
 ```
 
-## 高级 Installation
+## Advanced Installation
 
 <Tabs items={['pnpm', 'npm']}>
   <Tabs.Tab>
@@ -104,7 +104,7 @@ const univer = new Univer({
 univer.registerPlugin(UniverDataValidationPlugin);
 univer.registerPlugin(UniverSheetsDataValidationPlugin);
 univer.registerPlugin(UniverSheetsDataValidationUIPlugin, {
-  // 是否在下拉菜单中显示编辑按钮
+  // Whether to display the edit button in the drop-down menu
   showEditOnDropdown: true
 });
 ```

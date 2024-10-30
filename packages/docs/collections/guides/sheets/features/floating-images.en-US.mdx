@@ -1,25 +1,24 @@
 import { Callout, Tabs } from 'nextra/components'
+import FeatureMeta from '@/components/feature-meta'
 
 # Floating Images
 
-| 有付费版本 | 需要接入服务端 | 可用于 Univer on Node.js | 包含的 Preset |
-| - | - | - | - |
-| - | - | ✅ | `preset-sheets-drawing` |
+<FeatureMeta texts={['-', '-', '✅', 'UniverSheetsDrawingPreset' ]} />
 
 Insert floating images, support drag to adjust size and position.
 
-该功能包含以下插件包：
+This feature includes the following plugin packages:
 
-* [`@univerjs/drawing`](https://www.npmjs.com/package/@univerjs/drawing) - 插图插件
-* [`@univerjs/drawing-ui`](https://www.npmjs.com/package/@univerjs/drawing-ui) - 插图 UI 插件
-* [`@univerjs/sheets-drawing`](https://www.npmjs.com/package/@univerjs/sheets-drawing) - 表格插图插件
-* [`@univerjs/sheets-drawing-ui`](https://www.npmjs.com/package/@univerjs/sheets-drawing-ui) - 表格插图 UI 插件
+* [`@univerjs/drawing`](https://www.npmjs.com/package/@univerjs/drawing) - Fundamental Drawing Plugin
+* [`@univerjs/drawing-ui`](https://www.npmjs.com/package/@univerjs/drawing-ui) - Fundamental Drawing UI Plugin
+* [`@univerjs/sheets-drawing`](https://www.npmjs.com/package/@univerjs/sheets-drawing) - Sheet Drawing Plugin
+* [`@univerjs/sheets-drawing-ui`](https://www.npmjs.com/package/@univerjs/sheets-drawing-ui) - Sheet Drawing UI Plugin
 
 <Callout>
   TODO: add example
 </Callout>
 
-## Preset Installation
+## Installation with Presets
 
 <Tabs items={['pnpm', 'npm']}>
   <Tabs.Tab>
@@ -58,7 +57,7 @@ const { univerAPI } = createUniver({
 });
 ```
 
-## 高级 Installation
+## Advanced Installation
 
 <Tabs items={['pnpm', 'npm']}>
   <Tabs.Tab>

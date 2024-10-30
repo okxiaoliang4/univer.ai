@@ -1,11 +1,10 @@
 import { Callout, Tabs } from 'nextra/components'
 import VersionBadge from '@/components/version-badge'
+import FeatureMeta from '@/components/feature-meta'
 
 # 数据验证
 
-| 有付费版本 | 需要接入服务端 | 可用于 Univer on Node.js | 包含的 Preset |
-| - | - | - | - |
-| - | - | ✅ | `UniverSheetsDataValidationPreset` |
+<FeatureMeta texts={['-', '-', '✅', 'UniverSheetsDataValidationPreset' ]} />
 
 数据验证是一种在单元格中设置规则，以确保用户输入的数据符合特定条件的功能。
 目前已经支持的数据验证类型:
@@ -19,7 +18,7 @@ import VersionBadge from '@/components/version-badge'
 
 该功能包含以下插件包：
 
-* [`@univerjs/data-validation`](https://www.npmjs.com/package/@univerjs/data-validation) - 跨业务数据验证插件
+* [`@univerjs/data-validation`](https://www.npmjs.com/package/@univerjs/data-validation) - 基础数据验证插件
 * [`@univerjs/sheets-data-validation`](https://www.npmjs.com/package/@univerjs/sheets-data-validation) - sheet 数据验证插件
 * [`@univerjs/sheets-data-validation-ui`](https://www.npmjs.com/package/@univerjs/sheets-data-validation-ui) - sheet 数据验证 UI 插件
 

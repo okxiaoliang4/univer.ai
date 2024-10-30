@@ -8,6 +8,6 @@ export default {
   'range-selection': 'Range & Selection & Cell',
   'freeze': 'Freeze',
   'dom': 'Custom Component',
-  'default-style': 'Default Style',
+  // 'default-style': 'Default Style',
   'gridlines': 'Gridlines',
 }

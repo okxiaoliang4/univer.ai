@@ -1,13 +1,12 @@
 import { Tabs } from 'nextra/components'
 import { Callout } from 'nextra/components'
+import FeatureMeta from '@/components/feature-meta'
 
 # 数字格式
 
+<FeatureMeta texts={['-', '-', '✅', 'UniverSheetsCorePreset' ]} />
+
 数字格式插件提供了对单元格中数字的格式化功能，包括数字的小数位数、千分位分隔符、货币符号等。
-
-该功能包含以下插件包：
-
-* [`@univerjs/sheets-numfmt`](https://www.npmjs.com/package/@univerjs/sheets-numfmt) - 数字格式插件
 
 <Callout type="warning" emoji="🚨">
   不支持 **DBNum** 语法
@@ -17,42 +16,6 @@ import { Callout } from 'nextra/components'
   TODO: add example
 </Callout>
 
-## 高级安装
-
-<Tabs items={['pnpm', 'npm']}>
-  <Tabs.Tab>
-    ```shell
-    pnpm add @univerjs/sheets-numfmt
-    ```
-  </Tabs.Tab>
-  <Tabs.Tab>
-    ```shell
-    npm install @univerjs/sheets-numfmt
-    ```
-  </Tabs.Tab>
-</Tabs>
-
-```typescript {2-3,5,7,14,19}
-import { LocaleType, Tools } from '@univerjs/core';
-import { UniverSheetsNumfmtPlugin } from '@univerjs/sheets-numfmt';
-import SheetsNumfmtZhCN from '@univerjs/sheets-numfmt/locale/zh-CN';
-
-import '@univerjs/sheets-numfmt/lib/index.css';
-
-import '@univerjs/sheets-numfmt/facade';
-
-const univer = new Univer({
-  theme: defaultTheme,
-  locale: LocaleType.ZH_CN,
-  locales: {
-    [LocaleType.ZH_CN]: Tools.deepMerge(
-      SheetsNumfmtZhCN
-    ),
-  },
-});
-
-univer.registerPlugin(UniverSheetsNumfmtPlugin);
-```
 ## Facade API
 
 ### 设置数字格式

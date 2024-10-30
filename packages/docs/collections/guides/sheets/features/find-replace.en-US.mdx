@@ -1,23 +1,22 @@
 import { Callout, Tabs } from 'nextra/components'
+import FeatureMeta from '@/components/feature-meta'
 
 # Find & Replace
 
-| 有付费版本 | 需要接入服务端 | 可用于 Univer on Node.js | 包含的 Preset |
-| - | - | - | - |
-| - | - | - | `UniverSheetsFindReplacePreset` |
+<FeatureMeta texts={['-', '-', '-', 'UniverSheetsFindReplacePreset' ]} />
 
 The Find and Replace plug-in provides the function of finding and replacing cells.
 
-该功能包含以下插件包：
+This feature includes the following plugin packages:
 
-* [`@univerjs/find-replace`](https://www.npmjs.com/package/@univerjs/find-replace/README) - 跨业务查找替换插件
-* [`@univerjs/sheets-find-replace`](https://www.npmjs.com/package/@univerjs/sheets-find-replace/README) - sheet 查找替换插件
+* [`@univerjs/find-replace`](https://www.npmjs.com/package/@univerjs/find-replace/README) - Fundamental Find and Replace Plugin
+* [`@univerjs/sheets-find-replace`](https://www.npmjs.com/package/@univerjs/sheets-find-replace/README) - Sheet Find and Replace Plugin
 
 <Callout>
   TODO: add example
 </Callout>
 
-## Preset Installation
+## Installation with Presets
 
 <Tabs items={['pnpm', 'npm']}>
   <Tabs.Tab>
@@ -56,7 +55,7 @@ const { univerAPI } = createUniver({
 });
 ```
 
-## 高级 Installation
+## Advanced Installation
 
 <Tabs items={['pnpm', 'npm']}>
   <Tabs.Tab>
