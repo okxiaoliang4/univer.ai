@@ -1,16 +1,17 @@
 import { Callout, Steps, Tabs } from 'nextra/components'
 import VersionBadge from '@/components/version-badge'
+import FeatureMeta from '@/components/feature-meta'
 
-# Use Watermark <VersionBadge version="0.4.2+" />
+# Watermark <VersionBadge version="0.4.2+" />
+
+<FeatureMeta texts={['-', '-', '-', '❌ import via plugins' ]} />
 
 The watermark feature is designed to provide a flexible and secure watermark solution for web pages or applications. With this feature, developers can dynamically generate text or image watermarks on the page to prevent unauthorized use or dissemination of content. It supports multiple configurations.
 
 Watermark supports three settings: UI interface, FacadeAPI, and plug-in configuration.
 Three types of watermarks are supported: user information type, custom image type, and custom text type. The display of watermarks only supports one type of display, and the priority is user information type > custom image type > custom text type.
 
-## Install
-
-Install using your package manager:
+## Presets Installation
 
 <Tabs items={['pnpm', 'npm']}>
   <Tabs.Tab>
@@ -25,15 +26,70 @@ Install using your package manager:
   </Tabs.Tab>
 </Tabs>
 
-## Import
-
-```typescript
+```ts {4-5,7,9,17,25}
+import { createUniver, defaultTheme, LocaleType, Tools } from '@univerjs/presets';
+import { UniverDocsCorePreset } from '@univerjs/presets/preset-docs-core';
+import DocsCoreZhCN from '@univerjs/presets/preset-docs-core/locales/zh-CN';
 import { UniverWatermarkPlugin } from '@univerjs/watermark';
+import watermarkZhCN from '@univerjs/watermark/locale/zh-CN';
+
+import '@univerjs/watermark/lib/index.css';
+
+import '@univerjs/watermark/facade';
+
+const { univerAPI } = createUniver({
+    locale: LocaleType.ZH_CN,
+    locales: {
+        zhCN: Tools.deepMerge(
+            {},
+            DocsCoreZhCN,
+            watermarkZhCN,
+        ),
+    },
+    theme: defaultTheme,
+    presets: [
+        UniverDocsCorePreset(),
+    ],
+    plugins: [
+      UniverWatermarkPlugin,
+    ],
+});
 ```
 
-## Register
+## Advanced Installation
 
-```typescript
+<Tabs items={['pnpm', 'npm']}>
+  <Tabs.Tab>
+    ```shell
+    pnpm add @univerjs/watermark
+    ```
+  </Tabs.Tab>
+  <Tabs.Tab>
+    ```shell
+    npm install @univerjs/watermark
+    ```
+  </Tabs.Tab>
+</Tabs>
+
+```typescript {2-3,5,7,14,19}
+import { LocaleType, Tools } from '@univerjs/core';
+import { UniverWatermarkPlugin } from '@univerjs/watermark';
+import watermarkZhCN from '@univerjs/watermark/locale/zh-CN';
+
+import '@univerjs/watermark/lib/index.css';
+
+import '@univerjs/watermark/facade';
+
+const univer = new Univer({
+  theme: defaultTheme,
+  locale: LocaleType.ZH_CN,
+  locales: {
+    [LocaleType.ZH_CN]: Tools.deepMerge(
+      watermarkZhCN
+    ),
+  },
+});
+
 univer.registerPlugin(UniverWatermarkPlugin);
 ```
 
@@ -41,25 +97,28 @@ univer.registerPlugin(UniverWatermarkPlugin);
 
 ```typescript
 univer.registerPlugin(UniverWatermarkPlugin, {
-  textWatermarkSettings: {
-    // For specific configuration parameters, see https://github.com/dream-num/univer/blob/d0054f3e690d9d3cf9715b59a97a8cb95f65a6c8/packages/watermark/src/controllers/config.schema.ts#L24
-    content: "Univer",
-  }
+    textWatermarkSettings: {
+        content: "Univer",
+    }
 })
 ```
 
-### Facade API
+Detailed configuration can be found on [GitHub](https://github.com/dream-num/univer/blob/d0054f3e690d9d3cf9715b59a97a8cb95f65a6c8/packages/watermark/src/controllers/config.schema.ts#L24).
 
-### `FUniver.setWatermark(type, config)`
+## Facade API 
 
-Set watermark.
+### Set Watermark
 
 ```typescript
-const univerAPI = FUniver.newAPI(univer);
-// Please refer to the API documentation for specific parameters https://github.com/dream-num/univer/blob/d0054f3e690d9d3cf9715b59a97a8cb95f65a6c8/packages/facade/src/apis/facade.ts#L555
 univerAPI.setWatermark("text", { content: "hello", repeat: true })
 ```
 
-### `FUniver.setWatermark(null)`
+### Remove Watermark
 
-Remove watermark.
+```typescript
+univerAPI.setWatermark(null);
+```
+
+## Links
+
+* [API reference](https://github.com/dream-num/univer/blob/d0054f3e690d9d3cf9715b59a97a8cb95f65a6c8/packages/facade/src/apis/facade.ts#L555)

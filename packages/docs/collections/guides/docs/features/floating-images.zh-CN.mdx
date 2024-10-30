@@ -1,10 +1,47 @@
 import { Tabs } from 'nextra/components'
+import FeatureMeta from '@/components/feature-meta';
 
 # 浮动图片
 
+<FeatureMeta texts={['-', '-', '-', 'UniverDocsDrawingPreset' ]} />
+
 插入浮动图片，支持拖拽调整大小和位置。
 
-## 安装
+## Presets 安装
+
+```typescript {5-6,14,20}
+import { Tools } from '@univerjs/core';
+import { createUniver, defaultTheme, LocaleType } from '@univerjs/presets';
+import { UniverDocsCorePreset } from '@univerjs/presets/preset-docs-core';
+import zhCN from '@univerjs/presets/preset-docs-core/locales/zh-CN';
+import { UniverDocsDrawingPreset } from '@univerjs/presets/preset-docs-drawing';
+import DocsDrawingZhCN from '@univerjs/presets/preset-docs-drawing/locale/zh-CN';
+
+const { univerAPI } = createUniver({
+    locale: LocaleType.ZH_CN,
+    locales: {
+        zhCN: Tools.deepMerge({
+            {},
+            zhCN,
+            DocsDrawingZhCN 
+        }),
+    },
+    theme: defaultTheme,
+    presets: [
+        UniverDocsCorePreset(),
+        UniverDocsDrawingPreset(),
+    ],
+});
+```
+
+如果同时使用 Univer 协同功能，则需要提供配置：
+
+```diff
+- UniverDocsDrawingPreset()
++ UniverDocsDrawingPreset({ collaboration: true }),
+```
+
+## 高级安装
 
 <Tabs items={['pnpm', 'npm']}>
   <Tabs.Tab>
@@ -19,24 +56,17 @@ import { Tabs } from 'nextra/components'
   </Tabs.Tab>
 </Tabs>
 
-## 引入
-
-```typescript
-import '@univerjs/drawing-ui/lib/index.css';
-import '@univerjs/docs-drawing-ui/lib/index.css';
-
+```typescript {2-7,9-10,17-18,23-26}
+import { LocaleType, Tools } from '@univerjs/core';
 import { UniverDrawingPlugin } from '@univerjs/drawing';
 import { UniverDrawingUIPlugin } from '@univerjs/drawing-ui';
 import { UniverDocsDrawingPlugin} from '@univerjs/docs-drawing';
 import { UniverDocsDrawingUIPlugin } from '@univerjs/docs-drawing-ui';
-```
-
-## 国际化
-
-```typescript
-import { LocaleType, Tools } from '@univerjs/core';
 import DrawingUIZhCN from '@univerjs/drawing-ui/locale/zh-CN';
 import DocsDrawingUIZhCN from '@univerjs/docs-drawing-ui/locale/zh-CN';
+
+import '@univerjs/drawing-ui/lib/index.css';
+import '@univerjs/docs-drawing-ui/lib/index.css';
 
 const univer = new Univer({
   theme: defaultTheme,
@@ -48,28 +78,17 @@ const univer = new Univer({
     ),
   },
 });
-```
 
-## 注册
-
-不使用协同插件时，注册代码如下：
-
-```typescript
 univer.registerPlugin(UniverDrawingPlugin);
 univer.registerPlugin(UniverDrawingUIPlugin);
 univer.registerPlugin(UniverDocsDrawingPlugin);
 univer.registerPlugin(UniverDocsDrawingUIPlugin);
 ```
 
-使用协同插件时，注册代码如下：
+使用协同插件时，需要提供 `override` 配置：
 
-```typescript
-import { IImageIoService } from '@univerjs/drawing'
-
+```typescript {2}
 univer.registerPlugin(UniverDrawingPlugin, {
-  override: [[IImageIoService, null]], // 协同插件将会提供该实现
+  override: [[IImageIoService, null]],
 });
-univer.registerPlugin(UniverDrawingUIPlugin);
-univer.registerPlugin(UniverDocsDrawingPlugin);
-univer.registerPlugin(UniverDocsDrawingUIPlugin);
 ```

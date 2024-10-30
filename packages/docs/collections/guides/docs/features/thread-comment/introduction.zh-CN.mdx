@@ -1,10 +1,55 @@
 import { Tabs } from 'nextra/components'
+import FeatureMeta from '@/components/feature-meta'
 
-# 评论 / 批注简介
+# 评论
 
-评论 / 批注插件提供对文档的评论和批注功能。
+<FeatureMeta texts={['-', '可选', '-', 'UniverDocsThreadCommentPreset' ]} />
 
-## 安装
+评论插件提供对文档的评论的功能。
+
+该功能包含以下插件包：
+
+- [`@univerjs/thread-comment`](https://www.npmjs.com/package/@univerjs/thread-comment) - 基础评论插件
+- [`@univerjs/thread-comment-ui`](https://www.npmjs.com/package/@univerjs/thread-comment-ui) - 基础评论 UI 插件
+- [`@univerjs/docs-thread-comment-ui`](https://www.npmjs.com/package/@univerjs/sheets-thread-comment-ui) - doc 评论插件
+- [`@univerjs-pro/thread-comment-datasource`](https://www.npmjs.com/package/@univerjs-pro/thread-comment-datasource) - 和协同编辑一起使用时的评论数据源插件
+
+## Preset 安装
+
+```typescript {5-6,14,20}
+import { Tools } from '@univerjs/core';
+import { createUniver, defaultTheme, LocaleType } from '@univerjs/presets';
+import { UniverDocsCorePreset } from '@univerjs/presets/preset-docs-core';
+import zhCN from '@univerjs/presets/preset-docs-core/locales/zh-CN';
+import { UniverDocsThreadCommentPreset } from '@univerjs/presets/preset-docs-thread-comment';
+import DocsThreadCommentZhCN from '@univerjs/presets/preset-docs-thread-comment/locale/zh-CN';
+
+const { univerAPI } = createUniver({
+    locale: LocaleType.ZH_CN,
+    locales: {
+        zhCN: Tools.deepMerge({
+            {},
+            zhCN,
+            DocsThreadCommentZhCN 
+        }),
+    },
+    theme: defaultTheme,
+    presets: [
+        UniverDocsCorePreset(),
+        UniverDocsThreadCommentPreset(),
+    ],
+});
+```
+
+如果同时使用 Univer 协同功能，并且想让协同功能来管理评论信息，则需要提供配置：
+
+
+```diff
+- UniverDocsThreadCommentPreset()
++ UniverDocsThreadCommentPreset({ collaboration: true }),
+```
+
+## 高级安装
 
 <Tabs items={['pnpm', 'npm']}>
   <Tabs.Tab>
@@ -19,21 +64,14 @@ import { Tabs } from 'nextra/components'
   </Tabs.Tab>
 </Tabs>
 
-## 引入
-
-```typescript
-import '@univerjs/thread-comment-ui/lib/index.css';
-
+```typescript {2-5,7,14,19-32}
+import { LocaleType, Tools, UserManagerService } from '@univerjs/core';
 import { UniverThreadCommentPlugin } from '@univerjs/thread-comment';
 import { UniverThreadCommentUIPlugin } from '@univerjs/thread-comment-ui';
 import { UniverDocsThreadCommentUIPlugin } from '@univerjs/docs-thread-comment-ui';
-```
-
-## 国际化
-
-```typescript
-import { LocaleType, Tools } from '@univerjs/core';
 import ThreadCommentUIZhCN from '@univerjs/thread-comment-ui/locale/zh-CN';
+
+import '@univerjs/thread-comment-ui/lib/index.css';
 
 const univer = new Univer({
   theme: defaultTheme,
@@ -44,12 +82,6 @@ const univer = new Univer({
     ),
   },
 });
-```
-
-## 注册
-
-```typescript
-import { UserManagerService } from '@univerjs/core'
 
 const mockUser = {
   userID: 'mockId',
@@ -65,4 +97,25 @@ const userManagerService = injector.get(UserManagerService);
 univer.registerPlugin(UniverThreadCommentPlugin);
 univer.registerPlugin(UniverThreadCommentUIPlugin);
 univer.registerPlugin(UniverDocsThreadCommentUIPlugin);
+```
+
+如果同时使用 Univer 协同功能，并且想让协同功能来管理评论信息，则需要安装另一个插件：
+
+<Tabs items={['pnpm', 'npm']}>
+  <Tabs.Tab>
+    ```shell
+    pnpm add @univerjs-pro/thread-comment-datasource
+    ```
+  </Tabs.Tab>
+  <Tabs.Tab>
+    ```shell
+    npm install @univerjs-pro/thread-comment-datasource
+    ```
+  </Tabs.Tab>
+</Tabs>
+
+```typescript 
+import { UniverThreadCommentDataSourcePlugin } from '@univerjs-pro/thread-comment-datasource';
+
+univer.registerPlugin(UniverThreadCommentDataSourcePlugin);
 ```

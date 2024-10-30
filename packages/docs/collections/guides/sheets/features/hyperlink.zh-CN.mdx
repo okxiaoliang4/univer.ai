@@ -20,19 +20,6 @@ import FeatureMeta from '@/components/feature-meta'
 
 ## Preset 安装
 
-<Tabs items={['pnpm', 'npm']}>
-  <Tabs.Tab>
-    ```shell
-    pnpm add @univerjs/sheets-hyper-link @univerjs/sheets-hyper-link-ui
-    ```
-  </Tabs.Tab>
-  <Tabs.Tab>
-    ```shell
-    npm install @univerjs/sheets-hyper-link @univerjs/sheets-hyper-link-ui
-    ```
-  </Tabs.Tab>
-</Tabs>
-
 ```ts {4-5,13,19}
 import { createUniver, defaultTheme, LocaleType, Tools } from '@univerjs/presets';
 import { UniverSheetsCorePreset } from '@univerjs/presets/preset-sheets-core';
@@ -56,6 +43,7 @@ const { univerAPI } = createUniver({
     ]
 });
 ```
+
 ## 高级安装
 
 <Tabs items={['pnpm', 'npm']}>

@@ -6,7 +6,7 @@ import VersionBadge from '@/components/version-badge'
 
 <FeatureMeta texts={['-', '可选', '-', 'UniverSheetsThreadCommentPreset' ]} />
 
-评论 / 批注插件提供了对单元格进行评论或者批注的功能。
+评论插件提供了对单元格进行评论的功能。
 
 该功能包含以下插件包：
 
@@ -41,6 +41,13 @@ createUniver({
         UniverSheetsThreadCommentPreset(),
     ],
 });
+```
+
+如果同时使用 Univer 协同功能，则需要提供配置：
+
+```diff
+- UniverSheetsThreadCommentPreset(),
++ UniverSheetsThreadCommentPreset({ collaboration: true }),
 ```
 
 ## 高级安装
@@ -88,19 +95,7 @@ univer.registerPlugin(UniverSheetsThreadCommentBasePlugin);
 univer.registerPlugin(UniverSheetsThreadCommentPlugin);
 ```
 
-## 与 Univer 协同功能一起使用
-
 在使用评论功能时，你可以选择和 Univer 提供的协同功能一起使用，从而无需自己管理评论信息。
-
-### Preset 安装
-
-只需要修改 preset 配置参数即可。
-
-```ts
-UniverSheetsThreadCommentPreset({ collaboration: true }),
-```
-
-### 高级安装
 
 <Tabs items={['pnpm', 'npm']}>
   <Tabs.Tab>

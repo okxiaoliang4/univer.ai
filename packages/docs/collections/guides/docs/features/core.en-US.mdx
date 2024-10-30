@@ -1,7 +1,10 @@
 import { Tabs } from 'nextra/components'
 import VersionBadge from '@/components/version-badge'
+import FeatureMeta from '@/components/feature-meta';
 
 # Core Features
+
+<FeatureMeta texts={['-', '-', '-', 'UniverDocsCorePreset' ]} />
 
 The Core package and Doc-related Base packages provide the basic capabilities and core functions required by Univer Doc. For example, engine-render provides the typesetting and rendering of Doc documents, engine-formula provides the computing power of formulas, UI provides basic UI components, design provides basic style design, and doc and doc-ui implement most of the functions of Univer Doc.
 
@@ -18,7 +21,41 @@ At present, the core functions of Univer Doc mainly include:
 - **List Function**: Support the insertion and editing of order, bullet lists and task lists, support the indentation and indentation of lists, etc.
 - **Plug-in system**: Support plug-in system, you can customize plug-ins, such as formula plug-ins, picture plug-ins, chart plug-ins, etc., which is also one of Univer's core architecture capabilities.
 
-## Installation
+## Presets Installation
+
+<Tabs items={['pnpm', 'npm']}>
+  <Tabs.Tab>
+    ```shell
+    pnpm add @univerjs/presets
+    ```
+  </Tabs.Tab>
+  <Tabs.Tab>
+    ```shell
+    npm install @univerjs/presets
+    ```
+  </Tabs.Tab>
+</Tabs>
+
+```typescript
+import { createUniver, defaultTheme, LocaleType } from '@univerjs/presets';
+import { UniverDocsCorePreset } from '@univerjs/presets/preset-docs-core';
+import zhCN from '@univerjs/presets/preset-docs-core/locales/zh-CN';
+
+const { univerAPI } = createUniver({
+    locale: LocaleType.ZH_CN,
+    locales: {
+        zhCN,
+    },
+    theme: defaultTheme,
+    presets: [
+        UniverDocsCorePreset(),
+    ],
+});
+
+univerAPI.createUniverDoc({});
+```
+
+## Advanced Installation
 
 <Tabs items={['pnpm', 'npm']}>
   <Tabs.Tab>
@@ -33,59 +70,41 @@ At present, the core functions of Univer Doc mainly include:
   </Tabs.Tab>
 </Tabs>
 
-## Import
-
 ```typescript
+import { Univer, LocaleType, Tools } from "@univerjs/core";
+import { defaultTheme } from "@univerjs/design";
+import { UniverFormulaEnginePlugin } from "@univerjs/engine-formula";
+import { UniverRenderEnginePlugin } from "@univerjs/engine-render";
+import { UniverUIPlugin } from "@univerjs/ui";
+import { UniverDocsPlugin } from "@univerjs/docs";
+import { UniverDocsUIPlugin } from "@univerjs/docs-ui";
+
+import DesignZhCN from '@univerjs/design/locale/zh-CN';
+import DocsUIZhCN from '@univerjs/docs-ui/locale/zh-CN';
+import UIZhCN from '@univerjs/ui/locale/zh-CN';
+
 import "@univerjs/design/lib/index.css";
 import "@univerjs/ui/lib/index.css";
 import "@univerjs/docs-ui/lib/index.css";
 
-import { Univer } from "@univerjs/core";
-import { defaultTheme } from "@univerjs/design";
-
-import { UniverFormulaEnginePlugin } from "@univerjs/engine-formula";
-import { UniverRenderEnginePlugin } from "@univerjs/engine-render";
-
-import { UniverUIPlugin } from "@univerjs/ui";
-
-import { UniverDocsPlugin } from "@univerjs/docs";
-import { UniverDocsUIPlugin } from "@univerjs/docs-ui";
-```
-
-## Internationalization
-
-```typescript
-import { LocaleType, Tools } from '@univerjs/core';
-import DesignEnUS from '@univerjs/design/locale/en-US';
-import DocsUIEnUS from '@univerjs/docs-ui/locale/en-US';
-import SheetsEnUS from '@univerjs/sheets/locale/en-US';
-import SheetsUIEnUS from '@univerjs/sheets-ui/locale/en-US';
-import UIEnUS from '@univerjs/ui/locale/en-US';
-
 const univer = new Univer({
   theme: defaultTheme,
-  locale: LocaleType.EN_US,
+  locale: LocaleType.ZH_CN,
   locales: {
-    [LocaleType.EN_US]: Tools.deepMerge(
-      DesignEnUS,
-      DocsUIEnUS,
-      UIEnUS
+    [LocaleType.ZH_CN]: Tools.deepMerge(
+      DesignZhCN,
+      DocsUIZhCN,
+      UIZhCN
     ),
   },
 });
-```
 
-## Register
-
-```typescript
 univer.registerPlugin(UniverRenderEnginePlugin);
 univer.registerPlugin(UniverFormulaEnginePlugin);
-
 univer.registerPlugin(UniverUIPlugin, {
   container: 'app',
   footer: false,
 });
-
 univer.registerPlugin(UniverDocsPlugin);
 univer.registerPlugin(UniverDocsUIPlugin, {
   container: 'univerdoc',

@@ -75,7 +75,7 @@ const { univerAPI } = createUniver({
 ```typescript {2-3,5,7,14,19}
 import { LocaleType, Tools } from '@univerjs/core';
 import { UniverWatermarkPlugin } from '@univerjs/watermark';
-import sheetsWatermarkZhCN from '@univerjs/watermark/locale/zh-CN';
+import watermarkZhCN from '@univerjs/watermark/locale/zh-CN';
 
 import '@univerjs/watermark/lib/index.css';
 
@@ -86,7 +86,7 @@ const univer = new Univer({
   locale: LocaleType.ZH_CN,
   locales: {
     [LocaleType.ZH_CN]: Tools.deepMerge(
-     sheetsWatermarkZhCN 
+      watermarkZhCN
     ),
   },
 });

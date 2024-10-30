@@ -1,7 +1,10 @@
 import { Tabs } from 'nextra/components'
 import VersionBadge from '@/components/version-badge'
+import FeatureMeta from '@/components/feature-meta';
 
 # 核心功能
+
+<FeatureMeta texts={['-', '-', '-', 'UniverDocsCorePreset' ]} />
 
 Core 包及 Doc 相关基础包提供 Univer Doc 所需的基本能力和核心功能，如 engine-render 提供了 Doc 文档的排版和渲染，engine-formula 提供了公式的计算能力，ui 提供了基础的 UI 组件，design 提供了基础的样式设计，而 doc 和 doc-ui 则实现了 Univer Doc 的大部分功能。
 
@@ -18,7 +21,41 @@ Core 包及 Doc 相关基础包提供 Univer Doc 所需的基本能力和核心�
 - **列表功能**：支持有序、无序列表和任务列表的插入和编辑，支持列表的缩进和反缩进等。
 - **插件系统**：支持插件系统，可以自定义插件，如公式插件、图片插件、图表插件等， 这也是 Univer 核心架构能力之一。
 
-## 安装
+## Presets 安装
+
+<Tabs items={['pnpm', 'npm']}>
+  <Tabs.Tab>
+    ```shell
+    pnpm add @univerjs/presets
+    ```
+  </Tabs.Tab>
+  <Tabs.Tab>
+    ```shell
+    npm install @univerjs/presets
+    ```
+  </Tabs.Tab>
+</Tabs>
+
+```typescript
+import { createUniver, defaultTheme, LocaleType } from '@univerjs/presets';
+import { UniverDocsCorePreset } from '@univerjs/presets/preset-docs-core';
+import zhCN from '@univerjs/presets/preset-docs-core/locales/zh-CN';
+
+const { univerAPI } = createUniver({
+    locale: LocaleType.ZH_CN,
+    locales: {
+        zhCN,
+    },
+    theme: defaultTheme,
+    presets: [
+        UniverDocsCorePreset(),
+    ],
+});
+
+univerAPI.createUniverDoc({});
+```
+
+## 高级安装
 
 <Tabs items={['pnpm', 'npm']}>
   <Tabs.Tab>
@@ -33,32 +70,22 @@ Core 包及 Doc 相关基础包提供 Univer Doc 所需的基本能力和核心�
   </Tabs.Tab>
 </Tabs>
 
-## 引入
-
 ```typescript
-import "@univerjs/design/lib/index.css";
-import "@univerjs/ui/lib/index.css";
-import "@univerjs/docs-ui/lib/index.css";
-
-import { Univer } from "@univerjs/core";
+import { Univer, LocaleType, Tools } from "@univerjs/core";
 import { defaultTheme } from "@univerjs/design";
-
 import { UniverFormulaEnginePlugin } from "@univerjs/engine-formula";
 import { UniverRenderEnginePlugin } from "@univerjs/engine-render";
-
 import { UniverUIPlugin } from "@univerjs/ui";
-
 import { UniverDocsPlugin } from "@univerjs/docs";
 import { UniverDocsUIPlugin } from "@univerjs/docs-ui";
-```
 
-## 国际化
-
-```typescript
-import { LocaleType, Tools } from '@univerjs/core';
 import DesignZhCN from '@univerjs/design/locale/zh-CN';
 import DocsUIZhCN from '@univerjs/docs-ui/locale/zh-CN';
 import UIZhCN from '@univerjs/ui/locale/zh-CN';
+
+import "@univerjs/design/lib/index.css";
+import "@univerjs/ui/lib/index.css";
+import "@univerjs/docs-ui/lib/index.css";
 
 const univer = new Univer({
   theme: defaultTheme,
@@ -71,19 +98,13 @@ const univer = new Univer({
     ),
   },
 });
-```
 
-## 注册
-
-```typescript
 univer.registerPlugin(UniverRenderEnginePlugin);
 univer.registerPlugin(UniverFormulaEnginePlugin);
-
 univer.registerPlugin(UniverUIPlugin, {
   container: 'app',
   footer: false,
 });
-
 univer.registerPlugin(UniverDocsPlugin);
 univer.registerPlugin(UniverDocsUIPlugin, {
   container: 'univerdoc',

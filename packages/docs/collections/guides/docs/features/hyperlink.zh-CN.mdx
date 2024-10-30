@@ -1,10 +1,40 @@
 import { Tabs } from 'nextra/components'
+import FeatureMeta from '@/components/feature-meta';
 
 # 超链接
 
+<FeatureMeta texts={['-', '-', '-', 'UniverDocsHyperLinkPreset' ]} />
+
 支持在文档中插入超链接。
 
-## 安装
+## Presets 安装
+
+```typescript {5-6,14,20}
+import { Tools } from '@univerjs/core';
+import { createUniver, defaultTheme, LocaleType } from '@univerjs/presets';
+import { UniverDocsCorePreset } from '@univerjs/presets/preset-docs-core';
+import zhCN from '@univerjs/presets/preset-docs-core/locales/zh-CN';
+import { UniverDocsHyperLinkPreset } from '@univerjs/presets/preset-docs-hyperlink';
+import DocsHyperLinkZhCN from '@univerjs/presets/preset-docs-hyperlink/locale/zh-CN';
+
+const { univerAPI } = createUniver({
+    locale: LocaleType.ZH_CN,
+    locales: {
+        zhCN: Tools.deepMerge({
+            {},
+            zhCN,
+            DocsHyperLinkZhCN 
+        }),
+    },
+    theme: defaultTheme,
+    presets: [
+        UniverDocsCorePreset(),
+        UniverDocsHyperLinkPreset(),
+    ],
+});
+```
+
+## 高级安装
 
 <Tabs items={['pnpm', 'npm']}>
   <Tabs.Tab>
@@ -19,20 +49,13 @@ import { Tabs } from 'nextra/components'
   </Tabs.Tab>
 </Tabs>
 
-## 引入
-
-```typescript
-import '@univerjs/docs-hyper-link-ui/lib/index.css';
-
+```typescript {2-4,6,12, 18-19}
+import { LocaleType, Tools } from '@univerjs/core';
 import { UniverDocsHyperLinkPlugin } from '@univerjs/docs-hyper-link';
 import { UniverDocsHyperLinkUIPlugin } from '@univerjs/docs-hyper-link-ui';
-```
-
-## 国际化
-
-```typescript
-import { LocaleType, Tools } from '@univerjs/core';
 import DocsHyperLinkUIZhCN from '@univerjs/docs-hyper-link-ui/locale/zh-CN';
+
+import '@univerjs/docs-hyper-link-ui/lib/index.css';
 
 const univer = new Univer({
   theme: defaultTheme,
@@ -43,11 +66,7 @@ const univer = new Univer({
     ),
   },
 });
-```
 
-## 注册
-
-```typescript
 univer.registerPlugin(UniverDocsHyperLinkPlugin);
 univer.registerPlugin(UniverDocsHyperLinkUIPlugin);
 ```
