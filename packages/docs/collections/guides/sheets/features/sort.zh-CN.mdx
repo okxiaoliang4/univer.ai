@@ -1,10 +1,23 @@
-import { Tabs } from 'nextra/components'
+import { Callout, Tabs } from 'nextra/components'
 
 # 排序
 
+| 有付费版本 | 需要接入服务端 | 可用于 Univer on Node.js | 包含的 Preset |
+| - | - | - | - |
+| - | - | - | `UniverSheetsSortPreset` |
+
 排序插件提供了对指定区域内单元格的排序功能。
 
-## 安装
+该功能包含以下插件包：
+
+* [`@univerjs/sheets-sort`](https://www.npmjs.com/package/@univerjs/sheets-sort) - 跨业务排序插件
+* [`@univerjs/sheets-sort-ui`](https://www.npmjs.com/package/@univerjs/sheets-sort-ui) - sheet 排序 UI 插件
+
+<Callout>
+  TODO: add example
+</Callout>
+
+## Preset 安装
 
 <Tabs items={['pnpm', 'npm']}>
   <Tabs.Tab>
@@ -19,20 +32,52 @@ import { Tabs } from 'nextra/components'
   </Tabs.Tab>
 </Tabs>
 
-## 引入
+```ts {4-5,13,19}
+import { createUniver, defaultTheme, LocaleType, Tools } from '@univerjs/presets';
+import { UniverSheetsCorePreset } from '@univerjs/presets/preset-sheets-core';
+import sheetsCoreZhCN from '@univerjs/presets/preset-sheets-core/locales/zh-CN';
+import { UniverSheetsSortPreset } from '@univerjs/presets/preset-sheets-sort';
+import SheetsSortZhCN from '@univerjs/presets/preset-sheets-sort/locale/zh-CN';
 
-```typescript
-import '@univerjs/sheets-sort-ui/lib/index.css';
-
-import { UniverSheetsSortPlugin } from '@univerjs/sheets-sort';
-import { UniverSheetsSortUIPlugin } from '@univerjs/sheets-sort-ui';
+const { univerAPI } = createUniver({
+    locale: LocaleType.ZH_CN,
+    locales: {
+        zhCN: Tools.deepMerge(
+            {},
+            sheetsCoreZhCN,
+            SheetsSortZhCN 
+        ),
+    },
+    theme: defaultTheme,
+    presets: [
+        UniverSheetsCorePreset(),
+        UniverSheetsSortPreset()
+    ]
+});
 ```
 
-## 国际化
+## 高级安装
 
-```typescript
+<Tabs items={['pnpm', 'npm']}>
+  <Tabs.Tab>
+    ```shell
+    pnpm add @univerjs/sheets-sort @univerjs/sheets-sort-ui
+    ```
+  </Tabs.Tab>
+  <Tabs.Tab>
+    ```shell
+    npm install @univerjs/sheets-sort @univerjs/sheets-sort-ui
+    ```
+  </Tabs.Tab>
+</Tabs>
+
+```typescript {2-4,6,13,18-19}
 import { LocaleType, Tools } from '@univerjs/core';
+import { UniverSheetsSortPlugin } from '@univerjs/sheets-sort';
+import { UniverSheetsSortUIPlugin } from '@univerjs/sheets-sort-ui';
 import SheetsSortUIZhCN from '@univerjs/sheets-sort-ui/locale/zh-CN';
+
+import '@univerjs/sheets-sort-ui/lib/index.css';
 
 const univer = new Univer({
   theme: defaultTheme,
@@ -43,11 +88,7 @@ const univer = new Univer({
     ),
   },
 });
-```
 
-## 注册
-
-```typescript
 univer.registerPlugin(UniverSheetsSortPlugin);
 univer.registerPlugin(UniverSheetsSortUIPlugin);
 ```

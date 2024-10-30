@@ -82,35 +82,6 @@ univer.registerPlugin(UniverSheetsFilterPlugin);
 univer.registerPlugin(UniverSheetsFilterUIPlugin);
 ```
 
-## Univer on Node.js 高级安装
-
-<Tabs items={['pnpm', 'npm']}>
-  <Tabs.Tab>
-    ```shell
-    pnpm add @univerjs/sheets-filter
-    ```
-  </Tabs.Tab>
-  <Tabs.Tab>
-    ```shell
-    npm install @univerjs/sheets-filter
-    ```
-  </Tabs.Tab>
-</Tabs>
-
-```typescript {2,4,11}
-import { LocaleType, Tools } from '@univerjs/core';
-import { UniverSheetsFilterPlugin } from '@univerjs/sheets-filter';
-
-import '@univerjs/sheets-filter/facade';
-
-const univer = new Univer({
-  theme: defaultTheme,
-  locale: LocaleType.ZH_CN,
-});
-
-univer.registerPlugin(UniverSheetsFilterPlugin);
-```
-
 ## Facade API
 
 <Callout>

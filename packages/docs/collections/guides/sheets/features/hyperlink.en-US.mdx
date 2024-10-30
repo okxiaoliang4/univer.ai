@@ -34,16 +34,12 @@ import { Callout, Tabs } from 'nextra/components'
   </Tabs.Tab>
 </Tabs>
 
-```ts {3,5,7,9,17,23}
+```ts {4-5,13,19}
 import { createUniver, defaultTheme, LocaleType, Tools } from '@univerjs/presets';
 import { UniverSheetsCorePreset } from '@univerjs/presets/preset-sheets-core';
-import { UniverSheetsHyperLinkPreset } from '@univerjs/presets/preset-sheets-hyper-link';
 import sheetsCoreZhCN from '@univerjs/presets/preset-sheets-core/locales/zh-CN';
-import SheetsHyperLinkUIZhCN from '@univerjs/presets/preset-sheets-hyper-link/locale/zh-CN';
-
-import '@univerjs/sheets-hyper-link-ui/lib/index.css';
-
-import '@univerjs/sheets-hyper-link/facade';
+import { UniverSheetsHyperLinkPreset } from '@univerjs/presets/preset-sheets-hyper-link';
+import SheetsHyperLinkZhCN from '@univerjs/presets/preset-sheets-hyper-link/locale/zh-CN';
 
 const { univerAPI } = createUniver({
     locale: LocaleType.ZH_CN,
@@ -51,7 +47,7 @@ const { univerAPI } = createUniver({
         zhCN: Tools.deepMerge(
             {},
             sheetsCoreZhCN,
-            SheetsHyperLinkUIZhCN 
+            SheetsHyperLinkZhCN 
         ),
     },
     theme: defaultTheme,

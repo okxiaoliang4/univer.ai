@@ -1,15 +1,60 @@
-import { Tabs } from 'nextra/components'
+import { Callout, Tabs } from 'nextra/components'
 
 # 查找替换
 
 | 有付费版本 | 需要接入服务端 | 可用于 Univer on Node.js | 包含的 Preset |
 | - | - | - | - |
-| ❌ | ❌ | ❌ | `UniverSheetsFindReplacePreset` |
+| - | - | - | `UniverSheetsFindReplacePreset` |
+
+查找替换插件提供了对单元格的查找替换功能。
 
 该功能包含以下插件包：
 
 * [`@univerjs/find-replace`](https://www.npmjs.com/package/@univerjs/find-replace/README) - 跨业务查找替换插件
 * [`@univerjs/sheets-find-replace`](https://www.npmjs.com/package/@univerjs/sheets-find-replace/README) - sheet 查找替换插件
+
+<Callout>
+  TODO: add example
+</Callout>
+
+## Preset 安装
+
+<Tabs items={['pnpm', 'npm']}>
+  <Tabs.Tab>
+    ```shell
+    pnpm add @univerjs/find-replace @univerjs/sheets-find-replace
+    ```
+  </Tabs.Tab>
+  <Tabs.Tab>
+    ```shell
+    npm install @univerjs/find-replace @univerjs/sheets-find-replace
+    ```
+  </Tabs.Tab>
+</Tabs>
+
+```ts {4-5,13,19}
+import { createUniver, defaultTheme, LocaleType, Tools } from '@univerjs/presets';
+import { UniverSheetsCorePreset } from '@univerjs/presets/preset-sheets-core';
+import sheetsCoreZhCN from '@univerjs/presets/preset-sheets-core/locales/zh-CN';
+import { UniverSheetsFindReplacePreset } from '@univerjs/presets/preset-sheets-find-replace';
+import SheetsFindReplaceZhCN from '@univerjs/presets/preset-sheets-find-replace/locale/zh-CN';
+
+const { univerAPI } = createUniver({
+    locale: LocaleType.ZH_CN,
+    locales: {
+        zhCN: Tools.deepMerge(
+            {},
+            sheetsCoreZhCN,
+            SheetsFindReplaceZhCN 
+        ),
+    },
+    theme: defaultTheme,
+    presets: [
+        UniverSheetsCorePreset(),
+        UniverSheetsFindReplacePreset()
+    ]
+});
+```
 
 ## 高级安装
 
@@ -26,7 +71,7 @@ import { Tabs } from 'nextra/components'
   </Tabs.Tab>
 </Tabs>
 
-```typescript {2-5,14-15,20-21}
+```typescript {2-5,7,14-15,20-21}
 import { LocaleType, Tools } from '@univerjs/core';
 import { UniverFindReplacePlugin } from '@univerjs/find-replace';
 import { UniverSheetsFindReplacePlugin } from '@univerjs/sheets-find-replace';

@@ -4,16 +4,16 @@ import { Callout, Tabs } from 'nextra/components'
 
 | 有付费版本 | 需要接入服务端 | 可用于 Univer on Node.js | 包含的 Preset |
 | - | - | - | - |
-| - | - | ✅ | `preset-sheets-drawing` |
+| - | - | ✅ | `UniverSheetsDrawingPreset` |
 
 插入浮动图片，支持拖拽调整大小和位置。
 
 该功能包含以下插件包：
 
-* [`@univerjs/drawing`](https://www.npmjs.com/package/@univerjs/drawing) - 插图插件
-* [`@univerjs/drawing-ui`](https://www.npmjs.com/package/@univerjs/drawing-ui) - 插图 UI 插件
-* [`@univerjs/sheets-drawing`](https://www.npmjs.com/package/@univerjs/sheets-drawing) - 表格插图插件
-* [`@univerjs/sheets-drawing-ui`](https://www.npmjs.com/package/@univerjs/sheets-drawing-ui) - 表格插图 UI 插件
+* [`@univerjs/drawing`](https://www.npmjs.com/package/@univerjs/drawing) - 跨业务插图插件
+* [`@univerjs/drawing-ui`](https://www.npmjs.com/package/@univerjs/drawing-ui) - 跨业务插图 UI 插件
+* [`@univerjs/sheets-drawing`](https://www.npmjs.com/package/@univerjs/sheets-drawing) - sheet 插图插件
+* [`@univerjs/sheets-drawing-ui`](https://www.npmjs.com/package/@univerjs/sheets-drawing-ui) - sheet 插图 UI 插件
 
 <Callout>
   TODO: add example
@@ -34,17 +34,12 @@ import { Callout, Tabs } from 'nextra/components'
   </Tabs.Tab>
 </Tabs>
 
-```ts {3,5,7-8,10,18,24}
+```ts {4-5,13,19}
 import { createUniver, defaultTheme, LocaleType, Tools } from '@univerjs/presets';
 import { UniverSheetsCorePreset } from '@univerjs/presets/preset-sheets-core';
-import { UniverSheetsDrawingPreset } from '@univerjs/presets/preset-sheets-drawing';
 import sheetsCoreZhCN from '@univerjs/presets/preset-sheets-core/locales/zh-CN';
-import SheetsDrawingUIZhCN from '@univerjs/presets/preset-sheets-drawing/locale/zh-CN';
-
-import '@univerjs/drawing-ui/lib/index.css';
-import '@univerjs/sheets-drawing-ui/lib/index.css';
-
-import '@univerjs/sheets-drawing-ui/facade';
+import { UniverSheetsDrawingPreset } from '@univerjs/presets/preset-sheets-drawing';
+import SheetsDrawingZhCN from '@univerjs/presets/preset-sheets-drawing/locale/zh-CN';
 
 const { univerAPI } = createUniver({
     locale: LocaleType.ZH_CN,
@@ -52,7 +47,7 @@ const { univerAPI } = createUniver({
         zhCN: Tools.deepMerge(
             {},
             sheetsCoreZhCN,
-            SheetsDrawingUIZhCN 
+            SheetsDrawingZhCN 
         ),
     },
     theme: defaultTheme,

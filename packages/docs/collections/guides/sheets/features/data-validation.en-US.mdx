@@ -1,6 +1,10 @@
-import { Tabs } from 'nextra/components'
+import { Callout, Tabs } from 'nextra/components'
 
 # Data Validation
+
+| 有付费版本 | 需要接入服务端 | 可用于 Univer on Node.js | 包含的 Preset |
+| - | - | - | - |
+| - | - | ✅ | `UniverSheetsDataValidationPreset` |
 
 Data validation is a feature that sets rules in cells to ensure that the data entered by users meets specific conditions.
 Currently supported data validation types:
@@ -12,7 +16,17 @@ Currently supported data validation types:
 * Drop-down list (single/multiple)
 * Custom formula
 
-## Installation
+该功能包含以下插件包：
+
+* [`@univerjs/data-validation`](https://www.npmjs.com/package/@univerjs/data-validation) - 跨业务数据验证插件
+* [`@univerjs/sheets-data-validation`](https://www.npmjs.com/package/@univerjs/sheets-data-validation) - sheet 数据验证插件
+* [`@univerjs/sheets-data-validation-ui`](https://www.npmjs.com/package/@univerjs/sheets-data-validation-ui) - sheet 数据验证 UI 插件
+
+<Callout>
+  TODO: add example
+</Callout>
+
+## Preset Installation
 
 <Tabs items={['pnpm', 'npm']}>
   <Tabs.Tab>
@@ -27,43 +41,218 @@ Currently supported data validation types:
   </Tabs.Tab>
 </Tabs>
 
-## Import
+```ts {4-5,13,19}
+import { createUniver, defaultTheme, LocaleType, Tools } from '@univerjs/presets';
+import { UniverSheetsCorePreset } from '@univerjs/presets/preset-sheets-core';
+import sheetsCoreZhCN from '@univerjs/presets/preset-sheets-core/locales/zh-CN';
+import { UniverSheetsDataValidationPreset } from '@univerjs/presets/preset-sheets-data-validation';
+import SheetsDataValidationZhCN from '@univerjs/presets/preset-sheets-data-validation/locale/zh-CN';
 
-```typescript
-import '@univerjs/sheets-data-validation-ui/lib/index.css';
+const { univerAPI } = createUniver({
+    locale: LocaleType.ZH_CN,
+    locales: {
+        zhCN: Tools.deepMerge(
+            {},
+            sheetsCoreZhCN,
+            SheetsDataValidationZhCN 
+        ),
+    },
+    theme: defaultTheme,
+    presets: [
+        UniverSheetsCorePreset(),
+        UniverSheetsDataValidationPreset()
+    ]
+});
+```
 
+## 高级 Installation
+
+<Tabs items={['pnpm', 'npm']}>
+  <Tabs.Tab>
+    ```shell
+    pnpm add @univerjs/data-validation @univerjs/sheets-data-validation @univerjs/sheets-data-validation-ui
+    ```
+  </Tabs.Tab>
+  <Tabs.Tab>
+    ```shell
+    npm install @univerjs/data-validation @univerjs/sheets-data-validation @univerjs/sheets-data-validation-ui
+    ```
+  </Tabs.Tab>
+</Tabs>
+
+```typescript {2-5,7,9,16,21-26}
+import { LocaleType, Tools } from '@univerjs/core';
 import { UniverDataValidationPlugin } from '@univerjs/data-validation';
 import { UniverSheetsDataValidationPlugin } from '@univerjs/sheets-data-validation';
 import { UniverSheetsDataValidationUIPlugin } from '@univerjs/sheets-data-validation-ui';
-```
+import SheetsDataValidationZhCN from '@univerjs/sheets-data-validation-ui/locale/zh-CN';
 
-## Internationalization
+import '@univerjs/sheets-data-validation-ui/lib/index.css';
 
-```typescript
-import { LocaleType, Tools } from '@univerjs/core';
-import SheetsDataValidationEnUS from '@univerjs/sheets-data-validation-ui/locale/en-US';
+import '@univerjs/sheets-data-validation/facade';
 
 const univer = new Univer({
   theme: defaultTheme,
-  locale: LocaleType.EN_US,
+  locale: LocaleType.ZH_CN,
   locales: {
-    [LocaleType.EN_US]: Tools.deepMerge(
-      // ...other_locales,
-      SheetsDataValidationEnUS
+    [LocaleType.ZH_CN]: Tools.deepMerge(
+      SheetsDataValidationZhCN
     ),
   },
 });
-```
 
-## Register
-
-```typescript
 univer.registerPlugin(UniverDataValidationPlugin);
-
 univer.registerPlugin(UniverSheetsDataValidationPlugin);
-
 univer.registerPlugin(UniverSheetsDataValidationUIPlugin, {
-  // Whether to show the edit button in the dropdown menu
+  // 是否在下拉菜单中显示编辑按钮
   showEditOnDropdown: true
 });
 ```
+
+## Facade API <VersionBadge version="0.2.10+" />
+
+To get full defination of facade api, please refer to [FacadeAPI](/typedoc/@univerjs/facade/README)
+
+### Add a data validation rule
+
+```typescript
+const sheet = univerAPI.getActiveWorkbook().getActiveSheet();
+
+// get range
+const range = sheet.getRange(0, 0, 1, 1);
+
+// build data validation
+const dataValidationBuilder = FUniver.newDataValidation();
+const dataValidation = dataValidationBuilder.requireCheckbox().build();
+
+// set data validation
+range.setDataValidation(dataValidation);
+```
+
+### Clear data validations of range
+```typescript
+const sheet = univerAPI.getActiveWorkbook().getActiveSheet();
+
+// get range
+const range = sheet.getRange(0, 0, 10, 10); // A1:J10
+
+// clear data validation of range
+range.setDataValidation(null);
+```
+
+### Get data validations of Range / Worksheet 
+```typescript
+const sheet = univerAPI.getActiveWorkbook().getActiveSheet();
+
+// get range
+const range = sheet.getRange(0, 0, 10, 10); // A1:J10
+
+// get data validation of range
+const dataValidation = range.getDataValidation();
+const dataValidations = range.getDataValidations();
+
+// get data validation of worksheet
+const dataValidationsOfSheet = sheet.getDataValidations();
+```
+
+### Update/Delete data validation
+```typescript
+import { DataValidationErrorStyle, DataValidationOperator, DataValidationType } from '@univerjs/core';
+
+const sheet = univerAPI.getActiveWorkbook().getActiveSheet();
+
+// get range
+const range = sheet.getRange(0, 0, 10, 10); // A1:J10
+
+// get data validation
+const dataValidation = range.getDataValidation();
+
+// update data validation range
+dataValidation.setRanges([{
+    startRow: 0,
+    startColumn: 0,
+    endColumn: 20,
+    endRow: 20,
+}]);
+
+// update data validation criteria
+dataValidation.setCriteria(DataValidationType.WHOLE, [DataValidationOperator.BETWEEN, '1', '100']);
+
+// update data validation options
+dataValidation.setOptions({
+    errorStyle: DataValidationErrorStyle.STOP,
+});
+
+// delete data validation
+dataValidation.delete();
+```
+
+### Get validator status
+```typescript
+const workbook = univerAPI.getActiveWorkbook();
+const worksheet = workbook.getActiveSheet();
+
+// get range
+const range = worksheet.getRange(0, 0, 10, 10); // A1:J10
+
+range.getValidatorStatus().then((status) => {
+    console.log('===status', status);
+});
+
+worksheet.getValidatorStatus().then((statusOfSheet) => {
+    console.log('===statusOfSheet', statusOfSheet);
+});
+
+workbook?.getValidatorStatus().then((statusOfWorkbook) => {
+    console.log('===statusOfWorkbook', statusOfWorkbook);
+});
+```
+
+### Event
+```typescript
+const workbook = univerAPI.getActiveWorkbook();
+
+// don't forget to dispose the listener
+const dispose = workbook.onBeforeAddDataValidation((event) => {
+    console.log('===onBeforeAddDataValidation', event);
+});
+
+workbook.onBeforeDeleteAllDataValidation((event) => {
+    console.log('===onBeforeDeleteAllDataValidation', event);
+});
+
+workbook.onBeforeUpdateDataValidationCriteria((event) => {
+    console.log('===onBeforeUpdateDataValidationCriteria', event);
+});
+
+workbook.onBeforeUpdateDataValidationRange((event) => {
+    console.log('===onBeforeUpdateDataValidationRange', event);
+});
+
+workbook.onBeforeUpdateDataValidationOptions((event) => {
+    console.log('===onBeforeUpdateDataValidationOptions', event);
+});
+
+workbook.onDataValidationChange((event) => {
+    console.log('===onDataValidationChange', event);
+});
+
+workbook.onDataValidationStatusChange((event) => {
+    console.log('===onDataValidationStatusChange', event);
+});
+```
+
+### Change List render mode
+```typescript
+import { DataValidationRenderMode } from '@univerjs/core';
+
+dataValidation.setOptions({
+    // support TEXT, ARROW, CUSTOM
+    // default is `CUSTOM`
+    renderMode: DataValidationRenderMode.TEXT,
+});
+```
+
+
+
+
