@@ -39,7 +39,7 @@ import { Callout } from 'nextra/components'
 ```typescript {2-3,5,7,14,19}
 import { LocaleType, Tools } from '@univerjs/core';
 import { UniverSheetsNumfmtPlugin } from '@univerjs/sheets-numfmt';
-import SheetsNumfmtZhCN from '@univerjs/sheets-numfmt/locale/zh-CN';
+import SheetsNumfmtEnUS from '@univerjs/sheets-numfmt/locale/en-US';
 
 import '@univerjs/sheets-numfmt/lib/index.css';
 
@@ -47,10 +47,10 @@ import '@univerjs/sheets-numfmt/facade';
 
 const univer = new Univer({
   theme: defaultTheme,
-  locale: LocaleType.ZH_CN,
+  locale: LocaleType.EN_US,
   locales: {
-    [LocaleType.ZH_CN]: Tools.deepMerge(
-      SheetsNumfmtZhCN
+    [LocaleType.EN_US]: Tools.deepMerge(
+      SheetsNumfmtEnUS
     ),
   },
 });

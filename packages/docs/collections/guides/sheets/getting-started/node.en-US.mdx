@@ -12,13 +12,13 @@ If you use Presets to load Univer on Node, you can refer to the following code:
 import process from 'node:process';
 import { createUniver, LocaleType } from '@univerjs/presets';
 import { UniverSheetsNodeBasicPreset } from '@univerjs/presets/sheets-node/sheets-node-basic/index';
-import { zhCN } from '@univerjs/presets/sheets-node/sheets-node-basic/zh-CN';
+import { enUS } from '@univerjs/presets/sheets-node/sheets-node-basic/en-US';
 
 async function run(): Promise<void> {
     const { univerAPI } = createUniver({
-        locale: LocaleType.ZH_CN,
+        locale: LocaleType.EN_US,
         presets: [
-            UniverSheetsNodeBasicPreset({ locales: { zhCN } }),
+            UniverSheetsNodeBasicPreset({ locales: { enUS } }),
         ],
     });
 }

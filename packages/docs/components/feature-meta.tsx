@@ -124,9 +124,9 @@ function getMetaHeaderText(locale?: string): IHeaderTexts {
   }
 
   return {
-    hasPaidPlan: 'Paid Plan',
-    needUniverser: 'Univer Server Integration',
+    hasPaidPlan: 'There is a paid plan',
+    needUniverser: 'Univer server integration',
     nodeJS: 'Univer on Node.js',
-    preset: 'Included in Preset',
+    preset: 'Included in preset',
   }
 }

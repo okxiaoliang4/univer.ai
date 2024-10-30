@@ -1,10 +1,19 @@
 import { Tabs } from 'nextra/components'
+import FeatureMeta from '@/components/feature-meta'
 
 # Crosshair Highlight
 
+<FeatureMeta texts={['-', '-', '-', '❌ import via plugins' ]} />
+
 Crosshair highlight highlights the row and column of the selected cell to make it easier for users to identify the currently selected cell.
 
+This feature includes the following plugin packages:
+
+* [`@univerjs/sheets-crosshair-highlight`](https://www.npmjs.com/package/@univerjs/sheets-crosshair-highlight)
+
 ## Installation
+
+## Presets Installation
 
 <Tabs items={['pnpm', 'npm']}>
   <Tabs.Tab>
@@ -19,33 +28,89 @@ Crosshair highlight highlights the row and column of the selected cell to make i
   </Tabs.Tab>
 </Tabs>
 
-## Import
+```ts {4-5,7,9,17,25}
+import { createUniver, defaultTheme, LocaleType, Tools } from '@univerjs/presets';
+import { UniverSheetsCorePreset } from '@univerjs/presets/preset-sheets-core';
+import sheetsCoreEnUS from '@univerjs/presets/preset-sheets-core/locales/en-US';
+import { UniverSheetsCrosshairHighlightPlugin } from '@univerjs/sheets-crosshair-highlight';
+import sheetsCrosshairHighlightEnUS from '@univerjs/sheets-crosshair-highlight/locale/en-US';
 
-```typescript
 import '@univerjs/sheets-crosshair-highlight/lib/index.css';
 
-import { UniverSheetsCrosshairHighlightPlugin } from '@univerjs/sheets-crosshair-highlight';
+import '@univerjs/sheets-crosshair-highlight/facade';
+
+const { univerAPI } = createUniver({
+    locale: LocaleType.EN_US,
+    locales: {
+        enUS: Tools.deepMerge(
+            {},
+            sheetsCoreEnUS,
+            sheetsCrosshairHighlightEnUS 
+        ),
+    },
+    theme: defaultTheme,
+    presets: [
+        UniverSheetsCorePreset(),
+    ],
+    plugins: [
+      UniverSheetsCrosshairHighlightPlugin
+    ],
+});
 ```
 
-## Internationalization
+## Advanced Installation
 
-```typescript
+<Tabs items={['pnpm', 'npm']}>
+  <Tabs.Tab>
+    ```shell
+    pnpm add @univerjs/sheets-crosshair-highlight
+    ```
+  </Tabs.Tab>
+  <Tabs.Tab>
+    ```shell
+    npm install @univerjs/sheets-crosshair-highlight
+    ```
+  </Tabs.Tab>
+</Tabs>
+
+```typescript {2-3,5,7,14,19}
 import { LocaleType, Tools } from '@univerjs/core';
+import { UniverSheetsCrosshairHighlightPlugin } from '@univerjs/sheets-crosshair-highlight';
 import SheetsCrosshairHighlightEnUS from '@univerjs/sheets-crosshair-highlight/locale/en-US';
+
+import '@univerjs/sheets-crosshair-highlight/lib/index.css';
+
+import '@univerjs/sheets-crosshair-highlight/facade';
 
 const univer = new Univer({
   theme: defaultTheme,
   locale: LocaleType.EN_US,
   locales: {
     [LocaleType.EN_US]: Tools.deepMerge(
-      SheetsCrosshairHighlightEnUS 
+      SheetsCrosshairHighlightEnUS
     ),
   },
 });
-```
 
-## Register
-
-```typescript
 univer.registerPlugin(UniverSheetsCrosshairHighlightPlugin);
 ```
+
+## Facade API
+
+### Toggle Crosshair Highlight
+
+```typescript
+univerAPI.setCrosshairHighlightEnabled(true);
+
+univerAPI.setCrosshairHighlightEnabled(false);
+```
+
+### Set Crosshair Highlight Color
+
+```typescript
+univerAPI.setCrosshairHighlightColor('red');
+```
+
+## Links
+
+* [API reference](/typedoc/@univerjs/sheets-crosshair-highlight/README)

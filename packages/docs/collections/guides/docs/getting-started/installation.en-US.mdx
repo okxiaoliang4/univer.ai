@@ -40,14 +40,14 @@ Choose your package manager to install `@unvierjs/presets`:
 
 ```typescript
 import { createUniver, defaultTheme, LocaleType } from '@univerjs/presets';
-import { zhCN } from '@univerjs/presets/docs/docs-basic/zh-CN';
+import { enUS } from '@univerjs/presets/docs/docs-basic/en-US';
 import { UniverDocsBasicPreset } from '@univerjs/presets/presets/docs/docs-basic/index.js';
 
 const { univerAPI } = createUniver({
-    locale: LocaleType.ZH_CN,
+    locale: LocaleType.EN_US,
     theme: defaultTheme,
     presets: [
-        UniverDocsBasicPreset({ locales: { zhCN } }),
+        UniverDocsBasicPreset({ locales: { enUS } }),
     ],
 });
 

@@ -17,13 +17,13 @@ Create a simple spreadsheet and reference all the first-party features (plugins)
 ```js
 import { createUniver, defaultTheme, LocaleType } from '@univerjs/presets';
 import { UniverSheetsBasicPreset } from '@univerjs/presets/sheets/sheets-basic';
-import { zhCN } from '@univerjs/presets/sheets/sheets-basic/zh-CN';
+import { enUS } from '@univerjs/presets/sheets/sheets-basic/en-US';
 
 const { univerAPI } = createUniver({
-    locale: LocaleType.ZH_CN,
+    locale: LocaleType.EN_US,
     theme: defaultTheme,
     presets: [
-        UniverSheetsBasicPreset({ locales: { zhCN } }),
+        UniverSheetsBasicPreset({ locales: { enUS } }),
     ],
 });
 
@@ -42,17 +42,17 @@ To use the advanced features provided by Univer (including printing, pivot table
 ```js
 import { createUniver, defaultTheme, LocaleType } from '@univerjs/presets';
 import { UniverSheetsAdvancedPreset } from '@univerjs/presets/sheets/sheets-advanced-features';
-import { zhCN as advancedZhCN } from '@univerjs/presets/sheets/sheets-advanced-features/zh-CN';
+import { enUS as advancedEnUS } from '@univerjs/presets/sheets/sheets-advanced-features/en-US';
 import { UniverSheetsBasicPreset } from '@univerjs/presets/sheets/sheets-basic';
-import { zhCN as basicZhCN } from '@univerjs/presets/sheets/sheets-basic/zh-CN';
+import { enUS as basicEnUS } from '@univerjs/presets/sheets/sheets-basic/en-US';
 
 const { univerAPI } = createUniver({
-    locale: LocaleType.ZH_CN,
+    locale: LocaleType.EN_US,
     theme: defaultTheme,
     presets: [
-        UniverSheetsBasicPreset({ locales: { zhCN: basicZhCN } }),
+        UniverSheetsBasicPreset({ locales: { enUS: basicEnUS } }),
         UniverSheetsAdvancedPreset({ 
-            locales: { zhCN: advancedZhCN }, 
+            locales: { enUS: advancedEnUS }, 
             universerEndpoint: 'https://dev.univer.plus',
             license: 'xxx',
         }),
@@ -69,20 +69,20 @@ Online Example.
 ```js
 import { createUniver, defaultTheme, LocaleType } from '@univerjs/presets';
 import { UniverSheetsAdvancedPreset } from '@univerjs/presets/sheets/sheets-advanced-features';
-import { zhCN as advancedZhCN } from '@univerjs/presets/sheets/sheets-advanced-features/zh-CN';
+import { enUS as advancedEnUS } from '@univerjs/presets/sheets/sheets-advanced-features/en-US';
 import { UniverSheetsBasicPreset } from '@univerjs/presets/sheets/sheets-basic';
-import { zhCN as basicZhCN } from '@univerjs/presets/sheets/sheets-basic/zh-CN';
+import { enUS as basicEnUS } from '@univerjs/presets/sheets/sheets-basic/en-US';
 import { UniverSheetsCollaborationPreset } from '@univerjs/presets/sheets/sheets-collaboration';
-import { zhCN as collaborationZhCN } from '@univerjs/presets/sheets/sheets-collaboration/zh-CN';
+import { enUS as collaborationEnUS } from '@univerjs/presets/sheets/sheets-collaboration/en-US';
 
 createUniver({
-    locale: LocaleType.ZH_CN,
+    locale: LocaleType.EN_US,
     theme: defaultTheme,
     collaboration: true,
     presets: [
-        UniverSheetsBasicPreset({ locales: { zhCN: basicZhCN }, collaboration: true }),
-        UniverSheetsAdvancedPreset({ locales: { zhCN: advancedZhCN } }),
-        UniverSheetsCollaborationPreset({ locales: { zhCN: collaborationZhCN } }),
+        UniverSheetsBasicPreset({ locales: { enUS: basicEnUS }, collaboration: true }),
+        UniverSheetsAdvancedPreset({ locales: { enUS: advancedEnUS } }),
+        UniverSheetsCollaborationPreset({ locales: { enUS: collaborationEnUS } }),
     ],
 });
 ```

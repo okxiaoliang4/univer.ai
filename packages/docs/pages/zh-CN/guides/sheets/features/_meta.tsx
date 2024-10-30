@@ -16,7 +16,7 @@ export default {
     title: <TitleTag>打印</TitleTag>,
   },
   'import-export': {
-    title: <TitleTag>导入 & 导出</TitleTag>,
+    title: <TitleTag>导入导出</TitleTag>,
   },
   'collaboration': {
     title: <TitleTag>协同编辑</TitleTag>,
