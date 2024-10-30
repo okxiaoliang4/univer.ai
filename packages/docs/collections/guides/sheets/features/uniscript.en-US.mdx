@@ -1,8 +1,60 @@
 import { Tabs } from 'nextra/components'
+import FeatureMeta from '@/components/feature-meta'
 
 # Uniscript
 
-## Installation
+<FeatureMeta texts={['-', '-', '-', '❌ import via plugins']} />
+
+This feature includes the following plugin packages:
+
+* [`@univerjs/uniscript`](https://www.npmjs.com/package/@univerjs/uniscript)
+
+## Presets Installation
+
+<Tabs items={['pnpm', 'npm']}>
+  <Tabs.Tab>
+    ```shell
+    pnpm add @univerjs/uniscript/
+    ```
+  </Tabs.Tab>
+  <Tabs.Tab>
+    ```shell
+    npm install @univerjs/uniscript/
+    ```
+  </Tabs.Tab>
+</Tabs>
+
+```ts {4-5,7,9,17,25}
+import { createUniver, defaultTheme, LocaleType, Tools } from '@univerjs/presets';
+import { UniverSheetsCorePreset } from '@univerjs/presets/preset-sheets-core';
+import sheetsCoreEnUS from '@univerjs/presets/preset-sheets-core/locales/en-US';
+import { UniverUniscriptPlugin } from '@univerjs/uniscript';
+import UniscriptEnUS from '@univerjs/uniscript/locale/en-US';
+
+import '@univerjs/uniscript/lib/index.css';
+
+import '@univerjs/uniscript/facade';
+
+const { univerAPI } = createUniver({
+    locale: LocaleType.EN_US,
+    locales: {
+        enUS: Tools.deepMerge(
+            {},
+            sheetsCoreEnUS,
+            UniscriptEnUS 
+        ),
+    },
+    theme: defaultTheme,
+    presets: [
+        UniverSheetsCorePreset(),
+    ],
+    plugins: [
+      UniverUniscriptPlugin 
+    ],
+});
+```
+
+## Advanced Installation
 
 <Tabs items={['pnpm', 'npm']}>
   <Tabs.Tab>
@@ -17,19 +69,12 @@ import { Tabs } from 'nextra/components'
   </Tabs.Tab>
 </Tabs>
 
-## Import
-
-```typescript
-import '@univerjs/uniscript/lib/index.css';
-
-import { UniverUniscriptPlugin } from '@univerjs/uniscript';
-```
-
-## Internationalization
-
-```typescript
+```typescript {2-3,5,12,17}
 import { LocaleType, Tools } from '@univerjs/core';
+import { UniverUniscriptPlugin } from '@univerjs/uniscript';
 import UniscriptEnUS from '@univerjs/uniscript/locale/en-US';
+
+import '@univerjs/uniscript/lib/index.css';
 
 const univer = new Univer({
   theme: defaultTheme,
@@ -40,10 +85,6 @@ const univer = new Univer({
     ),
   },
 });
-```
 
-## Register
-
-```typescript
 univer.registerPlugin(UniverUniscriptPlugin);
 ```

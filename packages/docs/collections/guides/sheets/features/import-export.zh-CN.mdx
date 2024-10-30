@@ -1,14 +1,16 @@
 import { Callout, Tabs } from 'nextra/components'
-import BusinessPlanNotice from '@/components/business-plan-notice'
-import ServerNotice from '@/components/server-notice'
+import FeatureMeta from '@/components/feature-meta'
 
-# 导入 & 导出
+# 导入导出
 
-<BusinessPlanNotice />
-
-<ServerNotice />
+<FeatureMeta texts={['✅', '✅', '-', 'UniverSheetsAdvancedPreset' ]} />
 
 Univer 通过插件 + 后端服务的方式实现了 Excel XLSX 格式文件的导入导出功能。其中插件集成了与服务端交互的能力，以及提供了一个导入导出的菜单栏入口。
+
+该功能包含以下插件包：
+
+- [`@univerjs-pro/exchange-client`](https://www.npmjs.com/package/@univerjs-pro/exchange-client)
+- [`@univerjs-pro/sheets-exchange-client` ](https://www.npmjs.com/package/@univerjs-pro/sheets-exchange-client)
 
 <Callout type="warning" emoji="❓">
   **为什么 Univer 通过后端服务实现导入导出？**
@@ -16,7 +18,33 @@ Univer 通过插件 + 后端服务的方式实现了 Excel XLSX 格式文件的�
   仅通过前端实现的导入导出无论是从性能还是效果上来说都无法满足企业需求，因此我们提供了后端服务来实现导入导出功能。你可以通过一些开源的 XLSX 解析库将文件解析为符合 [`IWorksheetData`](/typedoc/@univerjs/core/interfaces/IWorksheetData) 接口的数据结构，然后通过 Facade API 将数据导入到 Univer 中。
 </Callout>
 
-## 安装
+## Presets 安装
+
+```typescript {4-5,13,19}
+import { createUniver, defaultTheme, LocaleType, Tools } from '@univerjs/presets';
+import { UniverSheetsCorePreset } from '@univerjs/presets/preset-sheets-core';
+import sheetsCoreZhCN from '@univerjs/presets/preset-sheets-core/locales/zh-CN';
+import { UniverSheetsAdvancedPreset } from '@univerjs/presets/preset-sheets-advanced';
+import sheetsAdvancedZhCN from '@univerjs/presets/preset-sheets-advanced/locales/zh-CN';
+
+const { univerAPI } = createUniver({
+    locale: LocaleType.ZH_CN,
+    locales: {
+        zhCN: Tools.deepMerge(
+            {},
+            sheetsCoreZhCN,
+            sheetsAdvancedZhCN,
+        ),
+    },
+    theme: defaultTheme,
+    presets: [
+        UniverSheetsCorePreset(),
+        UniverSheetsAdvancedPreset(),
+    ],
+});
+```
+
+## 高级安装
 
 <Tabs items={['pnpm', 'npm']}>
   <Tabs.Tab>
@@ -31,20 +59,13 @@ Univer 通过插件 + 后端服务的方式实现了 Excel XLSX 格式文件的�
   </Tabs.Tab>
 </Tabs>
 
-## 引入
-
-```typescript
-import '@univerjs-pro/exchange-client/lib/index.css';
-
+```typescript {2-4,6,13,18-25}
+import { LocaleType, Tools } from '@univerjs/core';
 import { UniverExchangeClientPlugin } from '@univerjs-pro/exchange-client';
 import { UniverSheetsExchangeClientPlugin } from '@univerjs-pro/sheets-exchange-client';
-```
-
-## 国际化
-
-```typescript
-import { LocaleType, Tools } from '@univerjs/core';
 import ExchangeClientZhCN from '@univerjs-pro/exchange-client/locale/zh-CN';
+
+import '@univerjs-pro/exchange-client/lib/index.css';
 
 const univer = new Univer({
   theme: defaultTheme,
@@ -55,11 +76,7 @@ const univer = new Univer({
     ),
   },
 });
-```
 
-## 注册
-
-```typescript
 univer.registerPlugin(UniverExchangeClientPlugin, {
   uploadFileServerUrl: `http://localhost:3010/universer-api/stream/file/upload`,
   importServerUrl: `http://localhost:3010/universer-api/exchange/{type}/import`,
@@ -118,7 +135,7 @@ fetchExcelFile(url).then(async file => {
 
 注: Facade API `univerAPI.importXLSXToSnapshot` 会调用  `@univerjs-pro/exchange-client` 提供的功能，使用前确保项目已经安装好了`@univerjs-pro/exchange-client`。
 
-### 导入导出 API 异常？ <a id="import-export-error" />
+### 导入导出 API 异常？
 
 要让导入导出正常工作，还需要正确配置 Univer Server 的 S3 配置，这些配置会用于存储导入、导出的文件。
 

@@ -34,27 +34,28 @@ This feature includes the following plugin packages:
 ```ts {4-5,13,19}
 import { createUniver, defaultTheme, LocaleType, Tools } from '@univerjs/presets';
 import { UniverSheetsCorePreset } from '@univerjs/presets/preset-sheets-core';
-import sheetsCoreZhCN from '@univerjs/presets/preset-sheets-core/locales/zh-CN';
+import sheetsCoreEnUS from '@univerjs/presets/preset-sheets-core/locales/en-US';
 import { UniverSheetsFindReplacePreset } from '@univerjs/presets/preset-sheets-find-replace';
-import SheetsFindReplaceZhCN from '@univerjs/presets/preset-sheets-find-replace/locale/zh-CN';
+import sheetsFindReplaceEnUS from '@univerjs/presets/preset-sheets-find-replace/locales/en-US';
 
 const { univerAPI } = createUniver({
-    locale: LocaleType.ZH_CN,
+    locale: LocaleType.EN_US,
     locales: {
-        zhCN: Tools.deepMerge(
+        enUS: Tools.deepMerge(
             {},
-            sheetsCoreZhCN,
-            SheetsFindReplaceZhCN 
+            sheetsCoreEnUS,
+            sheetsFindReplaceEnUS 
         ),
     },
     theme: defaultTheme,
     presets: [
         UniverSheetsCorePreset(),
-        UniverSheetsFindReplacePreset()
-    ]
+        UniverSheetsFindReplacePreset(),
+    ],
 });
 ```
 
+## Advanced Installation
 ## Advanced Installation
 
 <Tabs items={['pnpm', 'npm']}>
@@ -70,22 +71,22 @@ const { univerAPI } = createUniver({
   </Tabs.Tab>
 </Tabs>
 
-```typescript {2-5,7,14-15,20-21}
+```typescript {2-5,14-15,20-21}
 import { LocaleType, Tools } from '@univerjs/core';
 import { UniverFindReplacePlugin } from '@univerjs/find-replace';
 import { UniverSheetsFindReplacePlugin } from '@univerjs/sheets-find-replace';
-import FindReplaceZhCN from '@univerjs/find-replace/locale/zh-CN';
-import SheetsFindReplaceZhCN from '@univerjs/sheets-find-replace/locale/zh-CN';
+import FindReplaceEnUS from '@univerjs/find-replace/locale/en-US';
+import SheetsFindReplaceEnUS from '@univerjs/sheets-find-replace/locale/en-US';
 
 import '@univerjs/find-replace/lib/index.css';
 
 const univer = new Univer({
   theme: defaultTheme,
-  locale: LocaleType.ZH_CN,
+  locale: LocaleType.EN_US,
   locales: {
-    [LocaleType.ZH_CN]: Tools.deepMerge(
-      FindReplaceZhCN,
-      SheetsFindReplaceZhCN
+    [LocaleType.EN_US]: Tools.deepMerge(
+      FindReplaceEnUS,
+      SheetsFindReplaceEnUS
     ),
   },
 });

@@ -34,17 +34,17 @@ This feature includes the following plugin packages:
 ```ts {4-5,13,19}
 import { createUniver, defaultTheme, LocaleType, Tools } from '@univerjs/presets';
 import { UniverSheetsCorePreset } from '@univerjs/presets/preset-sheets-core';
-import sheetsCoreZhCN from '@univerjs/presets/preset-sheets-core/locales/zh-CN';
+import sheetsCoreEnUS from '@univerjs/presets/preset-sheets-core/locales/en-US';
 import { UniverSheetsSortPreset } from '@univerjs/presets/preset-sheets-sort';
-import SheetsSortZhCN from '@univerjs/presets/preset-sheets-sort/locale/zh-CN';
+import SheetsSortEnUS from '@univerjs/presets/preset-sheets-sort/locale/en-US';
 
 const { univerAPI } = createUniver({
     locale: LocaleType.ZH_CN,
     locales: {
         zhCN: Tools.deepMerge(
             {},
-            sheetsCoreZhCN,
-            SheetsSortZhCN 
+            sheetsCoreEnUS,
+            SheetsSortEnUS 
         ),
     },
     theme: defaultTheme,
@@ -74,16 +74,16 @@ const { univerAPI } = createUniver({
 import { LocaleType, Tools } from '@univerjs/core';
 import { UniverSheetsSortPlugin } from '@univerjs/sheets-sort';
 import { UniverSheetsSortUIPlugin } from '@univerjs/sheets-sort-ui';
-import SheetsSortUIZhCN from '@univerjs/sheets-sort-ui/locale/zh-CN';
+import SheetsSortUIEnUS from '@univerjs/sheets-sort-ui/locale/en-US';
 
 import '@univerjs/sheets-sort-ui/lib/index.css';
 
 const univer = new Univer({
   theme: defaultTheme,
-  locale: LocaleType.ZH_CN,
+  locale: LocaleType.EN_US,
   locales: {
-    [LocaleType.ZH_CN]: Tools.deepMerge(
-      SheetsSortUIZhCN
+    [LocaleType.EN_US]: Tools.deepMerge(
+      SheetsSortUIEnUS
     ),
   },
 });

@@ -1,41 +1,75 @@
 import { Tabs } from 'nextra/components'
+import FeatureMeta from '@/components/feature-meta'
+import VersionBadge from '@/components/version-badge'
 
-# Comment / Annotation Introduction
+# Thread Comment <VersionBadge version="0.2.10+" />
 
-The Comment / Annotation plugin provides the ability to comment or annotate cells.
+<FeatureMeta texts={['-', 'Optional', '-', 'UniverSheetsThreadCommentPreset' ]} />
 
-## Installation
+The Comment plugin provides the ability to comment or annotate cells.
+
+This feature includes the following plugin packages:
+
+- [`@univerjs/thread-comment`](https://www.npmjs.com/package/@univerjs/thread-comment) - 基础评论插件
+- [`@univerjs/thread-comment-ui`](https://www.npmjs.com/package/@univerjs/thread-comment-ui) - 基础评论 UI 插件
+- [`@univerjs/sheets-thread-comment`](https://www.npmjs.com/package/@univerjs/sheets-thread-comment) - sheet 评论插件
+- [`@univerjs/sheets-thread-comment-ui`](https://www.npmjs.com/package/@univerjs/sheets-thread-comment-ui) - sheet 评论插件
+- [`@univerjs-pro/thread-comment-datasource`](https://www.npmjs.com/package/@univerjs-pro/thread-comment-datasource) - 和协同编辑一起使用时的评论数据源插件
+
+## Presets Installation
+
+```ts {4-5,13,20}
+import { createUniver, defaultTheme, LocaleType, Tools } from '@univerjs/presets';
+import { UniverSheetsCorePreset } from '@univerjs/presets/preset-sheets-core';
+import sheetsCoreEnUS from '@univerjs/presets/preset-sheets-core/locales/en-US';
+import { UniverSheetsThreadCommentPreset } from '@univerjs/presets/preset-sheets-thread-comment';
+import sheetsThreadCommentEnUS from '@univerjs/presets/preset-sheets-thread-comment/locales/en-US';
+
+createUniver({
+    locale: LocaleType.EN_US,
+    locales: {
+        enUS: Tools.deepMerge(
+            {},
+            sheetsCoreEnUS,
+            sheetsThreadCommentEnUS 
+        ),
+    },
+    theme: defaultTheme,
+    collaboration: true,
+    presets: [
+        UniverSheetsCorePreset(),
+        UniverSheetsThreadCommentPreset(),
+    ],
+});
+```
+
+## Advanced Installation
 
 <Tabs items={['pnpm', 'npm']}>
   <Tabs.Tab>
     ```shell
-    pnpm add @univerjs/sheets-thread-comment-base @univerjs/sheets-thread-comment @univerjs/thread-comment @univerjs/thread-comment-ui
+    pnpm add @univerjs/sheets-thread-comment @univerjs/sheets-thread-comment-ui @univerjs/thread-comment @univerjs/thread-comment-ui
     ```
   </Tabs.Tab>
   <Tabs.Tab>
     ```shell
-    npm install @univerjs/sheets-thread-comment-base @univerjs/sheets-thread-comment @univerjs/thread-comment @univerjs/thread-comment-ui
+    npm install @univerjs/sheets-thread-comment @univerjs/sheets-thread-comment-ui @univerjs/thread-comment @univerjs/thread-comment-ui
     ```
   </Tabs.Tab>
 </Tabs>
 
-## Import
-
-```typescript
-import '@univerjs/thread-comment-ui/lib/index.css';
-
+```typescript {2-7,9,11,18-19,24-27}
+import { LocaleType, Tools } from '@univerjs/core';
 import { IThreadCommentMentionDataService, UniverThreadCommentUIPlugin } from '@univerjs/thread-comment-ui';
 import { UniverThreadCommentPlugin } from '@univerjs/thread-comment';
-import { UniverSheetsThreadCommentBasePlugin } from '@univerjs/sheets-thread-comment-base';
 import { UniverSheetsThreadCommentPlugin } from '@univerjs/sheets-thread-comment';
-```
-
-## Internationalization
-
-```typescript
-import { LocaleType, Tools } from '@univerjs/core';
+import { UniverSheetsThreadCommentUIPlugin } from '@univerjs/sheets-thread-comment-ui';
 import ThreadCommentUIEnUS from '@univerjs/thread-comment-ui/locale/en-US';
 import SheetsThreadCommentEnUS from '@univerjs/sheets-thread-comment/locale/en-US';
+
+import '@univerjs/thread-comment-ui/lib/index.css';
+
+import '@univerjs/sheets-thread-comment/facade';
 
 const univer = new Univer({
   theme: defaultTheme,
@@ -47,13 +81,98 @@ const univer = new Univer({
     ),
   },
 });
-```
 
-## Register
-
-```typescript
 univer.registerPlugin(UniverThreadCommentPlugin);
 univer.registerPlugin(UniverThreadCommentUIPlugin);
 univer.registerPlugin(UniverSheetsThreadCommentBasePlugin);
 univer.registerPlugin(UniverSheetsThreadCommentPlugin);
 ```
+
+## Use with the Collaborative Editing Feature
+
+You can choose to use the comment feature with the collaborative editing feature provided by Univer, so you don't need to manage the comment information yourself.
+
+### Preset Installation
+
+All you need to do is to modify the preset configuration parameters.
+
+```ts
+UniverSheetsThreadCommentPreset({ collaboration: true }),
+```
+
+### Advanced Installation
+
+<Tabs items={['pnpm', 'npm']}>
+  <Tabs.Tab>
+    ```shell
+    pnpm add @univerjs-pro/thread-comment-datasource
+    ```
+  </Tabs.Tab>
+  <Tabs.Tab>
+    ```shell
+    npm install @univerjs-pro/thread-comment-datasource
+    ```
+  </Tabs.Tab>
+</Tabs>
+
+```typescript 
+import { UniverThreadCommentDataSourcePlugin } from '@univerjs-pro/thread-comment-datasource';
+
+univer.registerPlugin(UniverThreadCommentDataSourcePlugin);
+```
+
+## Facade API 
+
+```typescript
+const univerAPI = FUniver.newAPI(univer);
+
+// get cell
+const workbook = univerAPI.getActiveWorkbook();
+const worksheet = workbook.getActiveSheet();
+// comment only attch to single cell, if range is A1:J10 equal A1
+const range = worksheet.getRange(0, 0, 1, 1);
+
+// add comment to empty cell
+range.addComment({
+    dataStream: 'hello world\r\n',
+});
+
+// reply to current comment
+range.addComment({
+    dataStream: 'reply\r\n',
+});
+
+
+range.clearComment();
+
+// get comment
+const comment = range.getComment();
+
+// update content
+comment?.update({
+    dataStream: 'hello world222\r\n',
+});
+
+// delete comment
+comment?.delete();
+
+// resolve comment
+comment?.resolve();
+
+// get replies
+comment?.getReplies();
+
+// get range of this comment
+comment?.getRange();
+
+// event
+workbook.onBeforeUpdateThreadComment
+workbook.onBeforeDeleteThreadComment
+workbook.onBeforeAddThreadComment
+// comment change event include add, update, delete
+workbook.onThreadCommentChange
+```
+
+## Links
+
+* [Facade API reference](/typedoc/@univerjs/facade/README)

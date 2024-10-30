@@ -58,7 +58,7 @@ You can create a new `custom-function.ts` file to specifically place custom form
       },
     };
 
-    export const functionZhCN = {
+    export const functionEnUS = {
       formulaCustom: {
         CUSTOMSUM: {
           description: '将单个值、单元格引用或是区域相加，或者将三者的组合相加。',
@@ -66,7 +66,7 @@ You can create a new `custom-function.ts` file to specifically place custom form
           links: [
             {
               title: '教学',
-              url: 'https://support.microsoft.com/zh-cn/office/sum-%E5%87%BD%E6%95%B0-043e1c7d-7726-4e80-8f32-07b23e057f89',
+              url: 'https://support.microsoft.com/en-US/office/sum-%E5%87%BD%E6%95%B0-043e1c7d-7726-4e80-8f32-07b23e057f89',
             },
           ],
           functionParameter: {
@@ -95,7 +95,7 @@ You can create a new `custom-function.ts` file to specifically place custom form
     import SheetsEnUS from '@univerjs/sheets/locale/en-US';
     import SheetsUIEnUS from '@univerjs/sheets-ui/locale/en-US';
     import UIEnUS from '@univerjs/ui/locale/en-US';
-    import { functionEnUS, functionZhCN } from "./custom-function";
+    import { functionEnUS, functionEnUS } from "./custom-function";
 
     export const locales = {
       [LocaleType.EN_US]: Tools.deepMerge(
@@ -106,8 +106,8 @@ You can create a new `custom-function.ts` file to specifically place custom form
         DesignEnUS,
         functionEnUS
       ),
-      [LocaleType.ZH_CN]: Tools.deepMerge(
-        functionZhCN
+      [LocaleType.EN_US]: Tools.deepMerge(
+        functionEnUS
       ),
     };
     ```
@@ -292,7 +292,7 @@ First, create a new plugin, and then you can start adding custom formulas.
       },
     };
 
-    export const functionZhCN = {
+    export const functionEnUS = {
       formulaCustom: {
         CUSTOMSUM: {
           description: '将单个值、单元格引用或是区域相加，或者将三者的组合相加。',
@@ -300,7 +300,7 @@ First, create a new plugin, and then you can start adding custom formulas.
           links: [
             {
               title: '教学',
-              url: 'https://support.microsoft.com/zh-cn/office/sum-%E5%87%BD%E6%95%B0-043e1c7d-7726-4e80-8f32-07b23e057f89',
+              url: 'https://support.microsoft.com/en-US/office/sum-%E5%87%BD%E6%95%B0-043e1c7d-7726-4e80-8f32-07b23e057f89',
             },
           ],
           functionParameter: {
@@ -382,7 +382,7 @@ First, create a new plugin, and then you can start adding custom formulas.
     ```typescript
     import { Disposable, LifecycleStages, Inject, LocaleService } from '@univerjs/core';
 
-    import { FUNCTION_LIST_USER, functionEnUS, functionZhCN } from '../common/custom-function';
+    import { FUNCTION_LIST_USER, functionEnUS, functionEnUS } from '../common/custom-function';
     import { IDescriptionService } from '../services/description.service';
 
     export class CustomDescriptionController extends Disposable {
@@ -402,7 +402,7 @@ First, create a new plugin, and then you can start adding custom formulas.
 
       private _registerLocales() {
         this._localeService.load({
-          zhCN: functionZhCN,
+          enUS: functionEnUS,
           enUS: functionEnUS,
         });
       }

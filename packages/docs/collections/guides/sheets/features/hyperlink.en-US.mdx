@@ -36,17 +36,17 @@ This feature includes the following plugin packages:
 ```ts {4-5,13,19}
 import { createUniver, defaultTheme, LocaleType, Tools } from '@univerjs/presets';
 import { UniverSheetsCorePreset } from '@univerjs/presets/preset-sheets-core';
-import sheetsCoreZhCN from '@univerjs/presets/preset-sheets-core/locales/zh-CN';
+import sheetsCoreEnUS from '@univerjs/presets/preset-sheets-core/locales/en-US';
 import { UniverSheetsHyperLinkPreset } from '@univerjs/presets/preset-sheets-hyper-link';
-import SheetsHyperLinkZhCN from '@univerjs/presets/preset-sheets-hyper-link/locale/zh-CN';
+import SheetsHyperLinkEnUS from '@univerjs/presets/preset-sheets-hyper-link/locale/en-US';
 
 const { univerAPI } = createUniver({
-    locale: LocaleType.ZH_CN,
+    locale: LocaleType.EN_US,
     locales: {
-        zhCN: Tools.deepMerge(
+        enUS: Tools.deepMerge(
             {},
-            sheetsCoreZhCN,
-            SheetsHyperLinkZhCN 
+            sheetsCoreEnUS,
+            SheetsHyperLinkEnUS 
         ),
     },
     theme: defaultTheme,
@@ -76,7 +76,7 @@ const { univerAPI } = createUniver({
 import { LocaleType, Tools } from '@univerjs/core';
 import { UniverSheetsHyperLinkPlugin } from '@univerjs/sheets-hyper-link';
 import { UniverSheetsHyperLinkUIPlugin } from '@univerjs/sheets-hyper-link-ui';
-import SheetsHyperLinkUIZhCN from '@univerjs/sheets-hyper-link-ui/locale/zh-CN';
+import SheetsHyperLinkUIEnUS from '@univerjs/sheets-hyper-link-ui/locale/en-US';
 
 import '@univerjs/sheets-hyper-link-ui/lib/index.css';
 
@@ -84,10 +84,10 @@ import '@univerjs/sheets-hyper-link/facade';
 
 const univer = new Univer({
   theme: defaultTheme,
-  locale: LocaleType.ZH_CN,
+  locale: LocaleType.EN_US,
   locales: {
-    [LocaleType.ZH_CN]: Tools.deepMerge(
-      SheetsHyperLinkUIZhCN
+    [LocaleType.EN_US]: Tools.deepMerge(
+      SheetsHyperLinkUIEnUS
     ),
   },
 });

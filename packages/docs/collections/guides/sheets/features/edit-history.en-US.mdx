@@ -1,17 +1,22 @@
 import { Tabs } from 'nextra/components'
-import BusinessPlanNotice from '@/components/business-plan-notice'
-import ServerNotice from '@/components/server-notice'
+import FeatureMeta from '@/components/feature-meta'
 
 # Edit History
 
-<BusinessPlanNotice />
+<FeatureMeta texts={['✅', '✅', '-', 'UniverSheetsCollaborationPreset' ]} />
 
-<ServerNotice />
+Univer provides a history tracking feature based on collaborative editing, so before using Edit History, **you need to install the [Collaboration](/guides/sheets/features/collaboration) feature first**.
 
-Univer provides a history tracking feature based on collaborative editing, so before using Edit History, **you need to install the [Collaboration](/guides/sheets/features/collaboration) plugin first**.
+This feature includes the following plugin packages:
+
+- [`@univerjs-pro/edit-history-viewer`](https://www.npmjs.com/package/@univerjs-pro/edit-history-viewer)
+- [`@univerjs-pro/edit-history-loader`](https://www.npmjs.com/package/@univerjs-pro/edit-history-loader)
+
+## Presets Installation
+
+Please follow the instructions in [Collaborative Editing](/guides/sheets/features/collaboration).
 
 ## Installation
-
 <Tabs items={['pnpm', 'npm']}>
   <Tabs.Tab>
     ```shell
@@ -27,19 +32,12 @@ Univer provides a history tracking feature based on collaborative editing, so be
   </Tabs.Tab>
 </Tabs>
 
-## Import
-
-```typescript
-import '@univerjs-pro/edit-history-viewer/lib/index.css';
-
-import { UniverEditHistoryLoaderPlugin } from '@univerjs-pro/edit-history-loader';
-```
-
-## Internationalization
-
-```typescript
+```typescript {2-3,5,12,17-19}
 import { LocaleType, Tools } from '@univerjs/core';
+import { UniverEditHistoryLoaderPlugin } from '@univerjs-pro/edit-history-loader';
 import EditHistoryViewerEnUS from '@univerjs-pro/edit-history-viewer/locale/en-US';
+
+import '@univerjs-pro/edit-history-viewer/lib/index.css';
 
 const univer = new Univer({
   theme: defaultTheme,
@@ -50,19 +48,20 @@ const univer = new Univer({
     ),
   },
 });
+
+univer.registerPlugin(UniverEditHistoryLoaderPlugin, { 
+  univerContainerId: 'Your-Univer-Container-Id',
+});
 ```
 
-## Register
-
-When starting the edit-history feature, the UniverEditHistoryLoaderPlugin will load a new Univer instance and mount it on the specified DOM node.
 
 Therefore, when registering, you need to provide the appropriate DOM node ID (e.g., the container of the original Univer instance) to ensure that the history panel covers the original Univer panel. If the node ID is not specified, it defaults to 'univer-container'.
+
 ```typescript
-
-univer.registerPlugin(UniverEditHistoryLoaderPlugin, { univerContainerId: 'Your-Univer-Container-Id'});
-
+univer.registerPlugin(UniverEditHistoryLoaderPlugin, { 
+  univerContainerId: 'Your-Univer-Container-Id'
+});
 ```
-
 
 ## Feature Adaptation
 

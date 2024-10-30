@@ -1,10 +1,10 @@
 import { Tabs } from 'nextra/components'
+import FeatureMeta from '@/components/feature-meta'
+import VersionBadge from '@/components/version-badge'
 
-# 评论 / 批注
+# 评论 <VersionBadge version="0.2.10+" />
 
-| 有付费版本 | 需要接入 Univer 服务端 | 可用于 Univer on Node.js | 包含的 Preset |
-| - | - | - | - |
-| - | 可以选择是否接入 | - | `UniverSheetsThreadCommentPreset` |
+<FeatureMeta texts={['-', '可选', '-', 'UniverSheetsThreadCommentPreset' ]} />
 
 评论 / 批注插件提供了对单元格进行评论或者批注的功能。
 
@@ -57,8 +57,6 @@ createUniver({
     ```
   </Tabs.Tab>
 </Tabs>
-
-## 引入
 
 ```typescript {2-7,9,11,18-19,24-27}
 import { LocaleType, Tools } from '@univerjs/core';
@@ -122,3 +120,59 @@ import { UniverThreadCommentDataSourcePlugin } from '@univerjs-pro/thread-commen
 
 univer.registerPlugin(UniverThreadCommentDataSourcePlugin);
 ```
+
+## Facade API 
+
+```typescript
+const univerAPI = FUniver.newAPI(univer);
+
+// get cell
+const workbook = univerAPI.getActiveWorkbook();
+const worksheet = workbook.getActiveSheet();
+// comment only attch to single cell, if range is A1:J10 equal A1
+const range = worksheet.getRange(0, 0, 1, 1);
+
+// add comment to empty cell
+range.addComment({
+    dataStream: 'hello world\r\n',
+});
+
+// reply to current comment
+range.addComment({
+    dataStream: 'reply\r\n',
+});
+
+
+range.clearComment();
+
+// get comment
+const comment = range.getComment();
+
+// update content
+comment?.update({
+    dataStream: 'hello world222\r\n',
+});
+
+// delete comment
+comment?.delete();
+
+// resolve comment
+comment?.resolve();
+
+// get replies
+comment?.getReplies();
+
+// get range of this comment
+comment?.getRange();
+
+// event
+workbook.onBeforeUpdateThreadComment
+workbook.onBeforeDeleteThreadComment
+workbook.onBeforeAddThreadComment
+// comment change event include add, update, delete
+workbook.onThreadCommentChange
+```
+
+## 参考链接
+
+* [Facade API](/typedoc/@univerjs/facade/README)

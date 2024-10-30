@@ -129,7 +129,7 @@ private _registerComponents(): void {
 If your menu item needs internationalization, you need to add internationalization resources in advance.
 
 ```typescript
-// src/plugin/locale/zh-CN.ts
+// src/plugin/locale/en-US.ts
 export default {
   customMenu: {
     button: '按钮',
@@ -163,7 +163,7 @@ export class UniverSheetsCustomMenuPlugin extends Plugin {
     super();
 
     this._localeService.load({
-      zhCN,
+      enUS,
       enUS
     });
   }

@@ -43,8 +43,8 @@ const { univerAPI } = createUniver({
     locales: {
         enUS: Tools.deepMerge(
             {},
-            sheetsCoreZhCN,
-            sheetsFilterZhCN 
+            sheetsCoreEnUS,
+            sheetsFilterEnUS 
         ),
     },
     theme: defaultTheme,
@@ -54,6 +54,7 @@ const { univerAPI } = createUniver({
     ],
 });
 ```
+
 ## Advanced Installation
 
 <Tabs items={['pnpm', 'npm']}>
@@ -95,17 +96,14 @@ univer.registerPlugin(UniverSheetsFilterUIPlugin);
 
 ## Facade API
 
-<Callout>
-  Add facade API
-</Callout>
-
-## 参考链接
-
-* [@univerjs/sheets-filter](/typedoc/@univerjs/sheets-filter/README)
-* [@univerjs/sheets-filter-ui](/typedoc/@univerjs/sheets-filter-ui/README)
-* `FRange` 对象上的 API
+* `FRange`
   * [`getFilter()`](/typedoc/@univerjs/facade/classes/FRange#getfilter)
   * [`createFilter()`](/typedoc/@univerjs/facade/classes/FRange#createfilter)
-* `FWorksheet` 对象上的 API
+* `FWorksheet` 
   * [`getFilter()`](/typedoc/@univerjs/facade/classes/FWorksheet#getfilter)
-* [`FFilter` 对象](/typedoc/@univerjs/facade/classes/FFilter)
+* [`FFilter`](/typedoc/@univerjs/facade/classes/FFilter)
+
+## Links
+
+* [`@univerjs/sheets-filter` API reference](/typedoc/@univerjs/sheets-filter/README)
+* [`@univerjs/sheets-filter-ui` API reference](/typedoc/@univerjs/sheets-filter-ui/README)

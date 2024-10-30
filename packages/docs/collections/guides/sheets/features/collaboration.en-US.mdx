@@ -1,16 +1,49 @@
 import { Tabs } from 'nextra/components'
-import BusinessPlanNotice from '@/components/business-plan-notice'
-import ServerNotice from '@/components/server-notice'
+import FeatureMeta from '@/components/feature-meta'
 
 # Collaborative Editing
 
-<BusinessPlanNotice />
-
-<ServerNotice />
+<FeatureMeta texts={['✅', '✅', '-', 'UniverSheetsCollaborationPreset' ]} />
 
 Univer provides collaborative editing functions, supporting multiple people to edit the same workbook at the same time.
 
-## Installation
+This feature includes the following plugin packages:
+
+- [`@univerjs-pro/collaboration`](https://www.npmjs.com/package/@univerjs-pro/collaboration)
+- [`@univerjs-pro/collaboration-client` ](https://www.npmjs.com/package/@univerjs-pro/collaboration-client)
+
+## Preset Installation
+
+```ts {6-7,16,20,24}
+import { createUniver, defaultTheme, LocaleType, Tools } from '@univerjs/presets';
+import { UniverSheetsCorePreset } from '@univerjs/presets/preset-sheets-core';
+import sheetsCoreEnUS from '@univerjs/presets/preset-sheets-core/locales/en-US';
+import { UniverSheetsAdvancedPreset } from '@univerjs/presets/preset-sheets-advanced';
+import sheetsAdvancedEnUS from '@univerjs/presets/preset-sheets-advanced/locales/en-US';
+import sheetsCollaborationEnUS from '@univerjs/presets/preset-sheets-collaboration/locales/en-US';
+import { UniverSheetsCollaborationPreset } from '@univerjs/presets/preset-sheets-collaboration';
+
+createUniver({
+    locale: LocaleType.EN_US,
+    locales: {
+        enUS: Tools.deepMerge(
+            {},
+            sheetsCoreEnUS,
+            sheetsAdvancedEnUS,
+            sheetsCollaborationEnUS,
+        ),
+    },
+    theme: defaultTheme,
+    collaboration: true,
+    presets: [
+        UniverSheetsCorePreset(),
+        UniverSheetsAdvancedPreset(),
+        UniverSheetsCollaborationPreset(),
+    ],
+});
+```
+
+## Advanced Installation
 
 <Tabs items={['pnpm', 'npm']}>
   <Tabs.Tab>
@@ -25,20 +58,13 @@ Univer provides collaborative editing functions, supporting multiple people to e
   </Tabs.Tab>
 </Tabs>
 
-## Import
-
-```typescript
-import '@univerjs-pro/collaboration-client/lib/index.css';
-
+```typescript {2-4,6,13,23-24,28-34}
+import { LocaleType, Tools } from '@univerjs/core';
 import { UniverCollaborationPlugin } from '@univerjs-pro/collaboration';
 import { UniverCollaborationClientPlugin } from '@univerjs-pro/collaboration-client';
-```
-
-## Internationalization
-
-```typescript
-import { LocaleType, Tools } from '@univerjs/core';
 import CollaborationClientEnUS from '@univerjs-pro/collaboration-client/locale/en-US';
+
+import '@univerjs-pro/collaboration-client/lib/index.css';
 
 const univer = new Univer({
   theme: defaultTheme,
@@ -49,11 +75,7 @@ const univer = new Univer({
     ),
   },
 });
-```
 
-## Register
-
-```typescript
 // By setting the override option to [[IAuthzIoService, null]], you can instruct Univer not to register the built-in IAuthzIoService.
 // By setting the override option to [[IUndoRedoService, null]], you can instruct Univer not to register the built-in IUndoRedoService.
 // This way, Univer will use the services provided by the UniverCollaborationPlugin as the implementation for the authorization and undo-redo features.

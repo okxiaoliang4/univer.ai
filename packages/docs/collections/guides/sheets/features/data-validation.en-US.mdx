@@ -44,17 +44,17 @@ This feature includes the following plugin packages:
 ```ts {4-5,13,19}
 import { createUniver, defaultTheme, LocaleType, Tools } from '@univerjs/presets';
 import { UniverSheetsCorePreset } from '@univerjs/presets/preset-sheets-core';
-import sheetsCoreZhCN from '@univerjs/presets/preset-sheets-core/locales/zh-CN';
+import sheetsCoreEnUS from '@univerjs/presets/preset-sheets-core/locales/en-US';
 import { UniverSheetsDataValidationPreset } from '@univerjs/presets/preset-sheets-data-validation';
-import SheetsDataValidationZhCN from '@univerjs/presets/preset-sheets-data-validation/locale/zh-CN';
+import SheetsDataValidationEnUS from '@univerjs/presets/preset-sheets-data-validation/locale/en-US';
 
 const { univerAPI } = createUniver({
     locale: LocaleType.ZH_CN,
     locales: {
         zhCN: Tools.deepMerge(
             {},
-            sheetsCoreZhCN,
-            SheetsDataValidationZhCN 
+            sheetsCoreEnUS,
+            SheetsDataValidationEnUS 
         ),
     },
     theme: defaultTheme,
@@ -85,7 +85,7 @@ import { LocaleType, Tools } from '@univerjs/core';
 import { UniverDataValidationPlugin } from '@univerjs/data-validation';
 import { UniverSheetsDataValidationPlugin } from '@univerjs/sheets-data-validation';
 import { UniverSheetsDataValidationUIPlugin } from '@univerjs/sheets-data-validation-ui';
-import SheetsDataValidationZhCN from '@univerjs/sheets-data-validation-ui/locale/zh-CN';
+import SheetsDataValidationEnUS from '@univerjs/sheets-data-validation-ui/locale/en-US';
 
 import '@univerjs/sheets-data-validation-ui/lib/index.css';
 
@@ -96,7 +96,7 @@ const univer = new Univer({
   locale: LocaleType.ZH_CN,
   locales: {
     [LocaleType.ZH_CN]: Tools.deepMerge(
-      SheetsDataValidationZhCN
+      SheetsDataValidationEnUS
     ),
   },
 });

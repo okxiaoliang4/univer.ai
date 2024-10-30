@@ -1,14 +1,16 @@
 import { Callout, Tabs } from 'nextra/components'
-import BusinessPlanNotice from '@/components/business-plan-notice'
-import ServerNotice from '@/components/server-notice'
+import FeatureMeta from '@/components/feature-meta'
 
 # Import & Export
 
-<BusinessPlanNotice />
-
-<ServerNotice />
+<FeatureMeta texts={['✅', '✅', '-', 'UniverSheetsAdvancedPreset' ]} />
 
 Univer implements the import and export of Excel XLSX format files through plugins and backend services. The plugin integrates the ability to interact with the server and provides an import and export menu entry.
+
+This feature includes the following plugin packages:
+
+- [`@univerjs-pro/exchange-client`](https://www.npmjs.com/package/@univerjs-pro/exchange-client)
+- [`@univerjs-pro/sheets-exchange-client` ](https://www.npmjs.com/package/@univerjs-pro/sheets-exchange-client)
 
 <Callout type="warning" emoji="❓">
   **Why does Univer implement import and export through backend services?**
@@ -16,7 +18,33 @@ Univer implements the import and export of Excel XLSX format files through plugi
   Importing and exporting implemented only through the frontend cannot meet enterprise requirements in terms of performance or effect. Therefore, we provide backend services to implement import and export features. You can use some open-source XLSX parsing libraries to parse files into data structures that conform to the [`IWorksheetData`](/typedoc/@univerjs/core/interfaces/IWorksheetData) interface, and then import the data into Univer through the Facade API.
 </Callout>
 
-## Installation
+## Presets Installation
+
+```typescript {4-5,13,19}
+import { createUniver, defaultTheme, LocaleType, Tools } from '@univerjs/presets';
+import { UniverSheetsCorePreset } from '@univerjs/presets/preset-sheets-core';
+import sheetsCoreEnUS from '@univerjs/presets/preset-sheets-core/locales/en-US';
+import { UniverSheetsAdvancedPreset } from '@univerjs/presets/preset-sheets-advanced';
+import sheetsAdvancedEnUS from '@univerjs/presets/preset-sheets-advanced/locales/en-US';
+
+const { univerAPI } = createUniver({
+    locale: LocaleType.EN_US,
+    locales: {
+        enUS: Tools.deepMerge(
+            {},
+            sheetsCoreEnUS,
+            sheetsAdvancedEnUS,
+        ),
+    },
+    theme: defaultTheme,
+    presets: [
+        UniverSheetsCorePreset(),
+        UniverSheetsAdvancedPreset(),
+    ],
+});
+```
+
+## Advanced Installation
 
 <Tabs items={['pnpm', 'npm']}>
   <Tabs.Tab>
@@ -31,20 +59,13 @@ Univer implements the import and export of Excel XLSX format files through plugi
   </Tabs.Tab>
 </Tabs>
 
-## Import
-
-```typescript
-import '@univerjs-pro/exchange-client/lib/index.css';
-
+```typescript {2-4,6,13,18-25}
+import { LocaleType, Tools } from '@univerjs/core';
 import { UniverExchangeClientPlugin } from '@univerjs-pro/exchange-client';
 import { UniverSheetsExchangeClientPlugin } from '@univerjs-pro/sheets-exchange-client';
-```
-
-## Internationalization
-
-```typescript
-import { LocaleType, Tools } from '@univerjs/core';
 import ExchangeClientEnUS from '@univerjs-pro/exchange-client/locale/en-US';
+
+import '@univerjs-pro/exchange-client/lib/index.css';
 
 const univer = new Univer({
   theme: defaultTheme,
@@ -55,11 +76,7 @@ const univer = new Univer({
     ),
   },
 });
-```
 
-## Register
-
-```typescript
 univer.registerPlugin(UniverExchangeClientPlugin, {
   uploadFileServerUrl: `http://localhost:3010/universer-api/stream/file/upload`,
   importServerUrl: `http://localhost:3010/universer-api/exchange/{type}/import`,
