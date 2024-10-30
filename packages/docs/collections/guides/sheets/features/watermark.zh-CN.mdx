@@ -1,11 +1,10 @@
 import { Callout, Steps, Tabs } from 'nextra/components'
 import VersionBadge from '@/components/version-badge'
+import FeatureMeta from '@/components/feature-meta'
 
 # 水印 <VersionBadge version="0.4.2+" />
 
-| 有付费版本 | 需要接入 Univer 服务端 | 可用于 Univer on Node.js | 包含的 Preset |
-| - | - | - | - |
-| - | - | - | ❌ 通过 plugin 引入 |
+<FeatureMeta texts={['-', '-', '-', '❌ 通过 plugin 引入' ]} />
 
 水印功能旨在为网页或应用提供灵活且安全的水印方案。通过该功能，开发者可以在页面上动态生成文本或图片水印，以防止内容未经授权的使用或传播。并支持多种配置。
 
@@ -60,8 +59,6 @@ const { univerAPI } = createUniver({
 
 ## 高级安装
 
-使用你的包管理器安装：
-
 <Tabs items={['pnpm', 'npm']}>
   <Tabs.Tab>
     ```shell
@@ -106,6 +103,8 @@ univer.registerPlugin(UniverWatermarkPlugin, {
     }
 })
 ```
+
+详细的配置信息可以在 [GitHub](https://github.com/dream-num/univer/blob/d0054f3e690d9d3cf9715b59a97a8cb95f65a6c8/packages/watermark/src/controllers/config.schema.ts#L24) 上找到。
 
 ## Facade API 
 
