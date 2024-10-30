@@ -2,7 +2,6 @@ import TitleTag from '@/components/title-tag'
 
 export default {
   'core': 'Core',
-  'numfmt': 'Number Format',
   'filter': 'Filter',
   'sort': 'Sort',
   'data-validation': 'Data Validation',

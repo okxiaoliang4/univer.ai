@@ -2,7 +2,6 @@ import TitleTag from '@/components/title-tag'
 
 export default {
   'core': '核心功能',
-  'numfmt': '数字格式',
   'filter': '筛选',
   'sort': '排序',
   'data-validation': '数据验证',
