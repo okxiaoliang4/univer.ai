@@ -1,9 +1,9 @@
 export default {
   'index': 'Univer Sheets',
-  'getting-started': 'Getting Started',
+  'getting-started': 'Get Started',
+  'pro-features': 'Get Started with Pro Features',
   'features': 'Features',
   'advanced': 'Advanced Usage',
-  'server': 'Self-hosted Backend Service',
   'tutorials': 'Tutorials',
   'troubleshooting': 'Troubleshooting',
 }
