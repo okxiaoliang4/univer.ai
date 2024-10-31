@@ -5,14 +5,14 @@ export default {
     title: <ProductSelector />,
     type: 'separator',
   },
-  introduction: {
-    type: 'page',
-    title: 'Introduction',
-  },
   guides: {
     type: 'menu',
     title: 'Guides',
     items: {
+      univer: {
+        title: '🌌 Univer',
+        href: '/introduction',
+      },
       sheet: {
         title: '📊 Univer Sheets',
         href: '/guides/sheets',
