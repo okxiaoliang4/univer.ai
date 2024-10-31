@@ -1,4 +1,4 @@
 export default {
-  installation: 'Installation & Usage',
+  installation: 'Installation & Basic Usage',
   i18n: 'Internationalization',
 }

@@ -2,7 +2,29 @@ import { Callout } from 'nextra/components'
 
 # Internationalization
 
-## Using Preset Locales
+## Presets Installation
+
+Each Preset provides a corresponding locale, import the locale corresponding to the Preset you are using:
+
+```ts
+import { defaultTheme } from '@univerjs/design';
+import { createUniver, LocaleType } from '@univerjs/presets';
+import { UniverSheetsAdvancedPreset } from '@univerjs/presets/sheets/sheets-advanced-features';
+import { zhCN as advancedZhCN } from '@univerjs/presets/sheets/sheets-advanced-features/zh-CN';
+import { UniverSheetsBasicPreset } from '@univerjs/presets/sheets/sheets-basic';
+import { zhCN as basicZhCN } from '@univerjs/presets/sheets/sheets-basic/zh-CN';
+
+const { univerAPI } = createUniver({
+  locale: LocaleType.ZH_CN,
+  theme: defaultTheme,
+  presets: [
+    UniverSheetsBasicPreset({ locales: { zhCN: basicZhCN } }),
+    UniverSheetsAdvancedPreset({ locales: { zhCN: advancedZhCN }),
+  ],
+});
+```
+
+## Advance Installation
 
 From version 0.1.13, Univer no longer includes any locales, all locales are provided by plugins. If you find it too cumbersome to manually import the locales required by the plugin, we also provide a build tool plugin that automatically imports the locales required by the plugin. Please refer to [Using Univer Plugins](/guides/sheets/advanced/univer-plugins) for more information.
 
@@ -32,12 +54,6 @@ const univer = new Univer({
   },
 });
 ```
-
-Univer currently includes the following preset locales:
-
-- `en-US`: Simplified Chinese
-- `en-US`: English
-- `ru-RU`: Russian
 
 You need to pay attention to the fact that since Webpack 4 does not support the `exports` field of package.json, you may need to modify the path to import the locale.
 
@@ -75,6 +91,15 @@ const univer = new Univer({
 });
 ```
 
-## Contributing Locales
+## Contributing Translations
+
+Now, Univer includes the following preset locales:
+
+- `zh-CN`: Simplified Chinese
+- `en-US`: English
+- `zh-TW`: Traditional Chinese
+- `ru-RU`: Russian
+- `vi-VN`: Vietnamese
+- `fa_IR`: Persian
 
 Univer OSS is an open source project full of inclusiveness, and we welcome developers from all over the world to add or improve locales for Univer. If you are interested in contributing locales to Univer, please refer to the [Contribution Guide](/guides/sheets/contributing).

@@ -2,32 +2,32 @@ import { Callout, Tabs } from 'nextra/components'
 
 # 安装和基本使用
 
-Univer 从 0.5.0 版本起提供了 `@univerjs/presets` 包，它针对一些常见场景提供了预设的配置，可以帮助你快速地搭建一个 Univer 应用而无需关心如何引入和配置 Univer 插件。
+如果你是首次使用 Univer，我们推荐从 Presets 开始，本章内容将会介绍基于 Presets 的引用方式。如果你已经较为熟悉 Univer，或希望更加灵活地引入插件（例如懒加载部分插件），请参考 [高级安装](/guides/sheet/advanced-installation)。
 
-<Callout type="info" emoji="🍃">
-  如果你是首次使用 Univer，我们推荐从 Presets 开始。在后续的小节中，除非特殊说明，我们都会假设你使用了 Presets。如果你已经较为熟悉 Univer，并且希望更加灵活地引入插件（例如懒加载部分插件），可以参考 [高级安装方式](/guides/sheets/advanced-installation)。
+<Callout type="info" emoji="💗">
+  在文档的大部分章节中，我们会介绍 Presets 和高级两种安装方式，请选择适合你的方式进行安装。
 </Callout>
 
 ## 使用包管理器
 
-如果你的项目中已经引入了现代前端开发工具，那么引入 Univer 将会非常简单。我们推荐使用 [Vite](https://vitejs.dev/)、[esbuild](https://esbuild.github.io/) 或 [Webpack 5](https://webpack.js.org/) 等对 ES Module 支持较好的构建工具来构建 Univer 应用。如果你使用了其它构建工具（例如 Webpack 4），可能会需要一些额外的配置，请阅读 [常见问题](/guides/sheets/troubleshooting) 获取更多信息。
+如果你的项目中已经引入了现代前端开发工具，那么引入 Univer 将会非常简单。我们推荐使用 [Vite](https://vitejs.dev/)、[esbuild](https://esbuild.github.io/) 或 [Webpack 5](https://webpack.js.org/) 等对 ES Module 支持较好的构建工具来构建 Univer 应用。如果你使用了其它构建工具（例如 Webpack 4），可能会需要一些额外的配置，请阅读 [常见问题](/guides/sheet/troubleshooting) 获取更多信息。
 
 ### 安装
 
 选择你所使用的包管理器以安装 `@unvierjs/presets`：
 
 <Tabs items={['pnpm', 'npm', 'yarn']}>
-  <Tabs.Tab>
+  <Tabs.Tab label="pnpm">
     ```shell
     pnpm add @univerjs/presets
     ```
   </Tabs.Tab>
-  <Tabs.Tab>
+  <Tabs.Tab label="npm">
     ```shell
     npm install @univerjs/presets
     ```
   </Tabs.Tab>
-  <Tabs.Tab>
+  <Tabs.Tab label="yarn">
     ```shell
     yarn add @univerjs/presets
     ```
@@ -79,8 +79,6 @@ univer.registerPlugin(UniverSheetsUIPlugin);
 univer.registerPlugin(UniverSheetsFormulaPlugin);
 
 univer.createUnit(UniverInstanceType.UNIVER_SHEET, {});`
-
-<ReactLive code={code} />
 
 ### 更新
 
@@ -228,9 +226,7 @@ const data = {
 
 univer.createUnit(UniverInstanceType.UNIVER_SHEET, data);`
 
-<ReactLive code={code2} />
-
-你可以在 [工作表数据结构](http://localhost:3000/zh-CN/guides/sheets/getting-started/workbook-data) 进一步了解如何初始化表格数据。
+你可以在 [工作表数据结构](http://localhost:3000/zh-CN/guides/sheet/getting-started/workbook-data) 进一步了解如何初始化表格数据。
 
 ### 修改数据
 
@@ -244,7 +240,7 @@ range.setValue(1);
 ```
 
 <Callout type="error" emoji="🚨">
-  Univer 基于 [命令系统](/guides/sheets/architecture/univer#%E5%91%BD%E4%BB%A4%E7%B3%BB%E7%BB%9F) 对状态和数据进行操作和更新，因此你**必须**使用 Facade API（或其对应的命令）来更新数据，任何直接对数据进行修改以更新视图的操作都不会生效。
+  Univer 基于 [命令系统](/guides/sheet/architecture/univer#%E5%91%BD%E4%BB%A4%E7%B3%BB%E7%BB%9F) 对状态和数据进行操作和更新，因此你**必须**使用 Facade API（或其对应的命令）来更新数据，任何直接对数据进行修改以更新视图的操作都不会生效。
 </Callout>
 
 ### 存储数据
@@ -257,10 +253,10 @@ const savedData = univerAPI.getActiveWorkbook().save();
 
 ## 下一步
 
-* 在 [基础概念](/guides/sheets/getting-started/concepts) 章节了解本章中出现的插件、命令和 Facade API 等概念。
-* 在 [Presets](/guides/sheets/getting-started/presets) 章节了解 Univer 官方提供的所有 Presets。
-* 在 [工作表数据结构](/guides/sheets/getting-started/workbook-data) 进一步了解如何初始化表格数据。
-* 在 [功能](/guides/sheets/features/core) 相关章节中了解修改电子表格数据的所有操作。
+* 在 [基础概念](/guides/sheet/getting-started/concepts) 章节了解本章中出现的插件、命令和 Facade API 等概念。
+* 在 [Presets](/guides/sheet/getting-started/presets) 章节了解 Univer 官方提供的所有 Presets。
+* 在 [工作表数据结构](/guides/sheet/getting-started/workbook-data) 进一步了解如何初始化表格数据。
+* 在 [功能](/guides/sheet/features/core) 相关章节中了解修改电子表格数据的所有操作。
 
 [^1]: https://blog.npmjs.org/post/110924823920/npm-weekly-5
 [^2]: https://pnpm.io/npmrc#auto-install-peers

@@ -1,13 +1,13 @@
 import { useRouter } from 'nextra/hooks'
 
-export default function FeatureMeta(props: { texts: [string, string, string, string] }) {
+export default function FeatureMeta(props: { texts: [string, string, string, string, string] }) {
   const router = useRouter()
 
   const locale = router.locale
   const headerText = getMetaHeaderText(locale)
 
   const { texts } = props
-  const [hasPaidPlan, needUniverser, nodeJS, preset] = texts
+  const [hasFacadeAPI, hasPaidPlan, needUniverser, nodeJS, preset] = texts
 
   return (
     <table className={`
@@ -18,13 +18,21 @@ export default function FeatureMeta(props: { texts: [string, string, string, str
     >
       <thead>
         <tr className={`
-          _m-0 _border-t _border-gray-300 _p-0
+          _m-0 _border-t _border-gray-300 _p-0 text-center
 
           dark:_border-gray-600
 
           even:_bg-gray-100 even:dark:_bg-gray-600/20
         `}
         >
+          <th className={`
+            _m-0 _border _border-gray-300 _px-4 _py-2 _font-semibold
+
+            dark:_border-gray-600
+          `}
+          >
+            {headerText.facadeAPI}
+          </th>
           <th className={`
             _m-0 _border _border-gray-300 _px-4 _py-2 _font-semibold
 
@@ -59,7 +67,7 @@ export default function FeatureMeta(props: { texts: [string, string, string, str
           </th>
         </tr>
       </thead>
-      <tbody>
+      <tbody className="text-center">
         <tr className={`
           _m-0 _border-t _border-gray-300 _p-0
 
@@ -68,6 +76,14 @@ export default function FeatureMeta(props: { texts: [string, string, string, str
           even:_bg-gray-100 even:dark:_bg-gray-600/20
         `}
         >
+          <td className={`
+            _m-0 _border _border-gray-300 _px-4 _py-2
+
+            dark:_border-gray-600
+          `}
+          >
+            {hasFacadeAPI}
+          </td>
           <td className={`
             _m-0 _border _border-gray-300 _px-4 _py-2
 
@@ -107,6 +123,7 @@ export default function FeatureMeta(props: { texts: [string, string, string, str
 }
 
 interface IHeaderTexts {
+  facadeAPI?: string
   hasPaidPlan: string
   needUniverser: string
   nodeJS: string
@@ -116,17 +133,19 @@ interface IHeaderTexts {
 function getMetaHeaderText(locale?: string): IHeaderTexts {
   if (locale === 'zh-CN') {
     return {
-      hasPaidPlan: '有付费版本',
-      needUniverser: '需要接入 Univer 服务端',
-      nodeJS: '可用于 Univer on Node.js',
-      preset: '包含的 Preset',
+      facadeAPI: 'Facade API',
+      hasPaidPlan: '付费版本',
+      needUniverser: '需要 Univer 服务端',
+      nodeJS: 'Univer on Node.js',
+      preset: 'Preset',
     }
   }
 
   return {
-    hasPaidPlan: 'There is a paid plan',
-    needUniverser: 'Univer server integration',
+    facadeAPI: 'Facade API',
+    hasPaidPlan: 'Paid Version',
+    needUniverser: 'Univer Server',
     nodeJS: 'Univer on Node.js',
-    preset: 'Included in preset',
+    preset: 'Preset',
   }
 }

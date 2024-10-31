@@ -1,6 +1,6 @@
 import { Callout, Tabs } from 'nextra/components'
 
-# 高级安装和基本使用
+# 高级安装
 
 ## 使用包管理器
 
@@ -60,17 +60,6 @@ Univer 以插件的形式提供了一系列功能，除了一些产品所必需�
 
 有关 `@univerjs/facade` 的更多信息，请参考 [Facade](/guides/sheets/getting-started/facade) 章节。
 
-### 更新
-
-由于 Univer 使用了 monorepo 的方式进行管理，每次发布都会更新所有官方插件的版本号。因此在更新 Univer 时，你应当同时更新所有的插件，保证它们的版本号一致。
-
-如果你使用的是 pnpm，你可以使用以下命令来更新所有的插件：
-
-```shell
-pnpm update "@univerjs/*" "@univerjs-pro/*" @latest
-```
-
-### 使用
 
 <Callout>
   样式文件的引入顺序很重要，确保你在依次引入 `@univerjs/design`、`@univerjs/ui` 的 CSS 样式后再引入其他插件的样式文件。
@@ -172,108 +161,29 @@ univer.registerPlugin(UniverSheetsUIPlugin);
 univer.registerPlugin(UniverSheetsFormulaPlugin);
 `
 
+### 更新
 
-### 懒加载部分插件
+由于 Univer 使用了 monorepo 的方式进行管理，每次发布都会更新所有官方插件的版本号。因此在更新 Univer 时，你应当同时更新所有的插件，保证它们的版本号一致。
+
+如果你使用的是 pnpm，你可以使用以下命令来更新所有的插件：
+
+```shell
+pnpm update "@univerjs/*" "@univerjs-pro/*" @latest
+```
+
+## 懒加载部分插件
 
 使用高级安装方式的一个优势是你可以更加灵活地控制插件的加载时机，一种常见的方式是在应用初始化时仅加载必须的插件，而将部分插件的加载时机延迟到首次渲染完成之后。
 
 Univer 的 [官方 demo](https://github.com/dream-num/univer/blob/dev/examples/src/sheets/main.ts) 就使用了这样的优化技巧，可参考。
 
+## 使用 Univer Plugins
+
 ## 通过 CDN 引入
 
-如果你不想使用包管理工具，你也可以通过 CDN 引入 Univer 的样式文件、语言包和插件。Univer 为每一个插件都提供了单独的 UMD 构建。当然，琐碎的 UMD 包会使得开发者拥有非常灵活的选择权，但也同样会让开发者面临一些新的挑战：
-
-- 我要如何确定一个包的前置依赖？
-- 我要如何确定正确的引入顺序？
-- 我要如何确定一个功能究竟是由哪些包提供的？
-
-如果对 Univer 的插件化机制没有一个非常清晰的了解的话，通常来说这些问题的背后就意味着无数种排列组合尝试的过程。
-
-因此，Univer 也提供了一个包含了所有插件的 UMD 构建，你可以在 HTML 文件中引入这个 UMD 构建，然后通过 `window` 对象来访问各个插件。
-
-### 示例
-
-当前主流的 CDN 服务商（例如 jsDelivr、unpkg）都支持 Univer 的 UMD 构建，你可以在 HTML 文件中引入这些资源：
-
-```html
-<head>
-  <script src="https://unpkg.com/@univerjs/umd/lib/univer.full.umd.js"></script>
-  <script src="https://unpkg.com/@univerjs/umd/lib/locale/zh-CN.js"></script>
-  <link rel="stylesheet" href="https://unpkg.com/@univerjs/umd/lib/univer.css">
-</head>
-<body>
-  <div id="app"></div>
- 
-  <script>
-    var {
-      UniverCore,
-      UniverDesign,
-      UniverEngineRender,
-      UniverEngineFormula,
-      UniverDocs,
-      UniverDocsUi,
-      UniverUi,
-      UniverSheets,
-      UniverSheetsUi,
-      UniverSheetsNumfmt,
-      UniverSheetsFormula,
-      UniverFacade,
-    } = window
- 
-    var univer = new UniverCore.Univer({
-      theme: UniverDesign.defaultTheme,
-      locale: UniverCore.LocaleType.ZH_CN,
-      locales: {
-        [UniverCore.LocaleType.ZH_CN]: UniverUMD['zh-CN'],
-      },
-    });
- 
-    univer.registerPlugin(UniverEngineRender.UniverRenderEnginePlugin);
-    univer.registerPlugin(UniverEngineFormula.UniverFormulaEnginePlugin);
- 
-    univer.registerPlugin(UniverUi.UniverUIPlugin, {
-      container: "app",
-    });
- 
-    univer.registerPlugin(UniverDocs.UniverDocsPlugin);
-    univer.registerPlugin(UniverDocsUi.UniverDocsUIPlugin);
- 
-    univer.registerPlugin(UniverSheets.UniverSheetsPlugin);
-    univer.registerPlugin(UniverSheetsUi.UniverSheetsUIPlugin);
-    univer.registerPlugin(UniverSheetsNumfmt.UniverSheetsNumfmtPlugin);
-    univer.registerPlugin(UniverSheetsFormula.UniverSheetsFormulaPlugin);
- 
-    univer.createUnit(UniverCore.UniverInstanceType.UNIVER_SHEET, {})
- 
-    const univerAPI = UniverFacade.FUniver.newAPI(univer)
-  </script>
-</body>
-```
-
-从上面的代码可以看出，通过 CDN 引入 Univer 的方式和使用包管理工具引入的方式基本一致，只是每个插件都有属于自己的命名空间。通常这些命名空间的命名规则为大写驼峰的 `Univer<PluginName>`。
-
-### 精简版本
-
-如果你的项目中已经使用了 React、ReactDOM 和 RxJS，你可以选择 UMD 包的精简版本，该版本不包含这些依赖项。
-
-```diff
-+ <script src="https://unpkg.com/react/umd/react.production.min.js"></script>
-+ <script src="https://unpkg.com/react-dom/umd/react-dom.production.min.js"></script>
-+ <script src="https://unpkg.com/rxjs/dist/bundles/rxjs.umd.min.js"></script>
- 
-- <script src="https://unpkg.com/@univerjs/umd/lib/univer.full.umd.js"></script>
-+ <script src="https://unpkg.com/@univerjs/umd/lib/univer.slim.umd.js"></script>
-<link rel="stylesheet" href="https://unpkg.com/@univerjs/umd/lib/univer.css">
-```
-
-### 指定版本
-
-unpkg 和 jsDeliver 都支持指定特定版本的资源。以 unpkg 为例，如果你想使用 0.1.16 版本的 Univer，仅需在 URL 中加上 `@<version>` 来指定版本即可：
-
-```diff
-- https://unpkg.com/@univerjs/umd/lib/univer.full.umd.js
-+ https://unpkg.com/@univerjs/umd@0.1.16/lib/univer.full.umd.js
-```
+<Callout type="error">
+从 0.5.0 版本开始，我们将不再提供高级安装方式的 UMD 版本，请使用 Presets 安装方式的 UMD 版本，或者使用包管理工具安装。
+</Callout>
 
 ---
 
