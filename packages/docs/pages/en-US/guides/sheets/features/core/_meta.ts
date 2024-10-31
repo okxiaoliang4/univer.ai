@@ -7,6 +7,7 @@ export default {
   'row-col': 'Row & Column',
   'range-selection': 'Range & Selection & Cell',
   'freeze': 'Freeze',
+  'clipboard': 'Clipboard',
   'dom': 'Custom Component',
   'default-style': 'Default Style',
   'gridlines': 'Gridlines',

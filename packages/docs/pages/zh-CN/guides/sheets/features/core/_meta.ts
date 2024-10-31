@@ -7,6 +7,7 @@ export default {
   'row-col': '行列',
   'range-selection': '范围、选区、单元格',
   'freeze': '冻结',
+  'clipboard': '复制粘贴',
   'dom': '集成自定义组件',
   'default-style': '默认样式',
   'gridlines': '网格线',
