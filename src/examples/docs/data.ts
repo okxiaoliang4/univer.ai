@@ -5,7 +5,7 @@ export const ALL_FEATURES_DOCUMENT_DATA = {
       width: 793.3333333333334,
       height: 1122.6666666666667,
     },
-    documentFlavor: 0,
+    documentFlavor: 1,
     marginTop: 66.66666666666667,
     marginBottom: 66.66666666666667,
     marginRight: 66.66666666666667,
