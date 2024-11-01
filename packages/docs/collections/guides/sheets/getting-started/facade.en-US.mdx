@@ -10,6 +10,10 @@ This chapter will show in detail how to add Facade API to your application. In t
   Starting from version 0.5.0, the `@univerjs/facade` package has been marked as deprecated and is planned to be removed in version 0.6.0. If you are a user before version 0.5.0, please refer to the "Advanced Installation" section below to modify the way you import Facade API.
 </Callout>
 
+<Callout type="warning">
+  Please note that some APIs in Univer are **asynchronous**, especially the APIs that modify data, most of which will return a `Promise`. If you need to get data immediately after modifying it, please use `await` or `.then()`, otherwise you may get unexpected results. To find out which APIs return a `Promise`, please refer to the corresponding API reference manual.
+</Callout>
+
 ## Presets Installation
 
 If you use Presets, it will automatically import the Facade API of the included features, and return a corresponding Facade API instance `univerAPI` when you create a Univer instance, which can be used directly.
