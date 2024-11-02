@@ -1,73 +1,103 @@
+import { Cards, Callout, Steps, Tabs } from 'nextra/components'
+
 # License
 
-## Introduction
+## Overview
 
-## Obtain a License
-Click [this page](https://univer.ai/zh-CN/pro/license) to obtain the license file.
-![Start the trial](./img/new-01-en.png)
+Full Univer advanced features require license support. You can activate paid plans by adding a license to your project, or you can upgrade to a higher-level plan by updating your license. This page will guide you on how to obtain, configure, and verify licenses.
 
+## Prerequisites
+Before you begin, make sure you:
+- Have integrated Univer advanced features in your project. If you haven't completed the integration, please refer to [Integrating Univer Advanced Features](/guides/sheets/getting-started/quickstart#integration-advanced-features).
+- For server-side deployment, have completed Docker or Kubernetes environment configuration. If you haven't completed the configuration, please refer to [Docker Deployment Documentation](/guides/sheets/pro-features/server/docker) or [Kubernetes Deployment Documentation](/guides/sheets/pro-features/server/kubernetes).
+- Have a valid license. If you don't have one yet, you can obtain it by registering on the [License Page](https://univer.ai/pro/license).
 
-![Download the license](./img/new-02-en.png)
+## Download License
+1. Visit the [License Page](https://univer.ai/pro/license) and log in to your account
 
-## Use a License
-unzipping the downloaded `license-univer.zip` file, you will get `license.txt` and `licenseKey.txt` files. Please keep these two files safe and ensure that you do not modify their format or content.
+2. Download the license file
+![Download License](./img/new-02-en.png)
 
-### Use License in JavaScript/TypeScript Projects
+### Apply for Free Trial License
 
+If you don't have a license or are still considering whether to purchase, we have prepared a 30-day trial license for you to fully experience all advanced features of Univer.
+
+1. Visit the [License Page](https://univer.ai/pro/license) and log in to your account
+
+2. Click the "Get Trial License" button
+
+![Get License](./img/new-01-en.png)
+
+## Add or Update License
+
+Unzip the downloaded license file `license-univer.zip`, you will get `license.txt` and `licenseKey.txt` files. Please keep these two files safe and ensure that you do not modify their format and content.
+
+### Using License in JavaScript/TypeScript Projects
 1. In addition to importing the univer plugin in your project, also import the license plugin. For specific plugin import methods, please refer to [here](https://univer.ai/guides/sheet/getting-started/installation#usage).
 
-```TypeScript
+```typescript
 import { UniverLicensePlugin } from '@univerjs-pro/license';
 ```
 
 2. Register the `UniverLicensePlugin` plugin. Make sure this plugin is registered first after the univer instance is initialized. Then paste the content of the `license.txt` file into the license parameter of the plugin.
 
-```TypeScript
+```typescript {2-4}
+const univer = new Univer(/** omitted */);
 univer.registerPlugin(UniverLicensePlugin, {
     license: `Content of your license.txt file`
 });
 ```
 
-### Use License with Univer Server
+### Using License with Univer Server
 
-- Use docker-compose
-
-Copy the `license.txt` and `licenseKey.txt` files to the `/docker-compose/configs/` directory.
-Run the service script `bash run.sh` in the docker-compose directory to restart the universer service.
-
-- Use Kubernetes
-
-execute
-```shell
+<Tabs items={['docker-compose', 'Kubernetes']}>
+    <Tabs.Tab>
+        1. Copy the `license.txt` and `licenseKey.txt` files to the `/docker-compose/configs/` directory.
+        2. Run the service script `bash run.sh` in the docker-compose directory to restart the universer service.
+    </Tabs.Tab>
+    <Tabs.Tab>
+        1. Execute the following command
+```bash
 helm upgrade --install -n univer --create-namespace \
     --set global.istioNamespace="univer" \
     --set-file universer.license.licenseV2=$(YOUR_LICENSE_TXT_PATH) \
     --set-file universer.license.licenseKeyV2=$(YOUR_LICENSE_KEY_TXT_PATH) \
     univer-stack oci://univer-acr-registry.cn-shenzhen.cr.aliyuncs.com/helm-charts/univer-stack
 ```
+    </Tabs.Tab>
+</Tabs>
 
-## Verifying the License File
+## Verify License
 
-After successfully replacing the frontend and backend license files and restarting the service, please follow these steps to verify that the service is running normally and the license has been successfully loaded.
-
-### Univer Server
-1. Visit `host:8000/universer-api/license/key` to view the license entitlement information.
-For example: If your service is running locally, please visit `http://localhost:8000/universer-api/license/key`.
-
-```json
-{
-"verify":true // License verification result
-"release_type":"COMMERCIAL" // License type
-}
-
-```
-
-![Backend license verification](./img/new-05.png)
-
-### JavaScript/TypeScript
+### Verifying License in JavaScript/TypeScript Projects
 1. After injecting the License into the frontend and starting the project, you can verify whether the License is valid and being used correctly.
 Note: If no license is entered, or if the entered license is invalid (e.g., expired or incorrect content), some features will be restricted, and a watermark will be displayed on the page.
 ![Frontend license verification failed](./img/new-06.png)
 
 2. With a valid license entered, the project will run normally without restrictions.
 ![Frontend license verification successful](./img/new-07.png)
+
+### Verifying License in Univer Server
+
+1. Visit `host:8000/universer-api/license/key` to view the license entitlement information. For example: If your service is running locally, please visit `http://localhost:8000/universer-api/license/key`.
+
+```json
+{
+    "verify":"true", // License verification result
+    "release_type":"COMMERCIAL" // License type
+}
+```
+![Backend license verification](./img/new-05.png)
+
+## Common Issues
+
+1. If license verification fails, please check:
+   - Whether the license files are complete and unmodified
+   - Whether the license has expired
+   - Whether the service has been correctly restarted
+2. For other issues, please contact our technical support
+
+## Related Links
+- [Integrating Univer Advanced Features](/guides/sheets/getting-started/quickstart#integration-advanced-features)
+- [Docker Deployment Documentation](/guides/sheets/pro-features/server/docker)
+- [Kubernetes Deployment Documentation](/guides/sheets/pro-features/server/kubernetes)
