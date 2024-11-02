@@ -25,6 +25,7 @@ export default antfu({
     ...eslintPluginReadableTailwind.configs.warning.rules,
     // enable all recommended rules to error
     ...eslintPluginReadableTailwind.configs.error.rules,
+    'jsonc/sort-keys': ['warn'],
 
     // or configure rules individually
     'readable-tailwind/multiline': ['warn', { printWidth: 120 }],
