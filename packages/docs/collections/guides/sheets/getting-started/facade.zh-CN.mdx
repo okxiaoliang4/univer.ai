@@ -1,6 +1,6 @@
 import { Callout, Steps, Tabs } from 'nextra/components'
 
-# 使用 Facade API
+# 面板（Facade） API
 
 为了应对复杂的需求，Univer 的架构也较为复杂，这可能会给使用造成一些困难，为此我们提供了一个更加简单易用的面板 API（Facade API）。
 
@@ -8,6 +8,10 @@ import { Callout, Steps, Tabs } from 'nextra/components'
 
 <Callout>
   从 0.5.0 开始版本，`@univerjs/facade` 包被标记为废弃，并计划在 0.6.0 版本中移除。如果你是 0.5.0 之前版本的用户，请参考下文中的 “高级安装” 部分修改引入 Facade API 的方式。
+</Callout>
+
+<Callout type="warning">
+  注意 Univer 当中部分 API 是**异步**的，特别是修改数据的 API，它们大多会返回一个 `Promise`。如果你需要再修改数据后立即获取数据，请使用 `await` 或者 `.then()`，否则可能会获取到不符合预期的结果。想要了解具体有哪些 API 会返回 `Promise`，请查看对应的 API 参考手册。
 </Callout>
 
 ## Presets 安装
