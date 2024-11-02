@@ -19,7 +19,8 @@ Univer 表格相关概念会尽可能与 Excel 保持一致。
 
 [`workbookData`](/guides/sheets/getting-started/cell-data) 是一个对象，包含了工作簿的配置信息。
 
-export const code = `const univer = new Univer({
+```typescript
+const univer = new Univer({
   theme: defaultTheme,
   locale: LocaleType.ZH_CN,
   locales: {
@@ -41,9 +42,8 @@ univer.registerPlugin(UniverSheetsUIPlugin);
 univer.registerPlugin(UniverSheetsFormulaPlugin);
 
 // 传入空对象会自动初始化工作簿
-univer.createUnit(UniverInstanceType.UNIVER_SHEET, {});`
-
-<ReactLive code={code} />
+univer.createUnit(UniverInstanceType.UNIVER_SHEET, {});
+```
 
 ### 获取工作簿数据
 
@@ -103,7 +103,8 @@ const sheet1 = Object.values(snapshot.sheets).find((sheet) => {
 
 下面例子展示通过 `Workbook.create` 方法创建一个工作表。
 
-export const code2 = `const univer = new Univer({
+```typescript
+const univer = new Univer({
   theme: defaultTheme,
   locale: LocaleType.ZH_CN,
   locales: {
@@ -131,9 +132,8 @@ const univerAPI = FUniver.newAPI(univer);
 const activeWorkbook = univerAPI.getActiveWorkbook();
 
 // 创建一个名为 'Sheet2' 的工作表，包含 10 行和 10 列
-const sheet2 = activeWorkbook.create('Sheet2', 10, 10)`
-
-<ReactLive code={code2} />
+const sheet2 = activeWorkbook.create('Sheet2', 10, 10)
+```
 
 ### 删除工作表
 
