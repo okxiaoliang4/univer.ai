@@ -17,15 +17,13 @@
 import { UniverLicensePlugin } from '@univerjs-pro/license';
 ```
 
-2. 注册 `UniverLicensePlugin` 插件，这里要保证该插件的顺序在 univer 实例化之后最先注册，如下图所示。然后将获得 `license.txt` 中的内容粘贴到插件的 license 参数中。
+2. 注册 `UniverLicensePlugin` 插件，这里要保证该插件的顺序在 univer 实例化之后最先注册。然后将获得 `license.txt` 中的内容粘贴到插件的 license 参数中。
 
 ```TypeScript
 univer.registerPlugin(UniverLicensePlugin, {
     license: `您获得的license.txt中的内容`
 });
 ```
-
-![运行安装命令](./img/new-04.png)
 
 ### 在 Univer Server 中使用许可证
 
@@ -43,7 +41,7 @@ helm upgrade --install -n univer --create-namespace \
     --set-file universer.license.licenseV2=$(YOUR_LICENSE_TXT_PATH) \
     --set-file universer.license.licenseKeyV2=$(YOUR_LICENSE_KEY_TXT_PATH) \
     univer-stack oci://univer-acr-registry.cn-shenzhen.cr.aliyuncs.com/helm-charts/univer-stack
-  ```
+```
 
 ## 验证许可证
 

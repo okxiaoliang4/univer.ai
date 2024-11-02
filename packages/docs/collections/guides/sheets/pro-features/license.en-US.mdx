@@ -20,15 +20,13 @@ unzipping the downloaded `license-univer.zip` file, you will get `license.txt` a
 import { UniverLicensePlugin } from '@univerjs-pro/license';
 ```
 
-2. Register the `UniverLicensePlugin` plugin. Make sure this plugin is registered first after the univer instance is initialized, as shown in the image below. Then paste the content of the `license.txt` file into the license parameter of the plugin.
+2. Register the `UniverLicensePlugin` plugin. Make sure this plugin is registered first after the univer instance is initialized. Then paste the content of the `license.txt` file into the license parameter of the plugin.
 
 ```TypeScript
 univer.registerPlugin(UniverLicensePlugin, {
     license: `Content of your license.txt file`
 });
 ```
-
-![Run the installation command](./img/new-04.png)
 
 ### Use License with Univer Server
 
