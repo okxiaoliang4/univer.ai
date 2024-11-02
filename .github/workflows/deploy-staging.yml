@@ -58,12 +58,12 @@ jobs:
           cd packages
           if [ "${{ github.event_name }}" == "schedule" ] || [ "${{ inputs.univer-site }}" == "true" ]; then
             cd www
-            make push_image PUSH_TAG=$IMAGE_TAG BUILDER=${{ steps.buildx.outputs.name }} OSARCH=linux/amd64 PUSH_TAG_AS_LATEST=${{ vars.PUSH_TAG_AS_LATEST }}
+            make push_image PUSH_TAG=$IMAGE_TAG BUILDER=${{ steps.buildx.outputs.name }} OSARCH=linux/amd64 PUSH_TAG_AS_LATEST=${{ vars.PUSH_TAG_AS_LATEST }} CR=${{ secrets.REGISTRY_CR }}
             cd ..
           fi
           if [ "${{ github.event_name }}" == "schedule" ] || [ "${{ inputs.univer-docs-site }}" == "true" ]; then
             cd docs
-            make push_image_demo PUSH_TAG=$IMAGE_TAG BUILDER=${{ steps.buildx.outputs.name }} OSARCH=linux/amd64 PUSH_TAG_AS_LATEST=${{ vars.PUSH_TAG_AS_LATEST }}
+            make push_image_demo PUSH_TAG=$IMAGE_TAG BUILDER=${{ steps.buildx.outputs.name }} OSARCH=linux/amd64 PUSH_TAG_AS_LATEST=${{ vars.PUSH_TAG_AS_LATEST }} CR=${{ secrets.REGISTRY_CR }}
             cd ..
           fi
 
