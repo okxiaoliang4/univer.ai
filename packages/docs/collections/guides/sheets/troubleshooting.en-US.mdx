@@ -79,17 +79,16 @@ Univer collects data about how users interact with the platform. This data helps
 
 Univer does not capture any data returned by your API, database, or third-party tools. All data captured from private deployment instances is completely anonymous to prevent user information leakage.
 
-Of course, you can choose to disable this feature
+You can choose to disable this feature
 
-1. going to the `docker-compose/configs` directory
-2. modify the `config.yaml` file.
+1. Go to the `docker-compose/configs` directory, modify the `config.yaml` file
 ```
 statsConf:
   timeInterval: 10
   maxRecords: 10
   addr: "https://www.univer.ai/univer-cloud/stats/report" // Remove this configuration item
 ```
-3. restart the service
+3. Restart the service
 ```
 bash run.sh
 ```
