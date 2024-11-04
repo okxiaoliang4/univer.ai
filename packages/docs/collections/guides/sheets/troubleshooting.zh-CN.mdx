@@ -80,7 +80,17 @@ univer 会收集用户与平台交互的数据。这些数据帮助 univer 团�
 如果您希望禁用数据收集功能，可以按照以下步骤操作：
 
 1. 进入`docker-compose/configs`目录，
-2. 删除`verify.json`文件即可
+2. 修改`config.yaml`配置
+```
+statsConf:
+  timeInterval: 10
+  maxRecords: 10
+  addr: "https://www.univer.ai/univer-cloud/stats/report" // 删除该配置项
+```
+3. 重启服务
+```
+bash run.sh
+```
 
 ## 集成相关
 

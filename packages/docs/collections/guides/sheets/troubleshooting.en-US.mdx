@@ -82,7 +82,18 @@ Univer does not capture any data returned by your API, database, or third-party 
 Of course, you can choose to disable this feature
 
 1. going to the `docker-compose/configs` directory
-2. deleting the `verify.json` file.
+2. modify the `config.yaml` file.
+```
+statsConf:
+  timeInterval: 10
+  maxRecords: 10
+  addr: "https://www.univer.ai/univer-cloud/stats/report" // Remove this configuration item
+```
+3. restart the service
+```
+bash run.sh
+```
+
 
 ## Integration Related
 
