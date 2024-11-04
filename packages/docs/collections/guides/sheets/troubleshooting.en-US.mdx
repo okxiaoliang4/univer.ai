@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import missingLocaleImg from './troubleshooting/missing-locale.png'
+import { Callout } from 'nextra/components'
 
 # Troubleshooting
 
@@ -74,6 +75,10 @@ This is because you have missed the corresponding locales. You need to pass the 
 <Image src={missingLocaleImg} alt="Missing Locale" width={300} />
 
 ### Does Univer collect my data?
+
+<Callout type="info" emoji="ℹ️">
+  Data collection is only effective for free version or 30-day trial users, and the commercial version will not collect any data from users.
+</Callout>
 
 Univer collects data about how users interact with the platform. This data helps the Univer team identify usage patterns, troubleshoot issues, and make informed decisions about new features and improvements.
 

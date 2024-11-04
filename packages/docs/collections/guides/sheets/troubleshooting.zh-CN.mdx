@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import missingLocaleImg from './troubleshooting/missing-locale.png'
-
+import { Callout } from 'nextra/components'
 # 常见问题
 
 ## 安装相关
@@ -73,6 +73,10 @@ $btn.addEventListener('click', () => {
 参考：https://github.com/dream-num/univer/issues/1314
 
 ### univer会收集我的数据吗？
+<Callout type="info" emoji="ℹ️">
+  数据收集只针对免费版以及30天试用用户生效，商业版不会收集用户的任何数据。
+</Callout>
+
 univer 会收集用户与平台交互的数据。这些数据帮助 univer 团队识别使用模式、解决问题，并就新功能和改进做出明智的决策。
 
 需要注意的是，univer 不会捕获您的 API、数据库或第三方工具返回的任何数据。对于私有化部署的实例，所有收集的数据都是完全匿名的，以确保用户信息的安全。
