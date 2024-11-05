@@ -1,4 +1,5 @@
 import TitleTag from '@/components/title-tag'
+import { Cards, Callout, Steps, Tabs } from 'nextra/components'
 
 # Introduction to Pro Features
 
@@ -14,12 +15,321 @@ and so on, these features will be marked with <span className="mr-2"><TitleTag /
 
 Pro features are based on the Univer commercial license agreement, which can be used for free, but there are some restrictions. If you need to unlock restrictions, you can contact our sales team to purchase a license. You can learn whether you need a license, how to obtain and use a license in the [License](/guides/sheets/pro-features/license) chapter.
 
-## Univer Server
+## Integrate Advanced Features [#integrate-advanced-features]
 
-Some pro features require access to the Univer server, including:
+<Steps>
+  ### Install and Run the Server
+
+  ```shell
+  bash -c "$(curl -fsSL https://get.univer.ai)"
+  ```
+
+  <Callout emoji="⚠️">
+    If you encounter any issues during installation or use, please refer to the [Troubleshooting](/guides/sheets/server/docker#troubleshooting).
+  </Callout>
+
+  ### Install and Run the Frontend [#install-and-run-the-frontend]
+
+  <Tabs items={['pnpm', 'npm', 'Without package manager']}>
+    <Tabs.Tab>
+      Run the following command requires your device has `nodejs >= 18`, `pnpm >= 7` and `git` installed.
+
+      ```shell
+      pnpm dlx degit dream-num/univer-pro-sheet-start-kit univer-pro-sheet-start-kit
+      cd univer-pro-sheet-start-kit
+      pnpm install
+      pnpm dev
+      ```
+      <Callout emoji="⚠️">
+        If you deploy the server on a different machine, you need to update the `server` configuration in `vite.config.ts` by changing `localhost` to the machine's IP address.
+      </Callout>
+
+      🎉 Congratulations! You've successfully created another Univer project with a server. You can now visit [http://localhost:5173/](http://localhost:5173/) to experience these pro features.
+
+      You can also find the source code for this template at [dream-num/univer-pro-sheet-start-kit](https://github.com/dream-num/univer-pro-sheet-start-kit).
+    </Tabs.Tab>
+
+    <Tabs.Tab>
+      Run the following command requires your device has `nodejs >= 18`, `npm >= 8` and `git` installed.
+
+      ```shell
+      npx degit dream-num/univer-pro-sheet-start-kit univer-pro-sheet-start-kit
+      cd univer-pro-sheet-start-kit
+      npm install
+      npm run dev
+      ```
+      <Callout emoji="⚠️">
+        If you deploy the server on a different machine, you need to update the `server` configuration in `vite.config.ts` by changing `localhost` to the machine's IP address.
+      </Callout>
+
+      🎉 Congratulations! You've successfully created another Univer project with a server. You can now visit [http://localhost:5173/](http://localhost:5173/) to experience these pro features.
+
+      You can also find the source code for this template at [dream-num/univer-pro-sheet-start-kit](https://github.com/dream-num/univer-pro-sheet-start-kit).
+    </Tabs.Tab>
+    <Tabs.Tab label="Without package manager">
+      If you want to run Univer directly in the browser without any frontend build tools, you can copy and save the following code to an HTML file, then double-click to open the file in the browser to experience features like printing, collaborative editing, importing/exporting, etc.
+
+      ```html
+      <!DOCTYPE html>
+      <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>
+          Univer UMD With Collaboration, Live Share, Print, Exchange
+        </title>
+        <script src="https://unpkg.com/@univerjs/umd/lib/univer.full.umd.js"></script>
+        <script src="https://unpkg.com/@univerjs/umd/lib/locale/en-US.js"></script>
+        <link rel="stylesheet" href="https://unpkg.com/@univerjs/umd/lib/univer.css">
+      
+        <script src="https://unpkg.com/@univerjs-pro/license/lib/umd/index.js"></script>
+        
+        <script src="https://unpkg.com/@univerjs-pro/collaboration/lib/umd/index.js"></script>
+        <script src="https://unpkg.com/@univerjs-pro/collaboration-client/lib/umd/index.js"></script>
+        <link rel="stylesheet" href="https://unpkg.com/@univerjs-pro/collaboration-client/lib/index.css">
+      
+        <script src="https://unpkg.com/@univerjs-pro/live-share/lib/umd/index.js"></script>
+        <link rel="stylesheet" href="https://unpkg.com/@univerjs-pro/live-share/lib/index.css">
+      
+        <script src="https://unpkg.com/@univerjs-pro/print/lib/umd/index.js"></script>
+        <script src="https://unpkg.com/@univerjs-pro/sheets-print/lib/umd/index.js"></script>
+        <link rel="stylesheet" href="https://unpkg.com/@univerjs-pro/sheets-print/lib/index.css">
+      
+        <script src="https://unpkg.com/@univerjs-pro/exchange-client/lib/umd/index.js"></script>
+        <link rel="stylesheet" href="https://unpkg.com/@univerjs-pro/exchange-client/lib/index.css">
+      
+        <script src="https://unpkg.com/@univerjs-pro/sheets-exchange-client/lib/umd/index.js"></script>
+
+        <script src="https://unpkg.com/@univerjs-pro/engine-pivot/lib/umd/index.js"></script>
+        <script src="https://unpkg.com/@univerjs-pro/sheets-pivot/lib/umd/index.js"></script>
+        <script src="https://unpkg.com/@univerjs-pro/sheets-pivot-ui/lib/umd/index.js"></script>
+        <link rel="stylesheet" href="https://unpkg.com/@univerjs-pro/sheets-pivot-ui/lib/index.css">
+
+        <script src="https://unpkg.com/@univerjs-pro/edit-history-viewer/lib/umd/index.js"></script>
+        <script src="https://unpkg.com/@univerjs-pro/edit-history-loader/lib/umd/index.js"></script>
+        <link rel="stylesheet" href="https://unpkg.com/@univerjs-pro/edit-history-viewer/lib/index.css">
+        <style>
+          body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+          }
+      
+          #app {
+            height: 100vh;
+            width: 100vw;
+          }
+        </style>
+      </head>
+      
+      <body>
+        <div id="app"></div>
+        <script>
+          var {
+            UniverCore,
+            UniverDesign,
+            UniverEngineRender,
+            UniverEngineFormula,
+            UniverDocs,
+            UniverDocsUi,
+            UniverUi,
+            UniverSheets,
+            UniverSheetsUi,
+            UniverSheetsNumfmt,
+            UniverCollaboration,
+            UniverCollaborationClient,
+            UniverSheetsThreadComment,
+            UniverExchangeClient,
+            UniverFacade
+          } = window;
+          var { UniverSheetsFormulaPlugin } = UniverSheetsFormula;
+          var { UniverSheetsExchangeClientPlugin } = UniverSheetsExchangeClient;
+          var { UniverSheetsNumfmtPlugin } = UniverSheetsNumfmt;
+          var { UniverDocsPlugin } = UniverDocs;
+          var { UniverRenderEnginePlugin } = UniverEngineRender;
+          var { UniverFormulaEnginePlugin } = UniverEngineFormula;
+          var { UniverUIPlugin } = UniverUi;
+          var { UniverDocsUIPlugin } = UniverDocsUi;
+          var { UniverSheetsPlugin } = UniverSheets;
+          var { UniverSheetsUIPlugin } = UniverSheetsUi;
+          var { UniverSheetsPivotTablePlugin } = UniverSheetsPivot;
+          var { UniverSheetsPivotTableUIPlugin } = UniverSheetsPivotUi;
+          var { UniverEditHistoryLoaderPlugin } = UniverEditHistoryLoader;
+          var { UniverCollaborationPlugin } = UniverCollaboration;
+          var { UniverCollaborationClientPlugin } = UniverCollaborationClient;
+          var { UniverLiveSharePlugin } = UniverLiveShare;
+          var { UniverSheetsPrintPlugin } = UniverSheetsPrint;
+          var { UniverSheetsThreadCommentPlugin, IThreadCommentMentionDataService } = UniverSheetsThreadComment;
+          var { defaultTheme, greenTheme } = UniverDesign;
+          var { FUniver } = UniverFacade;
+          var { UniverExchangeClientPlugin }= UniverExchangeClient;
+          var {UniverLicensePlugin} = UniverLicense;
+          var {
+            UniverInstanceType,
+            Tools,
+            IUndoRedoService,
+            IAuthzIoService,
+            LocaleType,
+            Univer,
+            IConfigService
+          } = window.UniverCore;
+        </script>
+        <script>
+          // Hi, developer, this is a simple example to show how to use Univer UMD with collaboration, live share, print, exchange
+          // If you want to use the collaboration, live share, print, exchange, you need to config the endpoint
+          // The endpoint is the univer backend server that provides the collaboration, live share, print, exchange service
+          // You can deploy the universer server on your own server, see the deployment guide: https://univer.ai/guides/sheets/server/docker
+
+          const universerEndpoint = 'localhost:8000';
+      
+          // check if the unit is already created
+          const url = new URL(window.location.href)
+          const unit = url.searchParams.get('unit')
+          if (unit) {
+      
+            // load the business locale
+            Promise.all([
+              fetch('https://unpkg.com/@univerjs-pro/collaboration-client/lib/locale/en-US.json').then(res => res.json()),
+              fetch('https://unpkg.com/@univerjs-pro/sheets-print/lib/locale/en-US.json').then(res => res.json()),
+              fetch('https://unpkg.com/@univerjs-pro/exchange-client/lib/locale/en-US.json').then(res => res.json()),
+              fetch('https://unpkg.com/@univerjs-pro/edit-history-viewer/lib/locale/en-US.json').then(res => res.json()),
+              fetch('https://unpkg.com/@univerjs-pro/sheets-pivot/lib/locale/en-US.json').then(res => res.json()),
+              fetch('https://unpkg.com/@univerjs-pro/sheets-pivot-ui/lib/locale/en-US.json').then(res => res.json()),
+          ]).then((langs) => {
+              setup(Tools.deepMerge(UniverUMD['en-US'],...langs));
+            })
+          } else {
+            const { UniverInstanceType } = window.UniverCore;
+            fetch(`http://${universerEndpoint}/universer-api/snapshot/${UniverInstanceType.UNIVER_SHEET}/unit/-/create`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                type: UniverInstanceType.UNIVER_SHEET,
+                name: 'New Sheet By Univer',
+                creator: 'user',
+              }),
+            }).then((response) => {
+              if (!response.ok) {
+                throw new Error('Failed to create new sheet')
+              }
+      
+              return response.json()
+            }).then((data) => {
+              if (!data.unitID) {
+                throw new Error('create unit failed')
+              }
+      
+              url.searchParams.set('unit', data.unitID)
+              url.searchParams.set('type', String(UniverInstanceType.UNIVER_SHEET))
+              window.location.href = url.toString()
+            }).catch((error) => {
+              console.error(error)
+            })
+          }
+      
+          const setup = (locales) => {
+            var univer = new Univer({
+              theme: defaultTheme,
+              locale: LocaleType.EN_US,
+              locales:{
+                  [LocaleType.EN_US]: locales,
+              },
+              override: [
+                [IAuthzIoService, null],
+                [IUndoRedoService, null]
+              ]
+            });
+            univer.registerPlugin(UniverRenderEnginePlugin);
+            univer.registerPlugin(UniverDocsPlugin);
+            univer.registerPlugin(UniverFormulaEnginePlugin);
+            univer.registerPlugin(UniverSheetsFormulaPlugin);
+      
+            univer.registerPlugin(UniverUIPlugin, {
+              container: "app",
+            });
+      
+            univer.registerPlugin(UniverDocsUIPlugin);
+      
+            univer.registerPlugin(UniverSheetsPlugin);
+            univer.registerPlugin(UniverSheetsUIPlugin);
+      
+            const mockUser = {
+              userID: 'mockId',
+              name: 'MockUser',
+              avatar: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAInSURBVHgBtZU9TxtBEIbfWRzFSIdkikhBSqRQkJqkCKTCFkqVInSUSaT0wC8w/gXxD4gU2nRJkXQWhAZowDUUWKIwEgWWbEEB3mVmx3dn4DA2nB/ppNuPeWd29mMIPXDr+RxwtgRHeW6+guNPRxogqnL7Dwz9psJ27S4NShaeZTH3kwXy6I81dlRKcmRui88swdq9AcSFL7Buz1Vmlns64MiLsCjzwnIYHLH57tbfFbs7KRaXyEU8FVZofqccOfA5l7Q8LPIkGrwnb2RPNEXWFVMUF3L+kDCk0btDDAMzOm5YfAHDwp4tG74wnzAsiOYMnJ3GoDybA7IT98/jm5+JNnfiIzAS6LlqHQBN/i6b2t/cV1Hh6BfwYlHnHP4AXi5q/8kmMMpOs8+BixZw/Fd6xUEHEbnkgclvQP2fGp7uShRKnQ3G32rkjV1th8JhIGG7tR/JyjGteSOZELwGMmNqIIigRCLRh2OZIE6BjItdd7pCW6Uhm1zzkUtungSxwEUzNpQ+GQumtH1ej1MqgmNT6vwmhCq5yuwq56EYTbgeQUz3yvrpV1b4ok3nYJ+eYhgYmjRUqErx2EDq0Fr8FhG++iqVGqxlUJI/70Ar0UgJaWHj6hYVHJrfKssAHot1JfqwE9WVWzXZVd5z2Ws/4PnmtEjkXeKJDvxUecLbWOXH/DP6QQ4J72NS0adedp1aseBfXP8odlZFfPvBF7SN/8hky1TYuPOAXAEipMx15u5ToAAAAABJRU5ErkJggg==',
+              anonymous: false,
+              canBindAnonymous: false,
+            };
+            class CustomMentionDataService {
+              trigger = '@';
+      
+              async getMentions (search) {
+                return [
+                  {
+                    id: mockUser.userID,
+                    label: mockUser.name,
+                    type: 'user',
+                    icon: mockUser.avatar,
+                  },
+                  {
+                    id: '2',
+                    label: 'User2',
+                    type: 'user',
+                    icon: mockUser.avatar,
+                  },
+                ];
+              }
+            }
+      
+            univer.registerPlugin(UniverSheetsThreadCommentPlugin, {
+              overrides: [[IThreadCommentMentionDataService, { useClass: CustomMentionDataService }]],
+            });
+      
+            // register collaboration plugin
+            univer.registerPlugin(UniverCollaborationPlugin);
+            univer.registerPlugin(UniverCollaborationClientPlugin, {
+              authzUrl: `http://${universerEndpoint}/universer-api/authz`,
+              snapshotServerUrl: `http://${universerEndpoint}/universer-api/snapshot`,
+              collabSubmitChangesetUrl: `http://${universerEndpoint}/universer-api/comb`,
+              collabWebSocketUrl: `http://${universerEndpoint}/universer-api/comb/connect`,
+              // If you use the `@univerjs/exchange-client`, you need to configure the following parameters
+              uploadFileServerUrl: `http://${universerEndpoint}/universer-api/stream/file/upload`,
+              signUrlServerUrl: `http://${universerEndpoint}/universer-api/file/{fileID}/sign-url`,
+            });
+      
+            // register live share plugin
+            univer.registerPlugin(UniverLiveSharePlugin)
+      
+            // register print plugin
+            univer.registerPlugin(UniverSheetsPrintPlugin)
+      
+            // register exchange client plugin
+            univer.registerPlugin(UniverExchangeClientPlugin, {
+              uploadFileServerUrl: `http://${universerEndpoint}/universer-api/stream/file/upload`,
+              importServerUrl: `http://${universerEndpoint}/universer-api/exchange/{type}/import`,
+              exportServerUrl: `http://${universerEndpoint}/universer-api/exchange/{type}/export`,
+              getTaskServerUrl: `http://${universerEndpoint}/universer-api/exchange/task/{taskID}`,
+              signUrlServerUrl: `http://${universerEndpoint}/universer-api/file/{fileID}/sign-url`,
+            })
+            univer.registerPlugin(UniverSheetsExchangeClientPlugin)
+          }
+        </script>
+      </body>
+      </html>
+      ```
+    </Tabs.Tab>
+  </Tabs>
+</Steps>
+
+
+## Univer Server 
+
+Some pro features require access to the Univer Server, including:
 
 - Import and Export
 - Collaborative Editing
 - Live Share
 
-Please refer to [Service Overview](/guides/sheets/pro-features/server/overview).
+Please refer to [Server Overview](/guides/sheets/pro-features/server/overview) for more information about Univer Server.
