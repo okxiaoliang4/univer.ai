@@ -10,6 +10,9 @@ export default function FeatureBox() {
         title: '🧩 Plugin-based',
         description: 'The core functionality and capabilities of Univer are provided through plugins, allowing developers to freely combine the required functionality or create custom plugins to extend Univer.',
       }, {
+        title: '🧙‍ Isomorphic',
+        description: 'It can run both on browsers and Node.js (in the future, mobile devices as well), with the same API.',
+      }, {
         title: '🪄 Customizable',
         description: 'Developers can customize the appearance and interaction of Univer by importing custom themes, icons, component libraries, etc.',
       }, {
@@ -39,6 +42,9 @@ export default function FeatureBox() {
       }, {
         title: '🧩 插件化',
         description: 'Univer 的核心功能和能力都是通过插件的方式提供的，开发者可以自由组合所需功能或扩展自定义插件。',
+      }, {
+        title: '🧙‍♀️ 多端同构',
+        description: '可以在桌面端浏览器和 Node.js 环境（未来还支持移动端浏览器）中运行，并提供相同的 API。',
       }, {
         title: '🪄 可定制',
         description: '通过导入自定义主题、图标、组件库等方式，开发者可以定制化 Univer 的外观和交互。',
