@@ -65,7 +65,7 @@ const plans: IPlan[] = [{
     }],
   }],
 }, {
-  title: 'Univer Advanced Features',
+  title: 'Univer Pro Features',
   features: [{
     title: 'Collaborative Editing',
     children: [{
