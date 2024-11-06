@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import relationshipImg from './usip/usip-relationship.png'
 import flowchartImg from './usip/usip-flowchart.png'
+import { Callout } from 'nextra/components'
 
 # Univer Server Integration Protocol
 
@@ -30,13 +31,12 @@ In this way, while ensuring that data remains within the third-party client syst
 
 ## Required Interfaces
 
-> <p style={{ color:"red" }}>!!! Important</p>
-> 1. Only the `Credential verify` api will forward credential headers information for authenticating external browser web calls; another apis are used for internal business purposes and will not be forwarded. <br />
-> 2. `userID` should be of string type. <br />
-> 3. Be sure USIP server network is work, and can be called by univer server. <br />
-> 4. If you have some trouble when verify your usip server, you can add some logs in USIP server, check the univer server logs and compare your code to this document api define (like response struct is error or response value type is error). <br />
-
-<br />
+<Callout type="info" emoji="ℹ️">
+  1. Only the `Credential verify` api will forward credential headers information for authenticating external browser web calls; another apis are used for internal business purposes and will not be forwarded. <br />
+  2. `userID` should be of string type. <br />
+  3. Be sure USIP server network is work, and can be called by univer server. <br />
+  4. If you have some trouble when verify your usip server, you can add some logs in USIP server, check the univer server logs and compare your code to this document api define (like response struct is error or response value type is error).
+</Callout>
 
 1. Credential verify: Verify user identity legality (AuthN)
 
@@ -151,13 +151,13 @@ To enable USIP functionality, configure the above interface addresses in the `.e
 ```shell
 # usip about
 USIP_ENBALED=true
-USIP_URI_CREDENTIAL=http://localhost:8080/credential
-USIP_URI_USERINFO=http://localhost:8080/userinfo
-USIP_URI_ROLE=http://localhost:8080/role
-USIP_URI_COLLABORATORS=http://localhost:8080/collaborators
+USIP_URI_CREDENTIAL=http://192.168.1.100:8080/credential
+USIP_URI_USERINFO=http://192.168.1.100:8080/userinfo
+USIP_URI_ROLE=http://192.168.1.100:8080/role
+USIP_URI_COLLABORATORS=http://192.168.1.100:8080/collaborators
 ```
 
-### Troubleshooting <a id="troubleshooting" />
+## Troubleshooting [#troubleshooting]
 
 1. If you want to make unit can be edit/read to everyone in default, you can set this in `.env`:
 ```shell
@@ -169,6 +169,10 @@ AUTH_PERMISSION_DEFAULT_SHARE_ROLE=editor
 
 2. `AUTH_PERMISSION_ENABLE_OBJ_INHERIT` control if file owner can have all permission, `true` or `false`.
 
-## Code Example
+## Demo
 
-You can view the [usip-example](https://github.com/dream-num/usip-example) for reference.
+<Callout type="info">
+  You can try our usip demo in docker compose version: set `USIP_ENBALED=true` in `.env`, then run `bash run.sh && bash run.sh start-demo-usip`, if success you can open `http://localhost:8080` to try.
+</Callout>
+
+View the [usip-example](https://github.com/dream-num/usip-example) for reference.
