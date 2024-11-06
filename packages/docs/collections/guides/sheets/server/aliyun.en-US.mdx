@@ -1,0 +1,139 @@
+import { Callout } from 'nextra/components'
+
+# Deploy to Aliyun
+
+## Docker compose
+
+<Callout type="info">
+  If you already have a aliyun ecs, you can skip this chapter. See [Deploy to Docker](/guides/sheets/pro-features/server/docker)
+</Callout>
+
+
+Setup a ECS for univer server. Require:
+
+- [terraform cli](https://developer.hashicorp.com/terraform/install)
+- Aliyun `access_key` and `access_secret`
+
+### Setup
+
+1. Click to create `access_key`: [Aliyun ROS](https://ros.console.aliyun.com/cn-hangzhou/stacks/create?step=2&exampleTemplateUrl=https://release-univer.oss-cn-shenzhen.aliyuncs.com/release/ros-ecs.yaml&stackNamePrefix=terraform-ecs-access-key&parameters={}&isSimplified=true&pageTitle={"zh-cn":%20"创建RAM角色",%20"en":%20"Create%20RAM%20Role"}), then get `access_key` and `access_secret` in stack output.
+   
+2. Git clone [https://github.com/dream-num/helm-charts](https://github.com/dream-num/helm-charts), `cd platform-setup/aliyun/docker-compose/terraform`, change the ecs password in `variables.tf` for ssh connecting.
+
+3. Run:
+```shell
+export ALICLOUD_ACCESS_KEY=${YOUR_ALICLOUD_ACCESS_KEY}
+export ALICLOUD_SECRET_KEY=${YOUR_ALICLOUD_SECRET_KEY}
+
+terraform init
+terraform apply
+```
+
+If success, you will get a spot ecs.
+
+### Install univer server
+
+1. Get the ECS public ip
+```shell
+PUBLIC_IP=$(terraform output --raw instance_public_ip)
+```
+
+2. Login into ECS with your password
+```shell
+ssh root@"$PUBLIC_IP"
+```
+
+3. Install univer server
+```shell
+bash -c "$(curl -fsSL https://get.univer.ai)"
+```
+
+4. Verify univer server is running
+```shell
+cd docker-compose && bash run.sh start-demo-ui
+```
+then open `http://${PUBLIC_IP}:3010/` to try.
+
+
+### Destroy ECS
+
+In `platform-setup/aliyun/docker-compose/terraform`, run:
+
+```shell
+terraform destroy
+```
+
+## Kubernetes
+
+<Callout type="info">
+  If you already have a aliyun ack, you can skip this chapter. See [Deploy to kubernetes](/guides/sheets/pro-features/server/kubernetes)
+</Callout>
+
+
+Setup a ACK for univer server. Require:
+
+- [terraform cli](https://developer.hashicorp.com/terraform/install)
+- [kubectl](https://kubernetes.io/docs/tasks/tools/#kubectl)
+- [helm](https://helm.sh/docs/intro/install/)
+- Aliyun `access_key` and `access_secret`
+
+### Setup
+
+1. Click to create `access_key`: [Aliyun ROS](https://ros.console.aliyun.com/cn-hangzhou/stacks/create?step=2&exampleTemplateUrl=https://release-univer.oss-cn-shenzhen.aliyuncs.com/release/ros-ack.yaml&stackNamePrefix=terraform-ack-access-key&parameters={}&isSimplified=true&pageTitle={"zh-cn":%20"创建RAM角色",%20"en":%20"Create%20RAM%20Role"}), then get `access_key` and `access_secret` in stack output.
+   
+2. Git clone [https://github.com/dream-num/helm-charts](https://github.com/dream-num/helm-charts), `cd platform-setup/aliyun/k8s/terraform` run:
+
+```shell
+export ALICLOUD_ACCESS_KEY=${YOUR_ALICLOUD_ACCESS_KEY}
+export ALICLOUD_SECRET_KEY=${YOUR_ALICLOUD_SECRET_KEY}
+
+terraform init
+terraform apply
+```
+
+If success, you will get a ack with 2 spot ecs, 1 clb.
+
+3. Setup kubeconfig, in this `terraform` folder run:
+
+```shell
+kubectl config set-cluster terraform-ack --server=$(terraform output --raw cluster_server)
+kubectl config set clusters.terraform-ack.certificate-authority-data $(terraform output --raw cluster_cert)
+kubectl config set users.terraform-ack-admin.client-key-data $(terraform output --raw client_key)
+kubectl config set users.terraform-ack-admin.client-certificate-data $(terraform output --raw client_certificate)
+kubectl config set-context terraform-ack --cluster=terraform-ack --user=terraform-ack-admin
+kubectl config use-context terraform-ack
+```
+
+### Install univer server
+
+```shell
+helm upgrade --install -n univer --create-namespace \
+    --set global.istioNamespace="univer" \
+    --set global.storageClass="alicloud-disk-ssd" \
+    --set postgresql.primary.persistence.size=20Gi \
+    --set redis.master.persistence.enabled=false \
+    --set rabbitmq.persistence.enabled=false \
+    --set minio.persistence.size=20Gi \
+    --set istio-istiod.istio_cni.enabled=true \
+    univer-stack oci://univer-acr-registry.cn-shenzhen.cr.aliyuncs.com/helm-charts/univer-stack
+
+kubectl rollout restart -n univer deployment/collaboration-server
+kubectl rollout restart -n univer deployment/universer
+
+# get ingress address
+kubectl -n univer get -o template ingress collaboration-demo --template '{{(index .status.loadBalancer.ingress 0).ip}}'
+```
+
+bind the ingress IP to `univer.example.com` in local hosts file, open `http://univer.example.com` in web browser to try univer sheet.
+
+### Destroy ack
+
+In `platform-setup/aliyun/k8s/terraform` run:
+
+```shell
+helm -n univer uninstall univer-stack
+kubectl -n univer delete statefulsets.apps postgresql
+kubectl -n univer delete pvc minio data-postgresql-0
+terraform destroy
+kubectl config delete-context terraform-ack
+```

@@ -1,12 +1,12 @@
 import { Steps } from 'nextra/components'
 
-# Deploying to Kubernetes
+# Deploy to Kubernetes
 
 Kubernetes is a powerful open-source platform for orchestrating containerized applications, automating their deployment, scaling, and management. In this guide, we'll leverage Helm, Kubernetes' package manager, to streamline our deployment process.
 
 ## Technical Overview
 
-Deploying Univer backend services on Kubernetes involves several key components:
+Deploy Univer backend services on Kubernetes involves several key components:
 
 - **Kubernetes Cluster**: The environment where your app resides.
 - **Helm**: The deployment and management tool for apps on Kubernetes. Require Helm 3.
@@ -28,7 +28,7 @@ helm version
 
   Make sure you have an active Kubernetes cluster. For cloud providers like Google Kubernetes Engine (GKE) or Amazon Elastic Kubernetes Service (EKS), adhere to their specific instructions for cluster creation.
 
-  ### Deploying Univer services
+  ### Deploy Univer services
 
   1. Use Helm to deploy Univer services:
 
@@ -63,6 +63,52 @@ helm version
   Visit: http://univer.example.com/sheet/
   ```
 </Steps>
+
+## Offline Deployment
+
+If you need to deploy in an offline environment, we also provide an offline installation package.
+
+<Steps>
+
+  ### Download the offline installation package
+
+  [Click here to download the offline installation package](https://univer.ai/releases/univer-server/download) and extract it on your server.
+
+  ```bash
+  tar -xvf installation-package.tar # Replace 'installation-package' with the actual file name
+  ```
+
+  ### Upload image to privite registry
+
+  Remember, you need to login to the private container image registry before running the script.
+ 
+  ```bash
+  bash load-image.sh --registry ${YOUR_REGISTRY} --namespace ${YOUR_IMAGE_NAMESPACE}
+  ```
+
+  ### Install univer service
+
+  The script need `helm` and `kubectl`.
+
+  ```bash
+  bash install.sh
+  ```
+
+  ### Verify that the service is available.
+
+  ```bash
+  # For quick testing, you might edit your local hosts file to map the domain.
+  # Default domain: univer.example.com
+
+  Visit: http://univer.example.com/sheet/
+  ```
+</Steps>
+
+### How to uninstall
+
+```bash
+bash uninstall.sh
+```
 
 ## Troubleshooting
 

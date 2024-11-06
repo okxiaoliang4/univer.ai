@@ -1,0 +1,147 @@
+import { Callout } from 'nextra/components'
+
+# Deploy to AWS
+
+## Docker compose
+
+<Callout type="info">
+  If you already have a aws ec2, you can skip this chapter. See [Deploy to Docker](/guides/sheets/pro-features/server/docker)
+</Callout>
+
+Setup a EC2 for univer server. Require:
+
+- [terraform cli](https://developer.hashicorp.com/terraform/install)
+- AWS `access_key` and `access_secret`
+- A local ssh key pair for connect machine
+
+### Setup
+
+1. Click to create `access_key`: [CloudFormation](https://console.aws.amazon.com/cloudformation/home#/stacks/create/review?templateURL=https://univer-release.s3.us-east-1.amazonaws.com/cloud-formation/cloud-formation-ec2.yaml&stackName=UniverEC2IAMStack), then get `access_key` from CloudFormation outputs.
+
+2. Git clone [https://github.com/dream-num/helm-charts](https://github.com/dream-num/helm-charts), `cd platform-setup/aws/docker-compose/terraform`, update `public_key` in `variables.tf` for ssh connecting ec2, then run:
+
+```shell
+export AWS_ACCESS_KEY_ID=${YOUR_AWS_ACCESS_KEY_ID}
+export AWS_SECRET_ACCESS_KEY=${YOUR_AWS_SECRET_ACCESS_KEY}
+
+terraform init
+terraform apply
+```
+
+If success, you will get a spot ec2.
+
+### Install univer server
+
+1. Get the EC2 public ip
+```shell
+PUBLIC_IP=$(terraform output --raw instance_public_ip)
+```
+
+2. Login into EC2
+```shell
+ssh ubuntu@"$PUBLIC_IP"
+```
+
+3. Install univer server
+```shell
+bash -c "$(curl -fsSL https://get.univer.ai)"
+```
+
+4. Verify univer server is running
+```shell
+cd docker-compose && bash run.sh start-demo-ui
+```
+then open `http://${PUBLIC_IP}:3010/` to try.
+
+
+### Destroy EC2
+
+In `platform-setup/aws/docker-compose/terraform` run:
+
+```shell
+terraform destroy
+```
+
+## Kubernetes
+
+<Callout type="info">
+  If you already have a aws eks, you can skip this chapter. See [Deploy to kubernetes](/guides/sheets/pro-features/server/kubernetes)
+</Callout>
+
+
+Setup a EKS for univer server. Require:
+
+- [terraform cli](https://developer.hashicorp.com/terraform/install)
+- [aws cli](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
+- [kubectl](https://kubernetes.io/docs/tasks/tools/#kubectl)
+- [helm](https://helm.sh/docs/intro/install/)
+- AWS `access_key` and `access_secret`
+
+### Setup
+
+1. Click to create `access_key`: [CloudFormation](https://console.aws.amazon.com/cloudformation/home#/stacks/create/review?templateURL=https://univer-release.s3.us-east-1.amazonaws.com/cloud-formation/cloud-formation-eks.yaml&stackName=UniverEKSIAMStack), then get `access_key` from CloudFormation outputs.
+   
+2. Git clone [https://github.com/dream-num/helm-charts](https://github.com/dream-num/helm-charts), `cd platform-setup/aws/k8s/terraform`, run:
+
+```shell
+export AWS_ACCESS_KEY_ID=${YOUR_AWS_ACCESS_KEY_ID}
+export AWS_SECRET_ACCESS_KEY=${YOUR_AWS_SECRET_ACCESS_KEY}
+
+# set up eks
+terraform init && terraform apply
+
+# set up alb
+cd alb && terraform init && terraform apply
+```
+
+If success, you will get a eks with 2 spot ec2, 1 alb.
+
+3. Setup kubeconfig, in this `terraform` folder run:
+```shell
+export AWS_ACCESS_KEY_ID=${YOUR_AWS_ACCESS_KEY_ID}
+export AWS_SECRET_ACCESS_KEY=${YOUR_AWS_SECRET_ACCESS_KEY}
+
+aws eks --region $(terraform output -raw region) update-kubeconfig --name $(terraform output -raw cluster_name)
+```
+
+### Install univer server
+
+```shell
+export AWS_ACCESS_KEY_ID=${YOUR_AWS_ACCESS_KEY_ID}
+export AWS_SECRET_ACCESS_KEY=${YOUR_AWS_SECRET_ACCESS_KEY}
+
+helm upgrade --install -n univer --create-namespace \
+    --set global.istioNamespace="univer" \
+    --set global.storageClass="gp2" \
+    --set istio-istiod.istio_cni.enabled=true \
+    --set universer.replicaCount=2 \
+    --set collaboration-server.replicaCount=2 \
+    --set-json 'universer.ingress={"enabled":true,"annotations":{"kubernetes.io/ingress.class":"alb","alb.ingress.kubernetes.io/target-type":"ip","alb.ingress.kubernetes.io/scheme":"internet-facing","alb.ingress.kubernetes.io/group.name":"univer"},"hosts":[{"host":"univer.example.com","paths":[{"path":"/universer-api/","pathType":"Prefix"}]}]}' \
+    --set-json 'collaboration-demo.ingress={"enabled":true,"annotations":{"kubernetes.io/ingress.class":"alb","alb.ingress.kubernetes.io/target-type":"ip","alb.ingress.kubernetes.io/scheme":"internet-facing","alb.ingress.kubernetes.io/group.name":"univer"},"hosts":[{"host":"univer.example.com","paths":[{"path":"/","pathType":"Prefix"}]}]}' \
+    univer-stack oci://univer-acr-registry.cn-shenzhen.cr.aliyuncs.com/helm-charts/univer-stack
+
+kubectl rollout restart -n univer deployment/collaboration-server
+kubectl rollout restart -n univer deployment/universer
+
+# get ingress address
+dig $(kubectl -n univer get -o template ingress collaboration-demo --template '{{(index .status.loadBalancer.ingress 0).hostname}}')
+```
+
+bind the ingress IP to `univer.example.com` in local hosts file, open `http://univer.example.com` in web browser to try univer sheet.
+
+
+### Destroy eks
+
+In `platform-setup/aws/k8s/terraform` run:
+
+```shell
+export AWS_ACCESS_KEY_ID=${YOUR_AWS_ACCESS_KEY_ID}
+export AWS_SECRET_ACCESS_KEY=${YOUR_AWS_SECRET_ACCESS_KEY}
+
+helm -n univer uninstall univer-stack
+kubectl -n univer delete statefulsets.apps postgresql
+kubectl -n univer delete pvc minio data-postgresql-0
+kubectl config delete-context $(terraform output -raw cluster_name)
+cd alb && terraform destroy && cd -
+terraform destroy
+```

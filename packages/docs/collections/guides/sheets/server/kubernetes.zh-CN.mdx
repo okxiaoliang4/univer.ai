@@ -64,6 +64,50 @@ helm version
   ```
 </Steps>
 
+## 离线部署
+
+<Steps>
+
+  ### 下载离线安装包
+
+  [点击链接下载离线安装包](https://univer.ai/releases/univer-server/download)，将安装包解压到服务器。
+
+  ```bash
+  tar -xvf installation-package.tar # 解压命令，将文件名替换为实际文件名
+  ```
+
+  ### 上传镜像到私有仓库
+
+  记住，在跑脚本前你需要本地先登陆到你的私有镜像仓库。
+ 
+  ```bash
+  bash load-image.sh --registry ${YOUR_REGISTRY} --namespace ${YOUR_IMAGE_NAMESPACE}
+  ```
+
+  ### 安装服务
+
+  脚本依赖 `helm` 和 `kubectl` 客户端工具。
+
+  ```bash
+  bash install.sh
+  ```
+
+  ### 验证服务是否可用
+
+  ```bash
+  # 可以简单修改本地 hosts 文件来解析域名。
+  # 默认域名: univer.example.com
+
+  Visit: http://univer.example.com/sheet/
+  ```
+</Steps>
+
+### 卸载
+
+```bash
+bash uninstall.sh
+```
+
 ## 常见问题
 
 服务未启动: 检查 Kubernetes 的 Pod 是否正常运行，查看日志以确定问题所在。

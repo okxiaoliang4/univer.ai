@@ -77,7 +77,7 @@ Univer 服务默认端口如下：
   [点击链接下载离线安装包](https://univer.ai/releases/univer-server/download)，将安装包解压到服务器。
 
   ```bash
-  tar -xvf 安装包.tar.gz # 解压命令，将文件名替换为实际文件名
+  tar -xvf 安装包.tar # 解压命令，将文件名替换为实际文件名
   ```
 
   ### 启动服务
@@ -101,7 +101,7 @@ bash uninstall.sh       # 卸载，保留数据下次使用
 bash uninstall.sh clean # 卸载，删除数据
 ```
 
-## 常见问题 <a id="troubleshooting" />
+## 常见问题 [#troubleshooting]
 
 ### 服务的运行目录在哪里？
 
@@ -111,7 +111,7 @@ bash uninstall.sh clean # 卸载，删除数据
 
 运行脚本 `run.sh` 需要 `bash` 环境支持，请使用 Git Bash/MinGW 或 WSL 环境启动。
 
-### 导入导出功能异常 <a id="import-export-error" />
+### 导入导出功能异常 [#import-export-error]
 
 首先，请通过浏览器开发工具检查下导入导出过程中响应体中是否存在 `univer-minio` 等字样，如果有，可能是 S3 配置不当导致的导入导出功能异常，请根据以下步骤检查和配置为正确的 S3 配置。
 
@@ -203,7 +203,7 @@ HOST_GRAFANA_PORT=13000
 
 4. 启动/重启服务：`bash run.sh`。
 
-### 怎样修改 S3 配置以使用自己的组件？ <a id="s3-config" />
+### 怎样修改 S3 配置以使用自己的组件？ [#s3-config]
 
 1. 更新 `.env` 文件，修改 S3 对应的配置。
 
@@ -275,7 +275,7 @@ server:
 - “*”：允许所有域名跨域，但不支持授权头信息比如 authorization、cookie。
 - “你自定义的源”：例如 `http://localhost:3010`，支持授权头信息。
 
-### 如何修改 redis 配置以使用自己的组件？  <a id="redis-config" />
+### 如何修改 redis 配置以使用自己的组件？  [#redis-config]
 
 1. 更新 `.env` 文件，设置对应的配置：
 ```shell
@@ -291,7 +291,7 @@ REDIS_DB=0
 
 3. 启动/重启服务：`bash run.sh`
 
-### 如何修改 rabbitmq 配置以使用自己的组件？  <a id="rabbitmq-config" />
+### 如何修改 rabbitmq 配置以使用自己的组件？  [#rabbitmq-config]
 
 1. 更新 `.env` 文件，设置对应的配置：
 ```shell

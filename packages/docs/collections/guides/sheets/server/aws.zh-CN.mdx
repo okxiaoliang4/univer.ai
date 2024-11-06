@@ -1,0 +1,147 @@
+import { Callout } from 'nextra/components'
+
+# 部署到亚马逊云
+
+## Docker compose 版本
+
+<Callout type="info">
+  如果你已经有一台亚马逊 EC2 服务器，那么可以跳过这节，直接看[部署到 Docker](/guides/sheets/pro-features/server/docker)
+</Callout>
+
+下面介绍如何开通一个亚马逊 EC2 服务器并部署 univer 服务，主要依赖：
+
+- [terraform 客户端](https://developer.hashicorp.com/terraform/install)
+- 亚马逊帐号的 `access_key` 和 `access_secret`
+- 一对用于 ssh 连接的密钥
+
+### 设置 EC2
+
+1. 点击创建亚马逊的 `access_key`：[CloudFormation](https://console.aws.amazon.com/cloudformation/home#/stacks/create/review?templateURL=https://univer-release.s3.us-east-1.amazonaws.com/cloud-formation/cloud-formation-ec2.yaml&stackName=UniverEC2IAMStack)，执行成功后将会在堆栈输出中得到 `access_key` 信息
+
+2. 克隆 [https://github.com/dream-num/helm-charts](https://github.com/dream-num/helm-charts) 仓库，进入目录 `cd platform-setup/aws/docker-compose/terraform`，更新 `variables.tf` 中的 `public_key` ssh 公钥文件路径，然后执行：
+
+```shell
+export AWS_ACCESS_KEY_ID=${YOUR_AWS_ACCESS_KEY_ID}
+export AWS_SECRET_ACCESS_KEY=${YOUR_AWS_SECRET_ACCESS_KEY}
+
+terraform init
+terraform apply
+```
+
+如果成功，你将得到一台抢占式节点的 EC2 服务器。
+
+### 安装 univer 服务
+
+1. 获取 EC2 的公网 IP
+```shell
+PUBLIC_IP=$(terraform output --raw instance_public_ip)
+```
+
+2. 登陆到 EC2
+```shell
+ssh ubuntu@"$PUBLIC_IP"
+```
+
+3. 安装 univer 服务
+```shell
+bash -c "$(curl -fsSL https://get.univer.ai)"
+```
+
+4. 试用我们提供的 demo
+```shell
+cd docker-compose && bash run.sh start-demo-ui
+```
+执行成功后在浏览器打开 `http://${PUBLIC_IP}:3010/` 进行验证。
+
+
+### 销毁 EC2
+
+在 `platform-setup/aws/docker-compose/terraform` 目录下执行：
+
+```shell
+terraform destroy
+```
+
+## Kubernetes 版本
+
+<Callout type="info">
+  如果你已经有一个亚马逊 EKS 集群，那么可以跳过这一节，直接查看[部署到 kubernetes](/guides/sheets/pro-features/server/kubernetes)
+</Callout>
+
+
+下面介绍如何开通一个亚马逊 EKS 集群并部署 univer 服务，主要依赖：
+
+- [terraform 客户端](https://developer.hashicorp.com/terraform/install)
+- [aws 客户端](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
+- [kubectl](https://kubernetes.io/docs/tasks/tools/#kubectl)
+- [helm](https://helm.sh/docs/intro/install/)
+- 亚马逊帐号的 `access_key` 和 `access_secret`
+
+### 设置 EKS
+
+1. 点击创建亚马逊 `access_key`：[CloudFormation](https://console.aws.amazon.com/cloudformation/home#/stacks/create/review?templateURL=https://univer-release.s3.us-east-1.amazonaws.com/cloud-formation/cloud-formation-eks.yaml&stackName=UniverEKSIAMStack)，执行成功后将会在堆栈输出中得到 `access_key` 信息
+   
+2. 克隆 [https://github.com/dream-num/helm-charts](https://github.com/dream-num/helm-charts) 仓库，进入目录 `cd platform-setup/aws/k8s/terraform`，然后执行：
+
+```shell
+export AWS_ACCESS_KEY_ID=${YOUR_AWS_ACCESS_KEY_ID}
+export AWS_SECRET_ACCESS_KEY=${YOUR_AWS_SECRET_ACCESS_KEY}
+
+# 创建 EKS
+terraform init && terraform apply
+
+# 创建 ALB
+cd alb && terraform init && terraform apply
+```
+
+如果成功，你将得到个有 2 个抢占式节点、1 个负载均衡器的 EKS 集群
+
+3. 设置 kubeconfig 凭证，在这个 `terraform` 目录下执行：
+```shell
+export AWS_ACCESS_KEY_ID=${YOUR_AWS_ACCESS_KEY_ID}
+export AWS_SECRET_ACCESS_KEY=${YOUR_AWS_SECRET_ACCESS_KEY}
+
+aws eks --region $(terraform output -raw region) update-kubeconfig --name $(terraform output -raw cluster_name)
+```
+
+### 安装 univer 服务
+
+```shell
+export AWS_ACCESS_KEY_ID=${YOUR_AWS_ACCESS_KEY_ID}
+export AWS_SECRET_ACCESS_KEY=${YOUR_AWS_SECRET_ACCESS_KEY}
+
+helm upgrade --install -n univer --create-namespace \
+    --set global.istioNamespace="univer" \
+    --set global.storageClass="gp2" \
+    --set istio-istiod.istio_cni.enabled=true \
+    --set universer.replicaCount=2 \
+    --set collaboration-server.replicaCount=2 \
+    --set-json 'universer.ingress={"enabled":true,"annotations":{"kubernetes.io/ingress.class":"alb","alb.ingress.kubernetes.io/target-type":"ip","alb.ingress.kubernetes.io/scheme":"internet-facing","alb.ingress.kubernetes.io/group.name":"univer"},"hosts":[{"host":"univer.example.com","paths":[{"path":"/universer-api/","pathType":"Prefix"}]}]}' \
+    --set-json 'collaboration-demo.ingress={"enabled":true,"annotations":{"kubernetes.io/ingress.class":"alb","alb.ingress.kubernetes.io/target-type":"ip","alb.ingress.kubernetes.io/scheme":"internet-facing","alb.ingress.kubernetes.io/group.name":"univer"},"hosts":[{"host":"univer.example.com","paths":[{"path":"/","pathType":"Prefix"}]}]}' \
+    univer-stack oci://univer-acr-registry.cn-shenzhen.cr.aliyuncs.com/helm-charts/univer-stack
+
+kubectl rollout restart -n univer deployment/collaboration-server
+kubectl rollout restart -n univer deployment/universer
+
+# 获取 ingress 的公网 IP
+dig $(kubectl -n univer get -o template ingress collaboration-demo --template '{{(index .status.loadBalancer.ingress 0).hostname}}')
+```
+
+将 IP 和域名 `univer.example.com` 绑定到本地 hosts 文件，在浏览器打开 `http://univer.example.com` 进行试用
+
+
+### 销毁 EKS
+
+在 `platform-setup/aws/k8s/terraform` 目录下执行：
+
+```shell
+export AWS_ACCESS_KEY_ID=${YOUR_AWS_ACCESS_KEY_ID}
+export AWS_SECRET_ACCESS_KEY=${YOUR_AWS_SECRET_ACCESS_KEY}
+
+helm -n univer uninstall univer-stack
+kubectl -n univer delete statefulsets.apps postgresql
+kubectl -n univer delete pvc minio data-postgresql-0
+kubectl config delete-context $(terraform output -raw cluster_name)
+cd alb && terraform destroy && cd -
+terraform destroy
+```

@@ -3,7 +3,7 @@ import Image from 'next/image'
 import mysqlImg from './docker/mysql.png'
 import serviceImg from './docker/service.png'
 
-# Deploying with Docker
+# Deploy to Docker
 
 Get up and running quickly with our Docker deployment solution for the Univer service, using Docker Compose for a hassle-free setup.
 
@@ -79,7 +79,7 @@ If you need to deploy in an offline environment, we also provide an offline inst
   [Click here to download the offline installation package](https://univer.ai/releases/univer-server/download) and extract it on your server.
 
   ```bash
-  tar -xvf installation-package.tar.gz # Replace 'installation-package' with the actual file name
+  tar -xvf installation-package.tar # Replace 'installation-package' with the actual file name
   ```
 
   ### Start the service
@@ -104,7 +104,7 @@ bash uninstall.sh       # Uninstall while retaining data for future use
 bash uninstall.sh clean # Uninstall and delete data
 ```
 
-## Troubleshooting <a id="troubleshooting" />
+## Troubleshooting [#troubleshooting]
 
 ### Where is the service dir?
 
@@ -114,7 +114,7 @@ In `docker-compose` dir, include `.env` config file, `run.sh` script.
 
 The `run.sh` script operates in a `bash` environment. To get it up and running, you'll need to use either Git Bash/MinGW or a WSL environment.
 
-### Import/Export functionality issue <a id="import-export-error" />
+### Import/Export functionality issue [#import-export-error]
 
 First, use the browser developer tools to check if the response body during the import/export process contains references to `univer-minio`. If it does, the issue might be due to improper S3 configuration, leading to import/export functionality issues. Follow the steps below to verify and correctly configure your S3 settings.
 
@@ -183,7 +183,7 @@ HOST_GRAFANA_PORT=13000
 
 4. Start/Restart the service: `bash run.sh`
 
-### How to change S3 config to use self component?  <a id="s3-config" />
+### How to change S3 config to use self component?  [#s3-config]
 
 1. Update `.env` file, set the S3 config.
 
@@ -255,7 +255,7 @@ server:
 - "*": allow all domain CORS, but not support credential headers like authorization, cookie.
 - [SelfDomainOrigin]: like `http://localhost:3010`, use domain origin support credential headers.
 
-### How to change redis config to use self component?  <a id="redis-config" />
+### How to change redis config to use self component?  [#redis-config]
 
 1. Update `.env` file, set the redis config:
 ```shell
@@ -271,7 +271,7 @@ REDIS_DB=0
 
 3. Start/Restart the service: `bash run.sh`
 
-### How to change rabbitmq config to use self component?  <a id="rabbitmq-config" />
+### How to change rabbitmq config to use self component?  [#rabbitmq-config]
 
 1. Update `.env` file, set the rabbitmq config:
 ```shell

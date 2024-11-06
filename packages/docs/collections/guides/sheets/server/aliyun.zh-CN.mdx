@@ -1,0 +1,139 @@
+import { Callout } from 'nextra/components'
+
+# 部署到阿里云
+
+## Docker compose 版本
+
+<Callout type="info">
+  如果你已经有一台阿里云 ECS 服务器，那么可以跳过这一节，直接查看[部署到 Docker](/guides/sheets/pro-features/server/docker)
+</Callout>
+
+
+下面介绍如何开通一台 ECS 服务器以部署 univer 服务，主要依赖：
+
+- [terraform 客户端](https://developer.hashicorp.com/terraform/install)
+- 阿里云帐号的 `access_key` 和 `access_secret`
+
+### 设置云服务器
+
+1. 点击创建阿里云 `access_key`：[Aliyun ROS](https://ros.console.aliyun.com/cn-hangzhou/stacks/create?step=2&exampleTemplateUrl=https://release-univer.oss-cn-shenzhen.aliyuncs.com/release/ros-ecs.yaml&stackNamePrefix=terraform-ecs-access-key&parameters={}&isSimplified=true&pageTitle={"zh-cn":%20"创建RAM角色",%20"en":%20"Create%20RAM%20Role"})，执行成功后可以在堆栈输出那得到 `access_key` 和 `access_secret`
+   
+2. 克隆 [https://github.com/dream-num/helm-charts](https://github.com/dream-num/helm-charts) 仓库，进入目录 `cd platform-setup/aliyun/docker-compose/terraform`，在 `variables.tf` 中修改 ECS 的登陆密码
+
+3. 执行：
+```shell
+export ALICLOUD_ACCESS_KEY=${YOUR_ALICLOUD_ACCESS_KEY}
+export ALICLOUD_SECRET_KEY=${YOUR_ALICLOUD_SECRET_KEY}
+
+terraform init
+terraform apply
+```
+
+执行成功后，你将得到一台抢占式节点的服务器。
+
+### 启动 univer 服务
+
+1. 获取 ECS 的公网 IP
+```shell
+PUBLIC_IP=$(terraform output --raw instance_public_ip)
+```
+
+2. 使用密码登陆到云服务器上
+```shell
+ssh root@"$PUBLIC_IP"
+```
+
+3. 启动 univer 服务：
+```shell
+bash -c "$(curl -fsSL https://get.univer.ai)"
+```
+
+4. 试用我们提供的 demo
+```shell
+cd docker-compose && bash run.sh start-demo-ui
+```
+执行成功后在浏览器打开 `http://${PUBLIC_IP}:3010/` 进行验证。
+
+
+### 销毁云服务器
+
+在 `platform-setup/aliyun/docker-compose/terraform` 目录下执行：
+
+```shell
+terraform destroy
+```
+
+## Kubernetes 版本
+
+<Callout type="info">
+  如果你已经有一个阿里云 ACK 集群，那么可以跳过这一节，直接查看[部署到 kubernetes](/guides/sheets/pro-features/server/kubernetes)
+</Callout>
+
+
+下面介绍如何开通一个阿里云 ACK 集群并部署 univer 服务，主要依赖：
+
+- [terraform 客户端](https://developer.hashicorp.com/terraform/install)
+- [kubectl](https://kubernetes.io/docs/tasks/tools/#kubectl)
+- [helm](https://helm.sh/docs/intro/install/)
+- 阿里云帐号的 `access_key` 和 `access_secret`
+
+### 设置 ACK
+
+1. 点击创建一个阿里云 `access_key`：[Aliyun ROS](https://ros.console.aliyun.com/cn-hangzhou/stacks/create?step=2&exampleTemplateUrl=https://release-univer.oss-cn-shenzhen.aliyuncs.com/release/ros-ack.yaml&stackNamePrefix=terraform-ack-access-key&parameters={}&isSimplified=true&pageTitle={"zh-cn":%20"创建RAM角色",%20"en":%20"Create%20RAM%20Role"})，执行成功后可以在堆栈输出中得到 `access_key` 和 `access_secret`
+   
+2. 克隆 [https://github.com/dream-num/helm-charts](https://github.com/dream-num/helm-charts) 仓库，进入目录 `cd platform-setup/aliyun/k8s/terraform` 后，执行：
+
+```shell
+export ALICLOUD_ACCESS_KEY=${YOUR_ALICLOUD_ACCESS_KEY}
+export ALICLOUD_SECRET_KEY=${YOUR_ALICLOUD_SECRET_KEY}
+
+terraform init
+terraform apply
+```
+
+如果成功，你将得到个有 2 个抢占式节点、1 个负载均衡器的 ACK 集群
+
+3. 配置 kubeconfig 凭证，在这个 `terraform` 目录下执行：
+
+```shell
+kubectl config set-cluster terraform-ack --server=$(terraform output --raw cluster_server)
+kubectl config set clusters.terraform-ack.certificate-authority-data $(terraform output --raw cluster_cert)
+kubectl config set users.terraform-ack-admin.client-key-data $(terraform output --raw client_key)
+kubectl config set users.terraform-ack-admin.client-certificate-data $(terraform output --raw client_certificate)
+kubectl config set-context terraform-ack --cluster=terraform-ack --user=terraform-ack-admin
+kubectl config use-context terraform-ack
+```
+
+### 安装 univer 服务
+
+```shell
+helm upgrade --install -n univer --create-namespace \
+    --set global.istioNamespace="univer" \
+    --set global.storageClass="alicloud-disk-ssd" \
+    --set postgresql.primary.persistence.size=20Gi \
+    --set redis.master.persistence.enabled=false \
+    --set rabbitmq.persistence.enabled=false \
+    --set minio.persistence.size=20Gi \
+    --set istio-istiod.istio_cni.enabled=true \
+    univer-stack oci://univer-acr-registry.cn-shenzhen.cr.aliyuncs.com/helm-charts/univer-stack
+
+kubectl rollout restart -n univer deployment/collaboration-server
+kubectl rollout restart -n univer deployment/universer
+
+# 获取 ingress 的公网 IP
+kubectl -n univer get -o template ingress collaboration-demo --template '{{(index .status.loadBalancer.ingress 0).ip}}'
+```
+
+将 IP 和域名 `univer.example.com` 绑定到本地 hosts 文件，在浏览器打开 `http://univer.example.com` 进行试用
+
+### 销毁 ACK
+
+在 `platform-setup/aliyun/k8s/terraform` 目录下执行：
+
+```shell
+helm -n univer uninstall univer-stack
+kubectl -n univer delete statefulsets.apps postgresql
+kubectl -n univer delete pvc minio data-postgresql-0
+terraform destroy
+kubectl config delete-context terraform-ack
+```
