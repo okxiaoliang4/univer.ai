@@ -1,4 +1,4 @@
-import { Steps } from 'nextra/components'
+import { Callout, Steps, Tabs } from 'nextra/components'
 
 # Deploy to Kubernetes
 
@@ -108,6 +108,187 @@ If you need to deploy in an offline environment, we also provide an offline inst
 
 ```bash
 bash uninstall.sh
+```
+## Custom config
+
+See [https://github.com/dream-num/helm-charts](https://github.com/dream-num/helm-charts) for default helm chart values config, or you can run `helm show values oci://univer-acr-registry.cn-shenzhen.cr.aliyuncs.com/helm-charts/univer-observability` to get it.
+
+Cross helm guidance, you can write a values.yaml to change the default config and use `helm upgrade --values values.yaml ...` to update univer service.
+
+### USIP
+
+```yaml
+universer:
+  config:
+    usip:
+      enabled: true
+      uri:
+        userinfo: "http://192.168.1.100:8080/userinfo"
+        collaborators: "http://192.168.1.100:8080/collaborators"
+        role: "http://192.168.1.100:8080/role"
+        credential: "http://192.168.1.100:8080/credential"
+```
+
+### Database
+
+Change universer and temporal database.
+
+<Tabs items={['PostgreSQL', 'MySQL']}>
+  <Tabs.Tab label="PostgreSQL">
+    ```yaml
+    universer:
+      config:
+        database:
+          driver: postgresql
+          host: postgresql
+          port: 5432
+          dbname: univer
+          username: postgres
+          password: postgres
+
+    temporal:
+      server:
+        config:
+          persistence:
+            default:
+              driver: "sql"
+              sql:
+                driver: "postgres12"
+                host: postgresql
+                port: 5432
+                database: temporal
+                user: postgres
+                password: postgres
+
+            visibility:
+              driver: "sql"
+              sql:
+                driver: "postgres12"
+                host: postgresql
+                port: 5432
+                database: temporal_visibility
+                user: postgres
+                password: postgres
+    ```
+  </Tabs.Tab>
+  <Tabs.Tab label="MySQL">
+    ```yaml
+    universer:
+      config:
+        database:
+          driver: mysql
+          host: mysql
+          port: 3306
+          dbname: univer
+          username: root
+          password: mysql
+
+    temporal:
+      server:
+        config:
+          persistence:
+            default:
+              driver: "sql"
+              sql:
+                driver: "mysql8"
+                host: mysql
+                port: 3306
+                database: temporal
+                user: root
+                password: mysql
+
+            visibility:
+              driver: "sql"
+              sql:
+                driver: "mysql8"
+                host: mysql
+                port: 33006
+                database: temporal_visibility
+                user: root
+                password: mysql
+    ```
+  </Tabs.Tab>
+</Tabs>
+
+### Redis
+
+```yaml
+universer:
+  config:
+    redis:
+      poolSize: 100
+      # if use redis cluster, use comma to separate multiple redis servers
+      # for example: redis1:6379,redis2:6379
+      addr: redis:6379
+      read_timeout: 1s
+      write_timeout: 1s
+      db: 0
+      username: ""
+      password: ""
+```
+
+### S3
+
+<Tabs items={['minio', 'aliyun oss', 'aws s3']}>
+  <Tabs.Tab label="minio">
+    ```yaml
+    universer:
+      config:
+        s3:
+          accessKeyID: admin
+          accessKeySecret: minioadmin
+          region: "us-east-1"
+          endpoint: http://minio:9000
+          endpointPublic: ""
+          usePathStyle: true
+          defaultBucket: univer
+    ```
+  </Tabs.Tab>
+  <Tabs.Tab label="aliyun oss">
+    ```yaml
+    universer:
+      config:
+        s3:
+          accessKeyID: "${YOUR_ACCESS_KEY_ID}"
+          accessKeySecret: "${YOUR_ACCESS_KEY_SECRET}"
+          region: oss-cn-shenzhen
+          endpoint: https://oss-cn-shenzhen-internal.aliyuncs.com
+          endpointPublic: https://oss-cn-shenzhen.aliyuncs.com
+          usePathStyle: false
+          defaultBucket: univer
+    ```
+  </Tabs.Tab>
+  <Tabs.Tab label="aws s3">
+    ```yaml
+    universer:
+      config:
+        s3:
+          accessKeyID: "${YOUR_ACCESS_KEY_ID}"
+          accessKeySecret: "${YOUR_ACCESS_KEY_SECRET}"
+          region: "us-east-1"
+          endpoint: https://s3.amazonaws.com
+          endpointPublic: https://s3.amazonaws.com
+          usePathStyle: false
+          defaultBucket: univer
+    ```
+  </Tabs.Tab>
+</Tabs>
+
+### RabbitMQ
+
+```yaml
+universer:
+  config:
+    rabbitmq:
+      cluster:
+        enabled: true
+        # use comma to separate multiple addresses
+        # for example: RABBITMQ_CLUSTER_ADDR=192.168.1.2:5672,192.168.1.5:5672,192.168.1.7:5672
+        addr: "192.168.1.2:5672"
+        username: "admin"
+        password: "rabbitmq"
+        vhost: "/"
+        schema: amqp
 ```
 
 ## Troubleshooting
