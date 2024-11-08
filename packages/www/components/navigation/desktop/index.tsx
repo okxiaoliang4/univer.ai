@@ -87,64 +87,63 @@ export default function HeaderDesktop() {
   return (
     <header
       className={`
-        fixed left-1/2 top-11 z-10 hidden w-max -translate-x-1/2 items-center justify-between rounded-[10px]
-        bg-[rgba(255,255,255,0.9)] px-4 py-3 text-sm text-gray-500
-        shadow-[0_2px_16px_-1px_rgba(17,22,40,0.07),0_-3px_6px_0_rgba(244,245,250,0.60)_inset] backdrop-blur-[30px]
-
-        xl:flex
+        sticky left-0 top-0 z-10 flex w-full items-center justify-between px-4 py-3 text-sm text-[rgba(255,255,255,0.9)]
+        backdrop-blur-[30px]
       `}
     >
-      {/* Logo */}
-      <Link href={`/${lang}`}>
-        <Image
-          className="mr-[55px]"
-          src={logoImg}
-          width={logoImg.width}
-          alt="logo"
-        />
-      </Link>
+      <div className="flex items-center">
+        {/* Logo */}
+        <Link href={`/${lang}`}>
+          <Image
+            className="mr-[55px]"
+            src={logoImg}
+            width={logoImg.width}
+            alt="logo"
+          />
+        </Link>
 
-      {/* Navigation */}
-      <nav
-        ref={containerRef}
-        className="relative mr-[44px] flex"
-      >
-        <div
-          className={`
-            absolute h-full rounded-lg border border-gray-100 shadow-[0_2px_4px_0_rgba(14,17,30,0.06)] transition-all
-            duration-200 ease-in-out
-          `}
-          style={{
-            width: navPos.w,
-            transform: `translateX(${navPos.x}px)`,
-            opacity: navPos.w ? 1 : 0,
-          }}
-        />
-        {
-          data.map((nav, index) => (
-            <div key={nav.title} className="group">
-              <Link
-                ref={(el) => { navRefs.current[index] = el }}
-                className={clsx(`
-                  relative flex cursor-pointer items-center gap-1 px-2.5 py-2 font-medium transition-colors duration-200
-                  ease-in-out
+        {/* Navigation */}
+        <nav
+          ref={containerRef}
+          className="relative mr-[44px] flex"
+        >
+          <div
+            className={`
+              absolute h-full rounded-lg border border-gray-100 shadow-[0_2px_4px_0_rgba(14,17,30,0.06)] transition-all
+              duration-200 ease-in-out
+            `}
+            style={{
+              width: navPos.w,
+              transform: `translateX(${navPos.x}px)`,
+              opacity: navPos.w ? 1 : 0,
+            }}
+          />
+          {
+            data.map((nav, index) => (
+              <div key={nav.title} className="group">
+                <Link
+                  ref={(el) => { navRefs.current[index] = el }}
+                  className={clsx(`
+                    relative flex cursor-pointer items-center gap-1 px-2.5 py-2 font-medium transition-colors
+                    duration-200 ease-in-out
 
-                  [&:hover]:text-gray-800
-                `, {
-                  'text-gray-800': currentPath === createHref(nav),
-                })}
-                href={createHref(nav)}
-                onMouseEnter={() => handleMouseEnter(index)}
-                onMouseLeave={handleMouseLevel}
-              >
-                {nav.title}
-                {'children' in nav && nav.children && <MoreDownSingle />}
-              </Link>
-              {'children' in nav && nav.children && <DropdownMenu menu={nav.children} />}
-            </div>
-          ))
-        }
-      </nav>
+                    [&:hover]:text-gray-800
+                  `, {
+                    'text-gray-800': currentPath === createHref(nav),
+                  })}
+                  href={createHref(nav)}
+                  onMouseEnter={() => handleMouseEnter(index)}
+                  onMouseLeave={handleMouseLevel}
+                >
+                  {nav.title}
+                  {'children' in nav && nav.children && <MoreDownSingle />}
+                </Link>
+                {'children' in nav && nav.children && <DropdownMenu menu={nav.children} />}
+              </div>
+            ))
+          }
+        </nav>
+      </div>
 
       {/* Actions */}
       <div className="flex gap-3">

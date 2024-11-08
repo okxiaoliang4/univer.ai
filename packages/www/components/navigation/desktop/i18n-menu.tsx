@@ -22,10 +22,8 @@ export default function I18nMenu(props: IProps) {
     <div className="group flex items-center">
       <a
         className={`
-          relative flex cursor-pointer items-center gap-1 px-2.5 py-2 font-medium text-gray-500 transition-colors
-          duration-200 ease-in-out
-
-          hover:text-gray-800
+          relative flex cursor-pointer items-center gap-1 px-2.5 py-2 font-medium transition-colors duration-200
+          ease-in-out
         `}
       >
         <LanguageSingle />

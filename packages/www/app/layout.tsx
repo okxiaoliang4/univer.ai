@@ -26,7 +26,7 @@ export default function RootLayout(props: IProps) {
   return (
     <html lang="en">
       <body
-        className={clsx(inter.className, 'antialiased')}
+        className={clsx(inter.className, 'bg-black antialiased')}
       >
         <Navigation />
 
