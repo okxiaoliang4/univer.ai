@@ -5,4 +5,5 @@ export default {
   'usip': 'Univer Server 集成协议',
   'import-and-export': '导入导出',
   'api': 'Univer Server 接口定义',
+  'event-sync': 'Univer Server 事件同步机制',
 }
