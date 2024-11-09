@@ -129,7 +129,7 @@ universer:
 
 ### Database
 
-修改 universer 和 temporal 数据库
+修改配置使用自己的数据库。
 
 <Tabs items={['PostgreSQL', 'MySQL']}>
   <Tabs.Tab label="PostgreSQL">
@@ -138,7 +138,7 @@ universer:
       config:
         database:
           driver: postgresql
-          host: postgresql
+          host: 192.168.1.100
           port: 5432
           dbname: univer
           username: postgres
@@ -152,7 +152,7 @@ universer:
               driver: "sql"
               sql:
                 driver: "postgres12"
-                host: postgresql
+                host: 192.168.1.100
                 port: 5432
                 database: temporal
                 user: postgres
@@ -162,11 +162,14 @@ universer:
               driver: "sql"
               sql:
                 driver: "postgres12"
-                host: postgresql
+                host: 192.168.1.100
                 port: 5432
                 database: temporal_visibility
                 user: postgres
                 password: postgres
+
+    postgresql:
+      enabled: false # 不使用默认部署的数据库
     ```
   </Tabs.Tab>
   <Tabs.Tab label="MySQL">
@@ -175,7 +178,7 @@ universer:
       config:
         database:
           driver: mysql
-          host: mysql
+          host: 192.168.1.100
           port: 3306
           dbname: univer
           username: root
@@ -189,7 +192,7 @@ universer:
               driver: "sql"
               sql:
                 driver: "mysql8"
-                host: mysql
+                host: 192.168.1.100
                 port: 3306
                 database: temporal
                 user: root
@@ -199,33 +202,43 @@ universer:
               driver: "sql"
               sql:
                 driver: "mysql8"
-                host: mysql
+                host: 192.168.1.100
                 port: 33006
                 database: temporal_visibility
                 user: root
                 password: mysql
+
+    mysql:
+      enabled: false # 不使用默认部署的数据库
     ```
   </Tabs.Tab>
 </Tabs>
 
 ### Redis
 
+修改配置使用自己的 Redis
+
 ```yaml
 universer:
   config:
     redis:
       poolSize: 100
-      # if use redis cluster, use comma to separate multiple redis servers
-      # for example: redis1:6379,redis2:6379
-      addr: redis:6379
+      # 如果是 redis 集群，可以用逗分隔多个地址
+      # 例如：192.168.1.100:6379,192.168.1.101:6379
+      addr: 192.168.1.100:6379
       read_timeout: 1s
       write_timeout: 1s
       db: 0
       username: ""
       password: ""
+
+redis:
+  enabled: false
 ```
 
 ### S3
+
+修改配置以使用自己的对象存储
 
 <Tabs items={['minio', 'aliyun oss', 'aws s3']}>
   <Tabs.Tab label="minio">
@@ -236,10 +249,13 @@ universer:
           accessKeyID: admin
           accessKeySecret: minioadmin
           region: "us-east-1"
-          endpoint: http://minio:9000
+          endpoint: http://192.168.1.100:9000
           endpointPublic: ""
           usePathStyle: true
           defaultBucket: univer
+
+    minio:
+      enabled: false
     ```
   </Tabs.Tab>
   <Tabs.Tab label="aliyun oss">
@@ -254,6 +270,9 @@ universer:
           endpointPublic: https://oss-cn-shenzhen.aliyuncs.com
           usePathStyle: false
           defaultBucket: univer
+
+    minio:
+      enabled: false
     ```
   </Tabs.Tab>
   <Tabs.Tab label="aws s3">
@@ -268,6 +287,9 @@ universer:
           endpointPublic: https://s3.amazonaws.com
           usePathStyle: false
           defaultBucket: univer
+
+    minio:
+      enabled: false
     ```
   </Tabs.Tab>
 </Tabs>
@@ -287,6 +309,9 @@ universer:
         password: "rabbitmq"
         vhost: "/"
         schema: amqp
+
+rabbitmq:
+  enabled: false
 ```
 
 ## 常见问题

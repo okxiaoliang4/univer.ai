@@ -131,7 +131,7 @@ universer:
 
 ### Database
 
-Change universer and temporal database.
+Change database to use self host.
 
 <Tabs items={['PostgreSQL', 'MySQL']}>
   <Tabs.Tab label="PostgreSQL">
@@ -140,7 +140,7 @@ Change universer and temporal database.
       config:
         database:
           driver: postgresql
-          host: postgresql
+          host: 192.168.1.100
           port: 5432
           dbname: univer
           username: postgres
@@ -154,7 +154,7 @@ Change universer and temporal database.
               driver: "sql"
               sql:
                 driver: "postgres12"
-                host: postgresql
+                host: 192.168.1.100
                 port: 5432
                 database: temporal
                 user: postgres
@@ -164,11 +164,14 @@ Change universer and temporal database.
               driver: "sql"
               sql:
                 driver: "postgres12"
-                host: postgresql
+                host: 192.168.1.100
                 port: 5432
                 database: temporal_visibility
                 user: postgres
                 password: postgres
+    
+    postgresql:
+      enabled: false # do not create a postgresql in k8s
     ```
   </Tabs.Tab>
   <Tabs.Tab label="MySQL">
@@ -177,7 +180,7 @@ Change universer and temporal database.
       config:
         database:
           driver: mysql
-          host: mysql
+          host: 192.168.1.100
           port: 3306
           dbname: univer
           username: root
@@ -191,7 +194,7 @@ Change universer and temporal database.
               driver: "sql"
               sql:
                 driver: "mysql8"
-                host: mysql
+                host: 192.168.1.100
                 port: 3306
                 database: temporal
                 user: root
@@ -201,16 +204,21 @@ Change universer and temporal database.
               driver: "sql"
               sql:
                 driver: "mysql8"
-                host: mysql
+                host: 192.168.1.100
                 port: 33006
                 database: temporal_visibility
                 user: root
                 password: mysql
+
+    mysql:
+      enabled: false # do not create a mysql in k8s
     ```
   </Tabs.Tab>
 </Tabs>
 
 ### Redis
+
+To use self host redis.
 
 ```yaml
 universer:
@@ -218,16 +226,21 @@ universer:
     redis:
       poolSize: 100
       # if use redis cluster, use comma to separate multiple redis servers
-      # for example: redis1:6379,redis2:6379
-      addr: redis:6379
+      # for example: 192.168.1.100:6379,192.168.1.101:6379
+      addr: 192.168.1.100:6379
       read_timeout: 1s
       write_timeout: 1s
       db: 0
       username: ""
       password: ""
+
+redis:
+  enabled: false
 ```
 
 ### S3
+
+To use self host object storage.
 
 <Tabs items={['minio', 'aliyun oss', 'aws s3']}>
   <Tabs.Tab label="minio">
@@ -238,10 +251,13 @@ universer:
           accessKeyID: admin
           accessKeySecret: minioadmin
           region: "us-east-1"
-          endpoint: http://minio:9000
+          endpoint: http://192.168.1.100:9000
           endpointPublic: ""
           usePathStyle: true
           defaultBucket: univer
+    
+    minio:
+      enabled: false
     ```
   </Tabs.Tab>
   <Tabs.Tab label="aliyun oss">
@@ -256,6 +272,9 @@ universer:
           endpointPublic: https://oss-cn-shenzhen.aliyuncs.com
           usePathStyle: false
           defaultBucket: univer
+    
+    minio:
+      enabled: false
     ```
   </Tabs.Tab>
   <Tabs.Tab label="aws s3">
@@ -270,11 +289,16 @@ universer:
           endpointPublic: https://s3.amazonaws.com
           usePathStyle: false
           defaultBucket: univer
+    
+    minio:
+      enabled: false
     ```
   </Tabs.Tab>
 </Tabs>
 
 ### RabbitMQ
+
+To use self host rabbitmq.
 
 ```yaml
 universer:
@@ -289,6 +313,9 @@ universer:
         password: "rabbitmq"
         vhost: "/"
         schema: amqp
+
+rabbitmq:
+  enabled: false
 ```
 
 ## Troubleshooting
