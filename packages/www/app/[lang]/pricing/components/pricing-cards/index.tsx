@@ -8,9 +8,9 @@ export default function PricingCards() {
   return (
     <ul
       className={`
-        grid grid-cols-1 gap-6 px-4
+        grid grid-cols-1 gap-6 px-20 pt-20
 
-        xl:grid-cols-3 xl:px-6
+        xl:grid-cols-3
       `}
     >
       <li>

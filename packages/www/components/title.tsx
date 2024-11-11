@@ -17,7 +17,7 @@ export default function Title(props: IProps) {
     <div className={clsx('mx-auto', className)}>
       <Heading
         className={clsx(`
-          mx-auto text-primary
+          mx-auto text-primary text-white
 
           xl:text-[52px]
         `, {

@@ -36,7 +36,7 @@ export default function Slider(props: IProps) {
           [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:shadow-md
         `}
         style={{
-          background: `linear-gradient(to right, #2563EB ${ratio}%, #E5E7EB ${ratio}%)`,
+          background: `linear-gradient(to right, #4E8EFC ${ratio}%, #E5E7EB ${ratio}%)`,
         }}
         value={value}
         min={min}

@@ -18,7 +18,7 @@ interface IPlan {
   features: (IFeatureWithChildren | IFeatureWithoutChildren)[]
 }
 const plans: IPlan[] = [{
-  title: 'Univer OSS',
+  title: 'Univer basic features',
   features: [{
     title: 'Univer Sheets',
     children: [{
@@ -26,7 +26,7 @@ const plans: IPlan[] = [{
     }, {
       title: 'Number format',
     }, {
-      title: 'Formula & functions',
+      title: 'Formulas & over 500 functions',
     }, {
       title: 'Filtering',
     }, {
@@ -65,7 +65,7 @@ const plans: IPlan[] = [{
     }],
   }],
 }, {
-  title: 'Univer Pro Features',
+  title: 'Univer premium Features',
   features: [{
     title: 'Collaborative Editing',
     children: [{
@@ -113,13 +113,13 @@ const plans: IPlan[] = [{
     title: 'Community support',
   }, {
     title: 'Email support',
-    limitCaution: <MinusSingle />,
+    limitCaution: <MinusSingle className="text-gray-500" />,
   }, {
     title: 'IM support',
-    limitCaution: <MinusSingle />,
+    limitCaution: <MinusSingle className="text-gray-500" />,
   }, {
     title: '2-hours onboarding session',
-    limitCaution: <MinusSingle />,
+    limitCaution: <MinusSingle className="text-gray-500" />,
   }],
 }]
 

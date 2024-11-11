@@ -15,9 +15,10 @@ export default function ToggleButton(props: IProps) {
   return (
     <div
       className={clsx(`
-        inline-block h-5 w-9 cursor-pointer rounded-full bg-gray-200 transition-all duration-200 ease-in-out
+        inline-block h-5 w-9 cursor-pointer rounded-full bg-[rgba(255,255,255,0.2)] transition-all duration-200
+        ease-in-out
       `, {
-        'bg-primary-600': value,
+        'bg-[#4E8EFC]': value,
       })}
       onClick={handleToggle}
     >

@@ -1,7 +1,7 @@
 import Button from '@/components/button'
 import Slider from '@/components/slider'
 import Tooltip from '@/components/tooltip'
-import { ArrowCircleRightSingle, InfoSingle } from '@univerjs/icons'
+import { InfoSingle } from '@univerjs/icons'
 import Link from 'next/link'
 import { useMemo, useState } from 'react'
 import CardWrapper from './card-wrapper'
@@ -89,7 +89,7 @@ export default function NonCommercialCard() {
         )}
       />
 
-      <div className="mb-6 grid h-14 gap-4 text-sm text-gray-500">
+      <div className="mb-6 grid h-14 gap-4 text-sm text-white/50">
         <p>
           <span className="inline-flex items-center gap-2">
             {count <= 10 ? count : `${count - 1}+`}
@@ -109,7 +109,7 @@ export default function NonCommercialCard() {
         />
       </div>
 
-      <ul className="mb-5 grid gap-4 text-sm">
+      <ul className="mb-5 grid gap-4 text-sm text-white/90">
         <li className="flex justify-between">
           <div className="inline-flex items-center gap-2">All basic features</div>
           <div className="text-gray-500">Free</div>
@@ -119,7 +119,7 @@ export default function NonCommercialCard() {
             <div className="inline-flex items-center gap-2">
               {feature.name}
             </div>
-            <div className="flex items-center gap-2 text-gray-500">
+            <div className="flex items-center gap-2">
               <span>
                 $
                 {feature.price}
@@ -135,8 +135,6 @@ export default function NonCommercialCard() {
       <div className="mb-5">
         <Button className="w-full" type="primary">
           Contact us
-          {' '}
-          <ArrowCircleRightSingle />
         </Button>
       </div>
 
@@ -145,7 +143,10 @@ export default function NonCommercialCard() {
         list={['Perpetual license', 'Email / Discord Support Issues priority support', '1 year of free upgrades. Subsequent access to the latest version requires renewal at a 40% discount.']}
       />
 
-      <Link className="text-indigo-600 underline" href="https://univer.ai/pro/license">
+      <Link
+        className="text-[#40FFD9] underline"
+        href="https://univer.ai/pro/license"
+      >
         Get your 30-day free trial
       </Link>
     </CardWrapper>

@@ -33,7 +33,7 @@ export default function PricingHeader(props: IProps) {
         )}
       </div>
 
-      <label className="mb-3 inline-flex items-center gap-2 font-medium">
+      <label className="mb-3 inline-flex items-center gap-2 font-medium text-white/90">
         {title}
         {description && (
           <Tooltip content={description} width="242px">
@@ -42,7 +42,7 @@ export default function PricingHeader(props: IProps) {
         )}
       </label>
 
-      <div className="flex h-10 items-center">
+      <div className="flex h-10 items-center text-white">
         {pricing}
       </div>
     </header>

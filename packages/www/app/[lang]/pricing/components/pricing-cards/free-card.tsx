@@ -1,6 +1,6 @@
 import Button from '@/components/button'
 import Tooltip from '@/components/tooltip'
-import { ArrowCircleRightSingle, InfoSingle } from '@univerjs/icons'
+import { InfoSingle } from '@univerjs/icons'
 import { useParams } from 'next/navigation'
 import CardWrapper from './card-wrapper'
 import freeImg from './free.svg'
@@ -24,7 +24,7 @@ export default function FreeCard() {
         )}
       />
 
-      <div className="mb-6 grid h-14 gap-4 text-sm text-gray-500">
+      <div className="mb-6 grid h-14 gap-4 text-sm text-white/50">
         <p>
           <span className="inline-flex items-center gap-2">
             No limited Named Hostname
@@ -35,7 +35,7 @@ export default function FreeCard() {
         </p>
       </div>
 
-      <ul className="mb-5 grid gap-4 text-sm">
+      <ul className="mb-5 grid gap-4 text-sm text-white/90">
         <li className="flex justify-between">
           <div className="inline-flex items-center gap-2">All basic features is free</div>
         </li>
@@ -67,10 +67,8 @@ export default function FreeCard() {
 
       {/* Actions */}
       <div className="mb-5">
-        <Button className="w-full" href={`/${lang}/quick-guide`}>
+        <Button className="w-full" type="text" href={`/${lang}/quick-guide`}>
           Start
-          {' '}
-          <ArrowCircleRightSingle />
         </Button>
       </div>
 

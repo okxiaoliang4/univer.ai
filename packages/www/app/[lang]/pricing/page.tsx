@@ -34,7 +34,7 @@ export default function Page() {
 
               [&_h2]:text-left [&_h2]:xl:text-center
 
-              xl:mb-16
+              xl:mb-14
             `}
             level="h2"
           >
