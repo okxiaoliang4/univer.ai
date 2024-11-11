@@ -1,13 +1,12 @@
 import type { Metadata } from 'next'
 import getSotries from '@/articles/customer-stories/data'
 import Container from '@/components/container'
-import LabelButton from '@/components/label-button'
 import Title from '@/components/title'
-import CommonUse from './components/common-use'
 import CustomerStories from './components/customer-stories'
 import Features from './components/features'
 import Feedback from './components/feedback'
 import Hero from './components/hero'
+import UserMarquee from './components/user-marquee'
 
 export const metadata: Metadata = {
   title: 'Univer',
@@ -21,6 +20,7 @@ export default function Page() {
   return (
     <main>
       <Hero />
+      <UserMarquee />
 
       <Container
         className={`
@@ -29,103 +29,56 @@ export default function Page() {
           xl:mb-24 xl:gap-24
         `}
       >
-        {/* Introduction */}
+        {/* core benefits & features */}
         <section
           className={`
-            mx-auto max-w-[1152px] px-4
+            mx-auto mt-[70px] max-w-[1152px] px-4
 
             xl:px-0
           `}
         >
-          <p className="text-primary mb-12 text-center text-2xl font-bold">
-            Univer empowers developers to generate server-side spreadsheets, documents, and slides, seamlessly embedding and displaying them within any web application.
-          </p>
-
+          <Title className="mb-14" level="h2">Core Benefits & Features</Title>
           <Features />
-
-          <p className={`
-            text-lg text-gray-500
-
-            [&>em]:font-semibold [&>em]:not-italic [&>em]:text-gray-800
-          `}
-          >
-            Univer enables server-side generation of a wide array of reports and complex data templates—including financial statements,
-            {' '}
-            <em>engineering documents</em>
-            ,
-            {' '}
-            <em>order forms</em>
-            ,
-            {' '}
-            <em>contracts</em>
-            ,
-            {' '}
-            <em>presentations</em>
-            , and more. It has been successfully integrated into systems such as
-            {' '}
-            <em>ERP/CRM</em>
-            ,
-            {' '}
-            <em>IM</em>
-            ,
-            {' '}
-            <em>Email</em>
-            ,
-            {' '}
-            <em>Notion-like editors</em>
-            ,
-            {' '}
-            <em>no-code/low-code platforms</em>
-            , BI, wikis, and others. Univer meets enterprise needs with
-            {' '}
-            <em>data collection/submission</em>
-            ,
-            {' '}
-            <em>data analytics</em>
-            , the creation of complex reports, data visualization, collaborative workflows, knowledge sharing, historical data queries, document access control, and more.
-          </p>
         </section>
 
-        {/* Common Uses */}
-        <section>
-          <LabelButton
-            className="relative left-1/2 mb-4 -translate-x-1/2"
-            emoji="🏡"
-          >
-            Common Uses
-          </LabelButton>
+        {/* application scenario */}
+        <section className={`
+          mx-auto mt-[70px] max-w-[1152px] px-4
 
-          <section
-            className={`
-              mx-auto mb-12 max-w-[860px]
-
-              xl:mb-24
-            `}
-          >
-            <Title className="mb-14" level="h2">One user has multiple scenarios</Title>
-
-            <CommonUse />
-          </section>
+          xl:px-0
+        `}
+        >
+          <Title className="mb-14" level="h2">Application Scenario</Title>
 
           {/* Customer Stories */}
           <CustomerStories stories={recentStories} />
         </section>
 
-        {/* They already love our products */}
-        <section>
-          <LabelButton
-            className="relative left-1/2 mb-4 -translate-x-1/2"
-            emoji="😍"
-          >
-            They already love our products
-          </LabelButton>
+        {/* customer stories */}
+        <section className={`
+          mx-auto mt-[70px] max-w-[1152px] px-4
 
-          <section className="mx-auto max-w-[860px]">
-            <Title className="mb-14" level="h2">See what our users say about us</Title>
+          xl:px-0
+        `}
+        >
+          <Title className="mb-14" level="h2">Customer Stories</Title>
 
-            <Feedback />
-          </section>
+          <Feedback />
         </section>
+
+        {/* people love Univer */}
+        <section className={`
+          mx-auto mt-[70px] max-w-[1152px] px-4
+
+          xl:px-0
+        `}
+        >
+          <Title className="mb-14" level="h2">People Love Univer</Title>
+
+          {/* Customer Stories */}
+          <CustomerStories stories={recentStories} />
+        </section>
+
       </Container>
     </main>
   )

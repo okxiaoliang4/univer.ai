@@ -88,14 +88,14 @@ export default function HeaderDesktop() {
     <header
       className={`
         sticky left-0 top-0 z-10 flex w-full items-center justify-between px-4 py-3 text-sm text-[rgba(255,255,255,0.9)]
-        backdrop-blur-[30px]
+        backdrop-blur-[35px]
       `}
     >
       <div className="flex items-center">
         {/* Logo */}
         <Link href={`/${lang}`}>
           <Image
-            className="mr-[55px]"
+            className="mr-[44px]"
             src={logoImg}
             width={logoImg.width}
             alt="logo"
@@ -126,10 +126,8 @@ export default function HeaderDesktop() {
                   className={clsx(`
                     relative flex cursor-pointer items-center gap-1 px-2.5 py-2 font-medium transition-colors
                     duration-200 ease-in-out
-
-                    [&:hover]:text-gray-800
                   `, {
-                    'text-gray-800': currentPath === createHref(nav),
+                    // 'text-gray-800': currentPath === createHref(nav),
                   })}
                   href={createHref(nav)}
                   onMouseEnter={() => handleMouseEnter(index)}

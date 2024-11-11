@@ -1,38 +1,104 @@
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import Image from 'next/image'
-import embeddableImg from './embeddable.svg'
-import extensibleImg from './extensible.svg'
-import performanceImg from './performance.svg'
+import integrationImg from './1.png'
+import performanceImg from './2.png'
+import customizationImg from './3.png'
 
 export default function Features() {
   return (
-    <section
-      className={`
-        mb-6 grid grid-cols-1 gap-6
+    <div className={`
+      relative flex w-full flex-col items-start overflow-hidden rounded-[var(--rounded-2xl,16px)] border-[0.5px]
+      border-solid border-[rgba(255,255,255,0.15)] backdrop-blur-[10px]
 
-        xl:grid-cols-3
-      `}
+      [background:rgba(0,0,0,0.30)]
+    `}
     >
-      <div
-        className="rounded-2xl border border-gray-200 bg-white p-6 text-sm shadow-[0_2px_4px_0_rgba(14,17,30,0.06)]"
+      <div className={`
+        absolute left-[-460px] top-[95px] z-[-1] h-[523px] w-[823px] rounded-[823px] blur-[150px]
+
+        [background:linear-gradient(90deg,#0090FF_51.72%,#07F_136.33%)]
+      `}
       >
-        <h3 className="mb-2 font-semibold text-gray-800">Embedded in your applications</h3>
-        <p className="mb-6 text-gray-500">Univer can be embedded into any applications or systems. Requires no pre-installed third-party components.</p>
-        <Image className="mx-auto h-[296px] rounded-[10px]" src={embeddableImg} alt="Embedded in your applications" />
       </div>
-      <div
-        className="rounded-2xl border border-gray-200 bg-white p-6 text-sm shadow-[0_2px_4px_0_rgba(14,17,30,0.06)]"
-      >
-        <h3 className="mb-2 font-semibold text-gray-800">Highly Extensible</h3>
-        <p className="mb-6 text-gray-500">Plugins bring unmatching customizability to Univer, including custom formulas, refined permission control, and many other features.</p>
-        <Image className="mx-auto h-[296px] rounded-[10px]" src={extensibleImg} alt="Highly Extensible" />
+      <div className="flex w-full flex-row border-b-[0.5px] border-solid border-[rgba(255,255,255,0.15)]">
+        <div className="flex-1 shrink-0 grow border-r-[0.5px] border-solid border-[rgba(255,255,255,0.15)] p-[36px]">
+          <Image alt="integration" src={integrationImg} className="mb-10 h-[137px] w-[137px] select-none"></Image>
+          <h3 className={`
+            mb-4 self-stretch text-lg font-semibold leading-[normal] text-white
+
+            [font-family:Inter]
+          `}
+          >
+            Integration anywhere
+          </h3>
+          <p className={`
+            self-stretch text-sm font-light leading-[150%] text-[rgba(255,255,255,0.50)]
+
+            [font-family:Inter]
+          `}
+          >
+            Embed Univer SDK into ERP/CRM, IM, Email, Notion like Editor, No/Low-code platform, BI and other systems. View and edit spreadsheets, documents, and slides online.
+          </p>
+        </div>
+        <div className="flex-1 shrink-0 grow border-r-[0.5px] border-solid border-[rgba(255,255,255,0.15)] p-[36px]">
+          <Image alt="integration" src={performanceImg} className="mb-10 h-[137px] w-[137px] select-none"></Image>
+          <h3 className={`
+            mb-4 self-stretch text-lg font-semibold leading-[normal] text-white
+
+            [font-family:Inter]
+          `}
+          >
+            Excellent Performance
+          </h3>
+          <p className={`
+            self-stretch text-sm font-light leading-[150%] text-[rgba(255,255,255,0.50)]
+
+            [font-family:Inter]
+          `}
+          >
+            Univer sheet supports 10 million cells and a formula engine that can calculate more than 2 million formulas, perform server-side calculations, and reduce waiting time. Univer doc supports more than 1 million characters
+          </p>
+        </div>
+        <div className="flex-1 shrink-0 grow p-[36px]">
+          <Image alt="integration" src={customizationImg} className="mb-10 h-[137px] w-[137px] select-none"></Image>
+          <h3 className={`
+            mb-4 self-stretch text-lg font-semibold leading-[normal] text-white
+
+            [font-family:Inter]
+          `}
+          >
+            Full customization
+          </h3>
+          <p className={`
+            self-stretch text-sm font-light leading-[150%] text-[rgba(255,255,255,0.50)]
+
+            [font-family:Inter]
+          `}
+          >
+            Univer adopts the plug-in architecture, and each plug-in corresponds to one function. At present, Univer has more than 100 built-in plug-ins, and can extend these existing plug-ins according to business needs, or develop new custom plug-ins.
+          </p>
+        </div>
       </div>
-      <div
-        className="rounded-2xl border border-gray-200 bg-white p-6 text-sm shadow-[0_2px_4px_0_rgba(14,17,30,0.06)]"
-      >
-        <h3 className="mb-2 font-semibold text-gray-800">Superior Performance</h3>
-        <p className="mb-6 text-gray-500">Univer supports spreadsheets with over 10 billion cells and offers server-side computing capabilities.</p>
-        <Image className="mx-auto h-[296px] rounded-[10px]" src={performanceImg} alt="Superior Performance" />
+
+      <div className="w-full p-[36px]">
+        <div className="flex w-full flex-col items-center">
+          <div>tabs</div>
+          <Tabs defaultValue="account" className="mb-4 w-[592px]">
+            <TabsList className="grid w-full grid-cols-2">
+              <TabsTrigger value="sheet">Sheet</TabsTrigger>
+              <TabsTrigger value="doc">Doc</TabsTrigger>
+            </TabsList>
+          </Tabs>
+          <p className={`
+            w-full text-center text-sm font-light leading-[normal] text-[rgba(255,255,255,0.50)]
+
+            [font-family:Inter]
+          `}
+          >
+            Univer is a full-stack framework for creating and editing spreadsheets, documents, and slides (coming soon) on both web and server.
+          </p>
+        </div>
       </div>
-    </section>
+    </div>
   )
 }

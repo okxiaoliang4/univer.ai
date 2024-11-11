@@ -9,7 +9,7 @@ interface IProps {
 }
 
 export default function Title(props: IProps) {
-  const { level, align = 'center', className, children, description } = props
+  const { level, align = 'left', className, children, description } = props
 
   const Heading = level as keyof JSX.IntrinsicElements
 
@@ -19,10 +19,10 @@ export default function Title(props: IProps) {
         className={clsx(`
           mx-auto text-primary text-white
 
-          xl:text-[52px]
+          xl:text-[46px]
         `, {
           'mb-6': description,
-          'text-4xl/[1.25] font-bold xl:text-[52px]/[1.25]': level === 'h1',
+          'text-4xl/[1.25] font-bold xl:text-[46px]/[1.25]': level === 'h1',
           'text-2xl/[1.5] font-semibold xl:text-5xl/[1.5]': level === 'h2',
           'text-center': align === 'center',
         })}
@@ -32,7 +32,7 @@ export default function Title(props: IProps) {
       {description && (
         <p
           className={`
-            mx-auto text-center text-lg text-gray-500
+            mx-auto
 
             xl:max-w-[824px]
           `}

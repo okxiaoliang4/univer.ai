@@ -4,11 +4,8 @@ import BlurFade from '@/components/blur-fade'
 import Button from '@/components/button'
 import Container from '@/components/container'
 import Title from '@/components/title'
-import { ArrowCircleRightSingle, RoundnessSingle } from '@univerjs/icons'
-import Image from 'next/image'
+import { ArrowCircleRightSingle } from '@univerjs/icons'
 import { useParams } from 'next/navigation'
-import backgroundImg from './background.svg'
-import previewSheetImg from './preview-sheet.svg'
 
 export default function Hero() {
   const params = useParams()
@@ -16,74 +13,82 @@ export default function Hero() {
   return (
     <section
       className={`
-        mb-12 px-4 pt-4
+        relative mb-12 px-4 pt-16
 
-        xl:mb-24 xl:px-6 xl:pt-6
+        xl:mb-12 xl:px-16 xl:pt-[150px]
       `}
     >
-      <section
-        className={`
-          relative overflow-hidden rounded-[20px] border-[3px] border-[rgba(255,255,255,0.50)] bg-[#F4F6FB]
-          shadow-[0_0_0_1px_#DEE2EE]
-        `}
-      >
-        <Image
-          className="absolute left-1/2 h-full w-full max-w-none -translate-x-1/2 object-cover"
-          src={backgroundImg}
-          width={backgroundImg.width}
-          alt="hero background"
-        />
+      <Container className="flex flex-row">
+        <header className="z-10 mb-10">
+          <Title
+            className="mb-6 w-[570px] font-semibold leading-[125%] tracking-[-0.46px]"
+            level="h1"
+            description={(
+              <span className={`
+                w-[570px] text-lg font-light leading-[150%] text-[rgba(255,255,255,0.50)]
 
-        <Container>
-          <section
-            className="relative mt-32"
-          >
-            <header className="mb-10">
-              <Title
-                className="mb-6 max-w-[1040px]"
-                level="h1"
-                description={(
-                  <span className="inline-flex items-center gap-2">
-                    Integrate Anywhere
-                    <RoundnessSingle className="h-1.5 w-1.5" />
-                    Customize Everything
-                    <RoundnessSingle className="h-1.5 w-1.5" />
-                    Unrivaled Performance
-                  </span>
-                )}
+                [font-family:Inter]
+              `}
               >
-                Embedding server-driven productivity tools into Your Workflow
-              </Title>
+                Univer is a full-stack framework for creating and editing spreadsheets, documents, and slides on both web and server.
+              </span>
+            )}
+          >
+            Embedding server-driven productivity tools into Your Workflow
+          </Title>
 
-              <div className="flex justify-center gap-4">
-                <Button type="primary" href={`/${params.lang}/quick-guide`}>
-                  Get Univer for free
-                  {' '}
-                  <ArrowCircleRightSingle />
-                </Button>
-                <Button>
-                  All features
-                  {' '}
-                  <ArrowCircleRightSingle />
-                </Button>
-              </div>
-            </header>
+          <div className="mt-12 flex gap-4">
+            <Button type="primary" href={`/${params.lang}/quick-guide`} className="h-[50px] text-white">
+              Get Univer for free
+              {' '}
+              <ArrowCircleRightSingle />
+            </Button>
+            <Button className={`
+              flex h-[50px] items-center justify-center border text-white pt-[var(--0,] pb-[var(--5,] gap-[var(--2,8px)]
+              rounded-[var(--rounded-lg,8px)] border-solid pl-[20px)] pr-[0px)] text-base font-medium leading-[150%]
 
-            <BlurFade className="[perspective:800px]">
-              <Image
-                className={`
-                  mx-auto origin-top
+              [background:var(--white,#FFF)]
 
-                  [transform:rotateX(25deg)_scale(0.92)]
-                `}
-                src={previewSheetImg}
-                width={previewSheetImg.width}
-                alt="Univer Sheet"
-              />
-            </BlurFade>
-          </section>
-        </Container>
-      </section>
+              [font-family:Inter]
+
+              border-[color:var(--gray-200,#E3E5EA)]
+
+              text-[color:var(--gray-800,#181C2A)]
+            `}
+            >
+              All Features
+            </Button>
+          </div>
+        </header>
+
+        <div className="relative ml-[51px]">
+          <div className={`
+            absolute left-[117px] top-[-136px] h-[577px] w-[577px] shrink-0 rounded-[577px] blur-[200px]
+
+            [background:linear-gradient(90deg,#005EB5_0%,#7200A6_104.41%)]
+          `}
+          >
+          </div>
+          <div className={`
+            absolute left-[-202px] top-[225px] h-[385px] w-[386px] shrink-0 rounded-[386px] blur-[200px]
+
+            [background:linear-gradient(90deg,rgba(0,157,174,0.50)_0%,rgba(0,170,116,0.50)_104.41%)]
+          `}
+          >
+          </div>
+          <BlurFade className="[perspective:800px]">
+            <div className={`
+              flex h-[420px] w-[672px] shrink-0 flex-col items-center justify-center gap-[6.533px] rounded-[14px]
+              border-[14px] border-solid border-[rgba(255,255,255,0.05)] px-[5.6px] pb-[5.6px] pt-[6.533px]
+              shadow-[0px_0px_50px_0px_rgba(69,236,255,0.30)]; backdrop-blur-[24[x]]
+
+              [background:rgba(255,255,255,0.90)]
+            `}
+            >
+            </div>
+          </BlurFade>
+        </div>
+      </Container>
     </section>
   )
 }
