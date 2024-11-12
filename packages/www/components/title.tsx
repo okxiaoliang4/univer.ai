@@ -30,7 +30,7 @@ export default function Title(props: IProps) {
         {children}
       </Heading>
       {description && (
-        <p
+        <div
           className={`
             mx-auto
 
@@ -38,7 +38,7 @@ export default function Title(props: IProps) {
           `}
         >
           {description}
-        </p>
+        </div>
       )}
     </div>
   )

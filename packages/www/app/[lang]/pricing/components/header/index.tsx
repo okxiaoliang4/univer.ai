@@ -17,7 +17,15 @@ export default function Header(_props: IProps) {
     >
       <section className="relative pt-[80px]">
         <Container>
-          <Title level="h1" description="Univer provides flexible quotes based on your actual needs.">
+          <Title
+            level="h1"
+            align="center"
+            description={(
+              <p className="text-center text-sm text-white/50">
+                Univer provides flexible quotes based on your actual needs.
+              </p>
+            )}
+          >
             Unlock the full power of Univer
           </Title>
 

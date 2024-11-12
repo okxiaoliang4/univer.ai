@@ -23,11 +23,29 @@ export default function Page() {
         {/* Compare plans */}
         <section
           className={`
-            mx-auto w-full px-4
+            relative mx-auto w-full px-4
 
             xl:w-auto
           `}
         >
+          {/* spotlight */}
+          <div className={`
+            absolute left-[50%] top-[-330px] z-[-1] h-[660px] w-[660px] shrink-0 translate-x-[-50%] rounded-[330px]
+            blur-[200px]
+
+            [background:linear-gradient(90deg,#005EB5_0%,#7200A6_104.41%)]
+          `}
+          >
+          </div>
+          <div className={`
+            absolute left-[-180px] top-[50%] z-[-1] h-[720px] w-[360px] shrink-0 translate-y-[-50%] rounded-[720px]
+            blur-[150px]
+
+            [background:linear-gradient(334deg,rgba(123,254,223,0.5)_3.1%,rgba(42,32,165,0.5)_39.47%,rgba(42,32,165,0)_74.42%)]
+          `}
+          >
+          </div>
+
           <Title
             className={`
               mb-6

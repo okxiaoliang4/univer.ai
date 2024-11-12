@@ -26,7 +26,12 @@ export default function PricingHeader(props: IProps) {
         />
 
         {discount && discount < 1 && (
-          <span className="rounded-md bg-green-100 px-2.5 py-0.5 text-xs text-green-400">
+          <span className={`
+            rounded-md
+            bg-[linear-gradient(129deg,rgba(64,255,217,0.1)_-32.2%,rgba(100,188,255,0.1)_24.07%,rgba(64,255,217,0.1)_99.97%)]
+            px-2.5 py-0.5 text-xs text-[#40FFD9]
+          `}
+          >
             {Math.ceil(1 * 100 - discount * 100)}
             % discount
           </span>
