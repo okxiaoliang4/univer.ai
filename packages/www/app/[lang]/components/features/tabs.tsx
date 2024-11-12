@@ -1,3 +1,7 @@
+/**
+ * The component in this file should only serve as a sub component of the Features component.
+ */
+
 'use client'
 
 import { cn } from '@/lib/utils'
@@ -13,7 +17,10 @@ const TabsList = React.forwardRef<
   <TabsPrimitive.List
     ref={ref}
     className={cn(
-      'inline-flex h-9 items-center justify-center rounded-lg bg-muted p-1 text-muted-foreground',
+      `
+        inline-flex h-9 items-center justify-center rounded-2xl p-1 text-muted-foreground bg-[rgba(0,0,0,0.16)]
+        backdrop-blur-md
+      `,
       className,
     )}
     {...props}
@@ -29,14 +36,12 @@ const TabsTrigger = React.forwardRef<
     ref={ref}
     className={cn(
       `
-        inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium
-        ring-offset-background transition-all
+        inline-flex items-center justify-center whitespace-nowrap rounded-xl px-3 py-1 text-sm font-medium
+        ring-offset-background text-white transition-all
 
-        data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow
+        data-[state=active]:bg-[rgba(10,48,61,0.4)] data-[state=active]:shadow
 
         disabled:pointer-events-none disabled:opacity-50
-
-        focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-ring
       `,
       className,
     )}

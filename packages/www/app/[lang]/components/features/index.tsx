@@ -1,8 +1,8 @@
-import { Tabs, TabsList, TabsTrigger } from '@/app/[lang]/components/features/tabs'
 import Image from 'next/image'
 import integrationImg from './1.png'
 import performanceImg from './2.png'
 import customizationImg from './3.png'
+import FeatureTabs from './feature-tabs'
 
 export default function Features() {
   return (
@@ -85,21 +85,8 @@ export default function Features() {
 
       <div className="w-full p-[36px]">
         <div className="flex w-full flex-col items-center">
-          <div>tabs</div>
-          <Tabs defaultValue="account" className="mb-4 w-[592px]">
-            <TabsList className="grid w-full grid-cols-2">
-              <TabsTrigger value="sheet">Sheet</TabsTrigger>
-              <TabsTrigger value="doc">Doc</TabsTrigger>
-            </TabsList>
-          </Tabs>
-          <p className={`
-            w-full text-center text-sm font-light leading-[normal] text-[rgba(255,255,255,0.50)]
+          <FeatureTabs />
 
-            [font-family:Inter]
-          `}
-          >
-            Univer is a full-stack framework for creating and editing spreadsheets, documents, and slides (coming soon) on both web and server.
-          </p>
         </div>
       </div>
     </div>

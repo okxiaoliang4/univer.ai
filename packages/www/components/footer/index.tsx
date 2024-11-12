@@ -58,7 +58,7 @@ export default function Footer() {
             `}
           >
             Productivity SDK of the
-            <wbr />
+            <br />
             Next Generation
           </Title>
 

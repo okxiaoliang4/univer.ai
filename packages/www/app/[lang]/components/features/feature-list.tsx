@@ -1,7 +1,70 @@
-export interface IFeatureListProps {
-  moreUrl: string
-  items: Array<{ icon: string, title: string, url: string }>
+import type { ReactNode } from 'react'
+import Link from 'next/link'
+import GradientText from '../../../../components/ui/gradient-text'
+import GradientArrow from '../application-cases/gradient-arrow'
+
+export interface IFeatureListItem {
+  icon: ReactNode
+  title: string
+  url: string
 }
 
-export default function FeatureList(_props: IFeatureListProps) {
+export interface IFeatureListProps {
+  moreUrl: string
+  items: Array<IFeatureListItem>
+}
+
+export default function FeatureList(props: IFeatureListProps) {
+  const { moreUrl, items } = props
+  const leftItems = items.slice(0, Math.ceil(items.length / 2))
+  const rightItems = items.slice(Math.ceil(items.length / 2))
+
+  return (
+    <div className="w-full text-white">
+      <div className="mt-[36px] flex w-full">
+        <div className="mr-[36px] flex-1">
+          {leftItems.map(item => (
+            <FeatureListItem key={item.title} item={item} />
+          ))}
+        </div>
+        <div className="ml-[36px] flex-1">
+          {rightItems.map(item => (
+            <FeatureListItem key={item.title} item={item} />
+          ))}
+        </div>
+
+      </div>
+      <div className="text-center">
+        <Link href={moreUrl} className="inline-flex items-center">
+          <GradientText className="mr-2">
+            Learn More
+          </GradientText>
+          <GradientArrow />
+        </Link>
+      </div>
+    </div>
+  )
+}
+
+function FeatureListItem(props: { item: IFeatureListItem }) {
+  const { item } = props
+  const { icon, title, url } = item
+
+  return (
+    <Link
+      className="mb-[36px] flex align-top"
+
+      href={url}
+    >
+      <span className="mr-4 size-6 shrink-0 grow-0">
+        {icon}
+      </span>
+      <span className="size-3 flex-1">{title}</span>
+      <span className="size-[22px] shrink-0 grow-0">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
+          <path d="M7.23438 5L14.2344 11L7.23438 17" stroke="white" stroke-opacity="0.3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </span>
+    </Link>
+  )
 }
