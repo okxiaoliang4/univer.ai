@@ -68,7 +68,8 @@ export default function NonCommercialCard() {
     <CardWrapper>
       <PricingHeader
         img={nonCommercialImg}
-        title="Non-commercial"
+        title="Business"
+        subtitle="Non-commercial license"
         description="Internal and Non-commercial use is defined as an application(s) that will be used for internal or external use where the end-user will not be charged to access the service(s)."
         discount={discount}
         pricing={(

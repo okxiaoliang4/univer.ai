@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import process from 'node:process'
 import Container from '@/components/container'
-import PageHeader from '@/components/page-header'
+import Title from '@/components/title'
 import { ArrowCircleRightSingle } from '@univerjs/icons'
 import dayjs from 'dayjs'
 import Link from 'next/link'
@@ -29,21 +29,50 @@ export default async function Page() {
 
   return (
     <main>
-      <PageHeader
-        title={(
-          <>
-            Changelog
-            {' '}
-            <span className="text-black">📜</span>
-          </>
-        )}
-        description="We are constantly looking at feedback from our valued users and pushing out updates so you can get the most out of Univer."
-      />
+      <section className="relative mx-auto max-w-screen-xl pt-[80px]">
+        {/* spotlight */}
+        <div className={`
+          absolute left-0 top-[-100px] z-[-1] h-[380px] w-[380px] shrink-0 rounded-[190px] blur-[150px]
+
+          [background:linear-gradient(90deg,rgba(0,157,174,0.24)_0%,rgba(0,170,116,0.24)_104.41%)]
+        `}
+        >
+        </div>
+        <div className={`
+          absolute right-0 top-0 z-[-1] h-[380px] w-[380px] shrink-0 rounded-[190px] blur-[150px]
+
+          [background:linear-gradient(90deg,rgba(0,94,181,0.42)_0%,rgba(114,0,166,0.42)_104.41%)]
+        `}
+        >
+        </div>
+
+        <Title
+          level="h1"
+          align="center"
+          description={(
+            <p className="text-center text-sm text-white/50">
+              We are constantly looking at feedback from our valued users and pushing out updates so you can get the most out of Univer.
+            </p>
+          )}
+        >
+          Changelog
+        </Title>
+      </section>
 
       <Container>
         <section
-          className="mx-auto mb-24 grid max-w-[1053px] gap-9"
+          className="relative mx-auto mb-24 grid max-w-[1053px] gap-9 pt-[80px]"
         >
+          {/* spotlight */}
+          <div className={`
+            fixed left-[50%] top-[330px] z-[-1] h-[660px] w-[660px] shrink-0 translate-x-[-50%] rounded-[330px]
+            blur-[200px]
+
+            [background:linear-gradient(90deg,#005EB5_0%,#7200A6_104.41%)]
+          `}
+          >
+          </div>
+
           {releases.map((release: any) => (
             <section
               key={release.id}
@@ -67,8 +96,7 @@ export default async function Page() {
               >
                 <time
                   className={`
-                    rounded-full border border-gray-300 px-3.5 py-1.5 text-sm text-gray-600
-                    shadow-[0_-3px_6px_0_rgba(244,245,250,0.6)_inset]
+                    rounded-full border border-gray-300 px-3.5 py-1.5 text-sm text-white/60
 
                     xl:border-none xl:p-0 xl:pl-8 xl:text-gray-500
                   `}
@@ -78,25 +106,31 @@ export default async function Page() {
                 </time>
               </div>
 
-              <div className="flex-1 rounded-2xl border border-dashed bg-white p-6 broder-gray-300">
+              <div className="flex-1 rounded-2xl border border-dashed border-gray-600 bg-black/65 p-6">
                 <article
                   className={`
-                    grid gap-6 text-gray-500
+                    grid gap-6 text-white/50
 
-                    [&_a]:text-indigo-700 [&_a]:underline
+                    [&_a]:text-primary-400 [&_a]:underline
 
-                    [&_code]:rounded-lg [&_code]:bg-gray-50 [&_code]:p-1 [&_code]:text-sm [&_code]:text-gray-800
+                    [&_code]:rounded-lg [&_code]:bg-white/10 [&_code]:p-1 [&_code]:text-sm [&_code]:text-white/70
 
-                    [&_h2]:text-2xl [&_h2]:font-semibold [&_h2]:text-gray-800
+                    [&_h2]:text-2xl [&_h2]:font-semibold [&_h2]:text-white
 
-                    [&_h3]:text-xl [&_h3]:font-semibold [&_h3]:text-gray-800
+                    [&_h3]:text-xl [&_h3]:font-semibold [&_h3]:text-white/90
 
-                    [&_h4]:font-semibold [&_h4]:text-gray-800
+                    [&_h4]:font-semibold [&_h4]:text-white/90
 
-                    [&_pre]:whitespace-pre-wrap [&_pre]:break-all [&_pre]:rounded-2xl [&_pre]:bg-gray-50 [&_pre]:p-4
-                    [&_pre]:text-sm [&_pre]:text-gray-800
+                    [&_p_a_img]:hidden
 
-                    [&_strong]:text-gray-800
+                    [&_p]:text-base [&_p]:font-semibold [&_p]:text-white/50
+
+                    [&_pre_code]:flex [&_pre_code]:bg-transparent
+
+                    [&_pre]:whitespace-pre-wrap [&_pre]:break-all [&_pre]:rounded-2xl [&_pre]:bg-white/10 [&_pre]:p-4
+                    [&_pre]:text-sm [&_pre]:text-white/70
+
+                    [&_strong]:text-white/50
 
                     [&_ul]:list-inside [&_ul]:list-disc
                   `}
@@ -110,7 +144,7 @@ export default async function Page() {
 
         <footer className="mx-auto mb-24 flex max-w-[1053px] justify-end gap-9">
           <Link
-            className="flex items-center gap-2 text-indigo-700 underline"
+            className="flex items-center gap-2 text-[#40FFD9] underline"
             href="https://github.com/dream-num/univer/releases"
           >
             Click here to view the full changelog

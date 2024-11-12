@@ -77,7 +77,8 @@ export default function CommercialCard() {
     <CardWrapper>
       <PricingHeader
         img={commercialImg}
-        title="Commercial"
+        title="Business"
+        subtitle="Commercial license"
         description="Commercial and/or SaaS use is defined as an application(s) that will be used where the end-user or company(s) will be charged to access the service(s)."
         discount={discount}
         pricing={(
