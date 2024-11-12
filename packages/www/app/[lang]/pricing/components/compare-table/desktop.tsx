@@ -33,21 +33,16 @@ export default function CompareTableDesktop() {
         `}
       >
         <tr className="grid grid-flow-col items-center gap-9">
-          <th className="w-[280px] pb-4 pt-10 text-left text-lg font-semibold">What's included in the plans</th>
+          <th className="w-[300px] pb-4 pt-10 text-left text-lg font-semibold">What's included in the plans</th>
           <th
-            className="w-[264px] pb-4 pt-10 text-center text-xl font-bold"
+            className="w-[312px] pb-4 pt-10 text-center text-xl font-bold"
           >
             Developer
           </th>
           <th
-            className="w-[264px] bg-[rgba(87,80,183,0.2)] pb-4 pt-10 text-center text-xl font-bold"
+            className="w-[312px] bg-[rgba(87,80,183,0.2)] pb-4 pt-10 text-center text-xl font-bold"
           >
-            Non-commercial
-          </th>
-          <th
-            className="w-[264px] bg-[rgba(87,80,183,0.2)] pb-4 pt-10 text-center text-xl font-bold"
-          >
-            Commercial
+            Business
           </th>
         </tr>
       </thead>
@@ -62,14 +57,11 @@ export default function CompareTableDesktop() {
         {plans.map(plan => (
           <Fragment key={plan.title}>
             <tr className="grid h-14 grid-flow-col items-center gap-9">
-              <td className="flex h-full w-[280px] items-center text-lg font-bold">{plan.title}</td>
-              <td className="flex h-full w-[264px] items-center px-6">
+              <td className="flex h-full w-[300px] items-center text-lg font-bold">{plan.title}</td>
+              <td className="flex h-full w-[312px] items-center px-6">
                 <hr className="w-full border-dashed border-gray-300" />
               </td>
-              <td className="flex h-full w-[264px] items-center bg-[rgba(87,80,183,0.2)] px-6">
-                <hr className="w-full border-dashed border-gray-300" />
-              </td>
-              <td className="flex h-full w-[264px] items-center bg-[rgba(87,80,183,0.2)] px-6">
+              <td className="flex h-full w-[312px] items-center bg-[rgba(87,80,183,0.2)] px-6">
                 <hr className="w-full border-dashed border-gray-300" />
               </td>
             </tr>
@@ -84,7 +76,7 @@ export default function CompareTableDesktop() {
                     [&_td]:py-2.5
                   `}
                 >
-                  <td className="flex h-full w-[280px] items-center">
+                  <td className="flex h-full w-[300px] items-center">
                     {'children' in feature
                       ? (
                           <a
@@ -101,17 +93,12 @@ export default function CompareTableDesktop() {
                           <span className="pl-4">{feature.title}</span>
                         )}
                   </td>
-                  <td className="flex h-full w-[264px] items-center justify-center px-6">
+                  <td className="flex h-full w-[312px] items-center justify-center px-6">
                     {!('children' in feature && feature.children) && (
                       'limitCaution' in feature && feature.limitCaution ? <p className="text-center text-xs font-medium">{feature.limitCaution}</p> : <CheckMarkSingle />
                     )}
                   </td>
-                  <td className="flex h-full w-[264px] items-center justify-center bg-[rgba(87,80,183,0.2)] px-6">
-                    {!('children' in feature && feature.children) && (
-                      <CheckMarkSingle />
-                    )}
-                  </td>
-                  <td className="flex h-full w-[264px] items-center justify-center bg-[rgba(87,80,183,0.2)] px-6">
+                  <td className="flex h-full w-[312px] items-center justify-center bg-[rgba(87,80,183,0.2)] px-6">
                     {!('children' in feature && feature.children) && (
                       <CheckMarkSingle />
                     )}
@@ -130,14 +117,11 @@ export default function CompareTableDesktop() {
                         'invisible h-0': collapsedFeatures.includes(feature.title),
                       })}
                     >
-                      <td className="flex h-full w-[280px] items-center pl-4 text-white/60">{child.title}</td>
-                      <td className="flex h-full w-[264px] items-center justify-center px-6">
+                      <td className="flex h-full w-[300px] items-center pl-4 text-white/60">{child.title}</td>
+                      <td className="flex h-full w-[312px] items-center justify-center px-6">
                         {child.limitCaution ? <p className="text-center text-xs font-medium">{child.limitCaution}</p> : <CheckMarkSingle />}
                       </td>
-                      <td className="flex h-full w-[264px] items-center justify-center bg-[rgba(87,80,183,0.2)] px-6">
-                        <CheckMarkSingle />
-                      </td>
-                      <td className="flex h-full w-[264px] items-center justify-center bg-[rgba(87,80,183,0.2)] px-6">
+                      <td className="flex h-full w-[312px] items-center justify-center bg-[rgba(87,80,183,0.2)] px-6">
                         <CheckMarkSingle />
                       </td>
                     </tr>

@@ -26,7 +26,7 @@ export default function PricingHeader(props: IProps) {
           height={40}
         />
 
-        <label className="mb-3 ml-3 flex inline-flex flex-col items-start items-start gap-2 text-lg text-white/90">
+        <div className="mb-3 ml-3 flex flex-col items-start gap-2 text-lg text-white/90">
           <p className="font-medium">{title}</p>
           <p className="flex items-center">
             {subtitle && (
@@ -40,11 +40,15 @@ export default function PricingHeader(props: IProps) {
               </Tooltip>
             )}
           </p>
-        </label>
+        </div>
+      </div>
+
+      <div className="relative flex h-10 items-start text-white">
+        {pricing}
 
         {discount && discount < 1 && (
           <span className={`
-            absolute right-0 top-0 rounded-md
+            ml-1 rounded-md
             bg-[linear-gradient(129deg,rgba(64,255,217,0.1)_-32.2%,rgba(100,188,255,0.1)_24.07%,rgba(64,255,217,0.1)_99.97%)]
             px-2.5 py-0.5 text-xs text-[#40FFD9]
           `}
@@ -53,10 +57,6 @@ export default function PricingHeader(props: IProps) {
             % discount
           </span>
         )}
-      </div>
-
-      <div className="flex h-10 items-center text-white">
-        {pricing}
       </div>
     </header>
   )
