@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Container from '@/components/container'
 import Title from '@/components/title'
 import ApplicationCases from './components/application-cases'
+import CustomStories from './components/customer-stories'
 import Features from './components/features'
 import Hero from './components/hero'
 import PeopleLoveUniver from './components/people-love'
@@ -50,12 +51,13 @@ export default function Page() {
 
         {/* customer stories */}
         <section className={`
-          mx-auto mt-[70px] px-4
+          mx-auto mt-[70px] w-full px-4
 
           xl:px-0
         `}
         >
           <Title className="mb-14" level="h2" align="center">Customer Stories</Title>
+          <CustomStories />
         </section>
 
         {/* people love Univer */}

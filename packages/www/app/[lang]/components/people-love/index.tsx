@@ -3,8 +3,10 @@
 import Button from '@/components/button'
 import { ArrowCircleRightSingle } from '@univerjs/icons'
 import Image from 'next/image'
+import FeedbackCarousel from './feedback-carousel'
 import num1Img from './num1.svg'
 import num2Img from './num2.svg'
+import Star from './star'
 
 export default function PeopleLoveUniver() {
   return (
@@ -28,17 +30,31 @@ export default function PeopleLoveUniver() {
 
       <div className="mt-[52px] flex h-[266px]">
         <div className={`
-          relative mr-6 flex-1 overflow-hidden rounded-2xl bg-[rgba(38, 38, 38, 0.30)] border border-[#444444]/20
-          bg-[#252525]/30
+          relative mr-6 flex-1 overflow-hidden rounded-2xl bg-[rgba(38, 38, 38, 0.30)] box-border flex flex-col border
+          border-[#444444]/20 bg-[#252525]/30
         `}
         >
-          <div className={`
-            absolute left-[-745px] top-[-329px] h-[491px] w-[1199px] rounded-full bg-gradient-to-r from-[#0090ff]
-            to-[#0077ff] opacity-60 blur-[300px]
-          `}
+          <div
+            role="ambient"
+            aria-hidden
+            className={`
+              absolute left-[-745px] top-[-329px] z-[-1] h-[491px] w-[1199px] rounded-full bg-gradient-to-r
+              from-[#0090ff] to-[#0077ff] blur-[300px]
+            `}
           />
+
+          <div className="m-9 mb-0 flex flex-shrink-0 flex-grow-0 items-center justify-between">
+            <div className="font-['Inter'] text-[28px] font-semibold text-white/30">User evaluation</div>
+            <div className="flex">
+              {Array.from({ length: 5 }).fill(0).map((_, index) => (<Star className="ml-3" key={`${index}`} />))}
+            </div>
+          </div>
+
+          <FeedbackCarousel />
         </div>
-        <div className="flex flex-1 flex-col">
+
+        {/* badges */}
+        <div className="box-border flex flex-1 flex-col">
           <div className={`
             relative inline-flex h-[122px] flex-row items-start justify-start overflow-hidden rounded-2xl border
             border-[#444444]/20 bg-[#252525]/30 px-9 pt-9
@@ -76,7 +92,7 @@ export default function PeopleLoveUniver() {
               aria-hidden
               className={`
                 absolute left-[158px] top-[81px] flex h-[323px] w-[323px] flex-row rounded-full bg-gradient-to-r
-                from-[#c6c6c6] to-[#e2e2e2] opacity-60 blur-[200px]
+                from-[#c6c6c6] to-[#e2e2e2] blur-[200px]
               `}
             />
 
