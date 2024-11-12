@@ -3,7 +3,7 @@
 import Button from '@/components/button'
 import { ArrowCircleRightSingle } from '@univerjs/icons'
 import { useParams } from 'next/navigation'
-import Carousel from './carousel'
+import Carousel from './carousel-legacy'
 
 export default function Feedback() {
   const params = useParams()

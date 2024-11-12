@@ -14,7 +14,7 @@ export default function Title(props: IProps) {
   const Heading = level as keyof JSX.IntrinsicElements
 
   return (
-    <div className={clsx('mx-auto', className)}>
+    <div className={clsx('mx-auto w-full', className)}>
       <Heading
         className={clsx(`
           mx-auto text-primary text-white
@@ -23,7 +23,7 @@ export default function Title(props: IProps) {
         `, {
           'mb-6': description,
           'text-4xl/[1.25] font-bold xl:text-[46px]/[1.25]': level === 'h1',
-          'text-2xl/[1.5] font-semibold xl:text-5xl/[1.5]': level === 'h2',
+          'text-2xl/[1.5] font-semibold xl:text-[38px]/[1.5]': level === 'h2',
           'text-center': align === 'center',
         })}
       >

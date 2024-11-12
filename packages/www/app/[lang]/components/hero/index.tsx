@@ -44,16 +44,10 @@ export default function Hero() {
               <ArrowCircleRightSingle />
             </Button>
             <Button className={`
-              flex h-[50px] items-center justify-center border text-white pt-[var(--0,] pb-[var(--5,] gap-[var(--2,8px)]
-              rounded-[var(--rounded-lg,8px)] border-solid pl-[20px)] pr-[0px)] text-base font-medium leading-[150%]
+              flex h-[50px] items-center justify-center rounded-[var(--rounded-lg,8px)] px-5 text-base font-medium
+              leading-[150%] text-gray-800
 
               [background:var(--white,#FFF)]
-
-              [font-family:Inter]
-
-              border-[color:var(--gray-200,#E3E5EA)]
-
-              text-[color:var(--gray-800,#181C2A)]
             `}
             >
               All Features

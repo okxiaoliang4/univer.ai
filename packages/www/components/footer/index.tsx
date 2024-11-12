@@ -23,7 +23,8 @@ export default function Footer() {
       >
         {/* #region - ambient lights */}
         <div className={`
-          absolute right-[233px] top-[-294px] h-[522px] w-[523px] shrink-0 rounded-[523px] px-4 opacity-60 blur-[150px]
+          absolute right-[233px] top-[-294px] z-[-1] h-[522px] w-[523px] shrink-0 rounded-[523px] px-4 opacity-60
+          blur-[150px]
 
           [background:linear-gradient(90deg,rgba(83,222,237,0.46)_0%,rgba(64,255,195,0.46)_104.41%)]
 
@@ -32,7 +33,7 @@ export default function Footer() {
         >
         </div>
         <div className={`
-          absolute left-[-23px] top-[-181px] h-[916px] w-[916px] shrink-0 rounded-[916px] opacity-60 blur-[200px]
+          absolute left-[-23px] top-[-181px] z-[-1] h-[916px] w-[916px] shrink-0 rounded-[916px] opacity-60 blur-[200px]
 
           [background:linear-gradient(90deg,#005EB5_0%,#7200A6_104.41%)]
         `}
@@ -148,7 +149,15 @@ export default function Footer() {
           `}
           >
             {socialMedia.map(link => (
-              <Link key={link.title} href={link.href}>
+              <Link
+                key={link.title}
+                href={link.href}
+                className={`
+                  transition-colors duration-200
+
+                  hover:text-white
+                `}
+              >
                 {link.icon}
               </Link>
             ))}

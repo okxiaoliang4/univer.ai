@@ -87,7 +87,7 @@ export default function HeaderDesktop() {
   return (
     <header
       className={`
-        sticky left-0 top-0 z-10 flex w-full items-center justify-between px-4 py-3 text-sm text-[rgba(255,255,255,0.9)]
+        sticky left-0 top-0 z-50 flex w-full items-center justify-between px-4 py-3 text-sm text-[rgba(255,255,255,0.9)]
         backdrop-blur-[35px]
       `}
     >

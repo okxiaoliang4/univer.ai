@@ -1,4 +1,4 @@
-import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { Tabs, TabsList, TabsTrigger } from '@/app/[lang]/components/features/tabs'
 import Image from 'next/image'
 import integrationImg from './1.png'
 import performanceImg from './2.png'
@@ -13,11 +13,14 @@ export default function Features() {
       [background:rgba(0,0,0,0.30)]
     `}
     >
-      <div className={`
-        absolute left-[-460px] top-[95px] z-[-1] h-[523px] w-[823px] rounded-[823px] blur-[150px]
+      <div
+        role="ambient"
+        aria-hidden
+        className={`
+          absolute left-[-460px] top-[95px] z-[-1] h-[523px] w-[823px] rounded-[823px] opacity-80 blur-[150px]
 
-        [background:linear-gradient(90deg,#0090FF_51.72%,#07F_136.33%)]
-      `}
+          [background:linear-gradient(90deg,#0090FF_51.72%,#07F_136.33%)]
+        `}
       >
       </div>
       <div className="flex w-full flex-row border-b-[0.5px] border-solid border-[rgba(255,255,255,0.15)]">
@@ -56,7 +59,7 @@ export default function Features() {
             [font-family:Inter]
           `}
           >
-            Univer sheet supports 10 million cells and a formula engine that can calculate more than 2 million formulas, perform server-side calculations, and reduce waiting time. Univer doc supports more than 1 million characters
+            Univer sheet supports 10 million cells and a formula engine that can calculate more than 2 million formulas, perform server-side calculations, and reduce waiting time. Univer doc supports more than 1 million characters.
           </p>
         </div>
         <div className="flex-1 shrink-0 grow p-[36px]">

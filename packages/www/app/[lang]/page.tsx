@@ -1,11 +1,10 @@
 import type { Metadata } from 'next'
-import getSotries from '@/articles/customer-stories/data'
 import Container from '@/components/container'
 import Title from '@/components/title'
-import CustomerStories from './components/customer-stories'
+import ApplicationCases from './components/application-cases'
 import Features from './components/features'
-import Feedback from './components/feedback'
 import Hero from './components/hero'
+import PeopleLoveUniver from './components/people-love'
 import UserMarquee from './components/user-marquee'
 
 export const metadata: Metadata = {
@@ -14,9 +13,6 @@ export const metadata: Metadata = {
 }
 
 export default function Page() {
-  const stories = getSotries()
-  const recentStories = stories.slice(0, 3)
-
   return (
     <main>
       <Hero />
@@ -24,7 +20,7 @@ export default function Page() {
 
       <Container
         className={`
-          mb-12 grid gap-12
+          mb-12 grid max-w-[1152px] gap-12
 
           xl:mb-24 xl:gap-24
         `}
@@ -32,53 +28,46 @@ export default function Page() {
         {/* core benefits & features */}
         <section
           className={`
-            mx-auto mt-[70px] max-w-[1152px] px-4
+            mx-auto mt-[70px] px-4
 
             xl:px-0
           `}
         >
-          <Title className="mb-14" level="h2">Core Benefits & Features</Title>
+          <Title className="mb-14" level="h2" align="center">Core Benefits & Features</Title>
           <Features />
         </section>
 
         {/* application scenario */}
         <section className={`
-          mx-auto mt-[70px] max-w-[1152px] px-4
+          mx-auto mt-[70px] w-full px-4
 
           xl:px-0
         `}
         >
-          <Title className="mb-14" level="h2">Application Scenario</Title>
-
-          {/* Customer Stories */}
-          <CustomerStories stories={recentStories} />
+          <Title className="mb-14" level="h2" align="center">Application Scenario</Title>
+          <ApplicationCases />
         </section>
 
         {/* customer stories */}
         <section className={`
-          mx-auto mt-[70px] max-w-[1152px] px-4
+          mx-auto mt-[70px] px-4
 
           xl:px-0
         `}
         >
-          <Title className="mb-14" level="h2">Customer Stories</Title>
-
-          <Feedback />
+          <Title className="mb-14" level="h2" align="center">Customer Stories</Title>
         </section>
 
         {/* people love Univer */}
         <section className={`
-          mx-auto mt-[70px] max-w-[1152px] px-4
+          mx-auto mt-[70px] w-full px-4
 
           xl:px-0
         `}
         >
-          <Title className="mb-14" level="h2">People Love Univer</Title>
-
-          {/* Customer Stories */}
-          <CustomerStories stories={recentStories} />
+          <Title className="mb-14" level="h2" align="center">People Love Univer</Title>
+          <PeopleLoveUniver />
         </section>
-
       </Container>
     </main>
   )

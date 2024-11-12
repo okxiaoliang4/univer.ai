@@ -49,7 +49,7 @@ export default function UserMarquee() {
     >
       {usersList.map(userInfo => (
         <img
-          className="mx-12 h-[30px] contrast-0 grayscale"
+          className="mx-12 h-[30px] select-none contrast-0 grayscale"
           key={userInfo.name}
           src={userInfo.img.src}
         />
