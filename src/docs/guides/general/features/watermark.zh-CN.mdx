@@ -60,9 +60,9 @@ univer.registerPlugin(UniverWatermarkPlugin, {
 ```typescript
 const univerAPI = FUniver.newAPI(univer);
 // 具体参数请看 API 文档 https://github.com/dream-num/univer/blob/d0054f3e690d9d3cf9715b59a97a8cb95f65a6c8/packages/facade/src/apis/facade.ts#L555
-univerAPI.setWatermark("text", { content: "hello", repeat: true })
+univerAPI.addWatermark("text", { content: "hello", repeat: true })
 ```
 
-### `FUniver.setWatermark(null)`
+### `FUniver.deleteWatermark()`
 
 移除水印。

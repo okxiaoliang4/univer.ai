@@ -496,3 +496,45 @@ In the case where the permission control of the workbook intersects with the wor
 |--------------------------------------|--------------------------------------------|
 | RangeProtectionPermissionViewPoint   | Can view content of protected ranges       |
 | RangeProtectionPermissionEditPoint   | Can edit protected ranges                  |     
+
+## Custom Permission UI
+
+### Hide Permission Background Shadow
+  
+The UI code related to permissions is written in the @univerjs/sheets-ui plugin. We provide a configuration option to hide the permission background shadow. You can hide it with the following code:
+
+```typescript
+  // Add UNIVER_SHEET_PERMISSION_BACKGROUND to customComponents, representing a custom permission background shadow. 
+  // You can register a custom background component, or leave it unregistered to hide it.
+  import { UNIVER_SHEET_PERMISSION_BACKGROUND } from '@univerjs/sheets-ui';
+  univer.registerPlugin(UniverSheetsUIPlugin, { customComponents: new Set([UNIVER_SHEET_PERMISSION_BACKGROUND]) });
+```
+
+### Custom User Component
+
+The approach to hide the default user component is similar to hiding the permission background shadow. You can hide the default user component with the following code:
+```typescript
+  import { UNIVER_SHEET_PERMISSION_USER_PART } from '@univerjs/sheets-ui';
+  univer.registerPlugin(UniverSheetsUIPlugin, { customComponents: new Set([UNIVER_SHEET_PERMISSION_USER_PART]) });
+```
+
+After hiding, you need to write your custom plugin code to register the custom component. The core logic for registration is as follows:
+```typescript
+  import { connectInjector } from '@univerjs/core';
+  // The injector instance can be obtained via dependency injection.
+  const uiPartsService = injector.get(IUIPartsService);
+  // Replace `PermissionDetailUserPart` with your custom component.
+  // For the required props definition of the custom component, refer to:
+  // https://github.com/dream-num/univer/blob/b4d4cfa063c9e6d5a82d1fc6b05edc206a415252/packages/sheets-ui/src/views/permission/panel-detail/PermissionDetailUserPart.tsx#L30
+  uiPartsService.registerComponent(UNIVER_SHEET_PERMISSION_USER_PART, () => connectInjector(PermissionDetailUserPart, injector))
+```
+
+**Note: In the custom component, after completing the custom user settings, please synchronize it with the `_selectUserList` in the `sheetPermissionUserManagerService` service for subsequent use.**
+```typescript
+  import { useDependency } from '@univerjs/core';
+
+  const sheetPermissionUserManagerService = useDependency(SheetPermissionUserManagerService);
+  // For the specific data structure, refer to:
+  // https://github.com/dream-num/univer/blob/b4d4cfa063c9e6d5a82d1fc6b05edc206a415252/packages/sheets-ui/src/services/permission/sheet-permission-user-list.service.ts#L57
+  sheetPermissionUserManagerService.setSelectUserList([]); 
+```
