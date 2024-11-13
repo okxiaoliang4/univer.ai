@@ -1,7 +1,6 @@
 import type { ReactNode } from 'react'
 import Link from 'next/link'
-import GradientText from '../../../../components/ui/gradient-text'
-import GradientArrow from '../application-cases/gradient-arrow'
+import { LearnMore } from '../learn-more'
 
 export interface IFeatureListItem {
   icon: ReactNode
@@ -36,16 +35,7 @@ export default function FeatureList(props: IFeatureListProps) {
 
       </div>
       <div className="text-center">
-        { showLinks
-          ? (
-              <Link href={moreUrl} className="inline-flex items-center">
-                <GradientText className="mr-2">
-                  Learn More
-                </GradientText>
-                <GradientArrow />
-              </Link>
-            )
-          : null}
+        { showLinks ? <LearnMore href={moreUrl} /> : null}
       </div>
     </div>
   )

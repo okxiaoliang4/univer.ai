@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { wrap } from 'popmotion'
 import { useState } from 'react'
 
+import { LearnMore } from '../learn-more'
 import Image1 from './imgs/1.jpg'
 
 export default function CustomStories() {
@@ -88,7 +89,7 @@ function Carousel() {
 
                 data-[state=active]:bg-gradient-to-r
               `}
-              onClick={() => setPage([index, page - index])}
+              onClick={() => setPage([index, index - page])}
               key={item.title}
             >
             </div>
@@ -112,9 +113,11 @@ function Carousel() {
           <h4 className="mb-4 text-[18px] font-semibold text-white">
             {items[itemIndex].title}
           </h4>
-          <p className="font-['Inter'] text-sm font-light leading-[21px] text-white/50">
+          <p className="mb-3 font-['Inter'] text-sm font-light leading-[21px] text-white/50">
             {items[itemIndex].description}
           </p>
+
+          <LearnMore href={items[itemIndex].src} />
         </motion.div>
       </AnimatePresence>
 
