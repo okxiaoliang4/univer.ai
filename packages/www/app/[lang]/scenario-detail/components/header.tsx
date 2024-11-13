@@ -1,12 +1,18 @@
+import type { IScenDataImage } from '../data'
 import Button from '@/components/button'
 import Container from '@/components/container'
 import Title from '@/components/title'
 import { ArrowCircleRightSingle, GithubSingle24 } from '@univerjs/icons'
 import Image from 'next/image'
 import backgroundImage from './bg.svg'
-import mainImage from './main.svg'
 
-export default function Header() {
+interface IProps {
+  title: string
+  description: string
+  mainImage: IScenDataImage
+}
+
+export default function Header(props: IProps) {
   return (
     <section
       className={`
@@ -38,16 +44,10 @@ export default function Header() {
             level="h1"
             align="center"
             description={(
-              <p className="text-center text-sm text-white/50">
-                Univer SDK enables you to easily automate software workflows to meet the needs of enterprises to automatically send reports, contracts, documents, documents, reports, optimize enterprise process management, and promote team collaboration.
-              </p>
+              <p className="text-center text-sm text-white/50">{props.description}</p>
             )}
           >
-            Automate your workflow from
-            {' '}
-            <br />
-            {' '}
-            idea to production
+            {props.title}
           </Title>
 
           <section className="flex items-center justify-center pt-4">
@@ -65,8 +65,8 @@ export default function Header() {
 
           <Image
             className="mx-auto mt-20"
-            src={mainImage}
-            width={mainImage.width}
+            src={props.mainImage}
+            width={(props.mainImage as HTMLImageElement).width}
             alt=""
           />
         </Container>
