@@ -115,7 +115,7 @@ Document：[Univer.registerPlugin](/typedoc/@univerjs/core/classes/Univer#regist
 
 We append the toolbar button in the `onStarting` lifecycle of the plugin.
 
-We append the action bar menu button using the `IMenuService.addMenuItem` method, which takes an `IMenuItem` object as a parameter, which defines the properties of the menu button, such as the icon, text, display position, etc.
+We append the action bar menu button using the `IMenuManagerService.addMenuItem` method, which takes an `IMenuItem` object as a parameter, which defines the properties of the menu button, such as the icon, text, display position, etc.
 
 We need to define an `IMenuItem` object first, the code is as follows:
 
@@ -130,18 +130,18 @@ const menuItem: IMenuItem = {
 }
 ```
 
-Then, we need to access the `IMenuService` instance object, which can be obtained through the `@Inject` decorator.
+Then, we need to access the `IMenuManagerService` instance object, which can be obtained through the `@Inject` decorator.
 
 <Callout type="info" emoji="ℹ️">
   Through the injection of the ID, we can obtain the corresponding object instance from the DI container. The injection ID can be a string constant. For the sake of maintenance, a variable name is often defined to store the injection ID.
 
-  In Univer, the injection ID is usually the same as the interface name. For example, the variable name of the injection ID of the class instance object that implements the `IMenuService` interface type is also `IMenuService`.
+  In Univer, the injection ID is usually the same as the interface name. For example, the variable name of the injection ID of the class instance object that implements the `IMenuManagerService` interface type is also `IMenuManagerService`.
 </Callout>
 
-We inject the class instance object that implements the `IMenuService` interface type into the plugin constructor function, the code is as follows:
+We inject the class instance object that implements the `IMenuManagerService` interface type into the plugin constructor function, the code is as follows:
 
 ```typescript
-import { IMenuService } from '@univerjs/core'
+import { IMenuManagerService } from '@univerjs/core'
 // ...omit other code
 
 class ImportCSVButtonPlugin extends Plugin {
@@ -149,7 +149,7 @@ class ImportCSVButtonPlugin extends Plugin {
     // inject injector, required
     @Inject(Injector) override readonly _injector: Injector,
     // inject menu service, to add toolbar button
-    @Inject(IMenuService) private menuService: IMenuService,
+    @Inject(IMenuManagerService) private menuManagerService: IMenuManagerService,
   ) {
     // ...omit other code
   }
@@ -158,13 +158,13 @@ class ImportCSVButtonPlugin extends Plugin {
 // ...omit other code
 ```
 
-Then,we can append the menu button through the `IMenuService` instance object in the `onStarting` lifecycle of the plugin, the code is as follows:
+Then,we can append the menu button through the `IMenuManagerService` instance object in the `onStarting` lifecycle of the plugin, the code is as follows:
 
 ```typescript
 // ...omit other code
 onStarting () {
   // ...omit other code
-  this.menuService.addMenuItem(menuItem);
+  this.menuManagerService.addMenuItem(menuItem);
 }
 // ...omit other code
 ```
