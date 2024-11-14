@@ -115,7 +115,7 @@ univer.registerPlugin(csvImportPlugin)
 
 我们在插件的 `onStarting` 生命周期中追加工具栏按钮。
 
-追加操作栏菜单按钮使用 `IMenuService.addMenuItem` 方法，该方法接收一个 `IMenuItem` 对象作为参数，该对象定义了菜单按钮的图标、文本、显示位置等属性。
+追加操作栏菜单按钮使用 `IMenuManagerService.addMenuItem` 方法，该方法接收一个 `IMenuItem` 对象作为参数，该对象定义了菜单按钮的图标、文本、显示位置等属性。
 
 首先，我们需要定义一个 `IMenuItem` 对象，代码如下：
 
@@ -130,18 +130,18 @@ const menuItem: IMenuItem = {
 }
 ```
 
-然后，我们需要访问到 `IMenuService` 的实例对象，该对象可以通过 `@Inject(注入ID)` 装饰器从 DI 容器中获取。
+然后，我们需要访问到 `IMenuManagerService` 的实例对象，该对象可以通过 `@Inject(注入ID)` 装饰器从 DI 容器中获取。
 
 <Callout type="info" emoji="ℹ️">
 通过注入 ID 我们就可以从 DI 容器中获取到对应的对象实例，注入ID 可以是字符串常量，为了维护方便，常会定义一个变量名来存放注入 ID。
 
-在 Univer 中，注入 ID 通常与接口名称相同，例如 `IMenuService` 接口类型的类实现的实例对象的注入 ID 的变量名也是 `IMenuService` 。
+在 Univer 中，注入 ID 通常与接口名称相同，例如 `IMenuManagerService` 接口类型的类实现的实例对象的注入 ID 的变量名也是 `IMenuManagerService` 。
 </Callout>
 
-我们在插件构造函数中注入 `IMenuService` 接口的类实现的实例对象，代码如下：
+我们在插件构造函数中注入 `IMenuManagerService` 接口的类实现的实例对象，代码如下：
 
 ```typescript
-import { IMenuService } from '@univerjs/core'
+import { IMenuManagerService } from '@univerjs/ui'
 // ...omit other code
 
 class ImportCSVButtonPlugin extends Plugin {
@@ -149,7 +149,7 @@ class ImportCSVButtonPlugin extends Plugin {
     // inject injector, required
     @Inject(Injector) override readonly _injector: Injector,
     // inject menu service, to add toolbar button
-    @Inject(IMenuService) private menuService: IMenuService,
+    @Inject(IMenuManagerService) private menuManagerService: IMenuManagerService,
   ) {
     // ...omit other code
   }
@@ -158,13 +158,13 @@ class ImportCSVButtonPlugin extends Plugin {
 // ...omit other code
 ```
 
-这样，我们就可以在插件的 `onStarting` 生命周期中，访问 `IMenuService` 的实例对象追加菜单按钮了，代码如下：
+这样，我们就可以在插件的 `onStarting` 生命周期中，访问 `IMenuManagerService` 的实例对象追加菜单按钮了，代码如下：
 
 ```typescript
 // ...omit other code
 onStarting () {
   // ...omit other code
-  this.menuService.addMenuItem(menuItem);
+  this.menuManagerService.addMenuItem(menuItem);
 }
 // ...omit other code
 ```
@@ -175,7 +175,7 @@ onStarting () {
 
 在 Univer 菜单工具栏中，菜单按钮的点击会触发一个与菜单按钮 `id` 相同的命令，所以我们只需要注册同名命令即可响应菜单按钮的点击事件。
 
-通过 `ICommandService.registerCommandHandler` 我们可以注册一个新命令，与 `IMenuService` 同理，通过注入ID `ICommandService` 可以获取对应的对象实例，我们在插件构造函数添加如下代码：
+通过 `ICommandService.registerCommandHandler` 我们可以注册一个新命令，与 `IMenuManagerService` 同理，通过注入ID `ICommandService` 可以获取对应的对象实例，我们在插件构造函数添加如下代码：
 
 ```typescript
 import { ICommandService } from "@univerjs/core";
