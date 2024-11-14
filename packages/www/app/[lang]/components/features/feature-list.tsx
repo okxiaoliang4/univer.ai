@@ -56,7 +56,7 @@ function FeatureListItem(props: { item: IFeatureListItem, showLinks: boolean }) 
           ? (
               <span className="size-[22px] shrink-0 grow-0">
                 <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
-                  <path d="M7.23438 5L14.2344 11L7.23438 17" stroke="white" stroke-opacity="0.3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                  <path d="M7.23438 5L14.2344 11L7.23438 17" stroke="white" strokeOpacity="0.3" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </span>
             )

@@ -114,9 +114,9 @@ function Carousel() {
 function ArrowLeft() {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
-      <rect width="22" height="22" rx="11" fill="white" fill-opacity="0.2" />
-      <rect x="0.25" y="0.25" width="21.5" height="21.5" rx="10.75" stroke="white" stroke-opacity="0.14" stroke-width="0.5" />
-      <path d="M13 15L8.2 11L13 7" stroke="white" stroke-opacity="0.52" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+      <rect width="22" height="22" rx="11" fill="white" fillOpacity="0.2" />
+      <rect x="0.25" y="0.25" width="21.5" height="21.5" rx="10.75" stroke="white" strokeOpacity="0.14" strokeWidth="0.5" />
+      <path d="M13 15L8.2 11L13 7" stroke="white" strokeOpacity="0.52" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   )
 }
@@ -124,9 +124,9 @@ function ArrowLeft() {
 function ArrowRight() {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
-      <rect width="22" height="22" rx="11" fill="white" fill-opacity="0.2" />
-      <rect x="0.25" y="0.25" width="21.5" height="21.5" rx="10.75" stroke="white" stroke-opacity="0.14" stroke-width="0.5" />
-      <path d="M9.19922 7L13.9992 11L9.19922 15" stroke="white" stroke-opacity="0.52" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+      <rect width="22" height="22" rx="11" fill="white" fillOpacity="0.2" />
+      <rect x="0.25" y="0.25" width="21.5" height="21.5" rx="10.75" stroke="white" strokeOpacity="0.14" strokeWidth="0.5" />
+      <path d="M9.19922 7L13.9992 11L9.19922 15" stroke="white" strokeOpacity="0.52" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   )
 }
